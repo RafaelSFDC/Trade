@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+      integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../assets/css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>RedeTrade</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <side-bar></side-bar>
+
+      <!-- Page Content  -->
+      <div id="content" class="">
+        <!-- Navbar -->
+        <nav-bar></nav-bar>
+
+        <div class="container py-2">
+          <div class="container container-wordPress">
+            <p class="text-muted font-weight-bold">Bem vindo a Rede Trade</p>
+          </div>
+
+          <div class="container px-0 mb-3 box-param">
+            <div class="row" style="padding-right: 20px">
+              <div class="col-md-3 pr-1">
+                <div class="card bottom">
+                  <div class="card-body pb-0">
+                    <h5 class="card-title text-purple">Associados</h5>
+                    <div class="row p-2">
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p style="font-size: 1rem">Unidade</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="qtdAssociadosUnidade">0</p>
+                      </div>
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p style="font-size: 1rem">Geral</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="qtdAssociadosGeral"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body-bar"></div>
+              </div>
+
+              <div class="col-md-3 pr-1">
+                <div class="card h-100 bottom">
+                  <div class="card-body pb-0">
+                    <h5 class="card-title text-purple">Ofertas</h5>
+                    <div class="row pt-2">
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Unidade</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="totalUnidadeOfertas">0</p>
+                      </div>
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Geral</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="totalGeralOfertas">0</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body-bar"></div>
+              </div>
+
+              <div class="col-md-3 pr-1">
+                <div class="card h-100 bottom">
+                  <div class="card-body pb-0 px-3">
+                    <h5 class="card-title text-purple">Permutas Mês</h5>
+                    <div class="row pt-2">
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Unidade</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="permutaMesUnidade">0</p>
+                      </div>
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Geral</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="permutaMesGeral">0</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body-bar"></div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="card h-100 bottom">
+                  <div class="card-body pb-0 px-3">
+                    <h5
+                      class="card-title text-purple text-truncate"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Fundo de Permuta"
+                    >
+                      Fundo de Permuta
+                    </h5>
+                    <div class="row pt-2">
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Unidade</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="permutaTotalUnidade">0</p>
+                      </div>
+                      <div class="col-md-6 pr-0 text-purple">
+                        <p>Geral</p>
+                      </div>
+                      <div class="col-md-6 pl-0 text-right">
+                        <p id="permutaTotalGeral">0</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body-bar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="container px-0">
+            <div class="row">
+              <div class="col-md-7">
+                <div
+                  class="card h-100 text-center"
+                  style="width: 652px; margin-right: 20px"
+                >
+                  <div
+                    class="card-body p-0 d-flex flex-column justify-content-start align-items-center"
+                  >
+                    <img
+                      class="img-fluid rounded"
+                      src="/assets/img/moeda.jpg"
+                      alt=""
+                      style="width: 75%; margin-top: 40px"
+                    />
+                    <h3 class="pt-3 t-gray" style="font-size: 2rem">
+                      Aqui seu produto vale muito!
+                    </h3>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-md-5 d-flex flex-column justify-content-around pt-0 mt-0 pb-0 mb-0"
+                style="margin-left: 0px"
+              >
+                <div
+                  class="card h-50 mb-4"
+                  style="margin-left: 20px; width: 413px"
+                >
+                  <div class="card-body">
+                    <h5 class="card-title text-purple mb-5">
+                      Resumo Administrativo
+                    </h5>
+                    <div class="row">
+                      <!--<div class="col-md-6">
+                      <p>Plano:</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <p id="plano">Franquia</p>
+                    </div>-->
+                      <div class="col-md-6">
+                        <p class="fw-light">Limite de Crédito:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p id="limiteDeCredito">RT$ 0,00</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Saldo em permutas:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p id="saldoDePermuta">RT$ 0,00</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Ultima Transação:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p id="ultimaTransacao">sem transações</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card h-50" style="margin-left: 20px; width: 413px">
+                  <div class="card-body">
+                    <h5 class="card-title text-purple mb-5">
+                      Resumo Financeiro
+                    </h5>
+                    <!--<div class="row">
+                    <div class="col-md-6">
+                      <p>Repasse Agência:</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <p id="repasseMatriz">R$ 0,00</p>
+                    </div>
+                  </div>-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Pagar Gerentes:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p>R$ 0,00</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Receber Agências:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p id="receberAgencias">R$ 0,00</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p>Receber Associados:</p>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p id="receberAssociados">R$ 0,00</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer-bar></footer-bar>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.js"
+      integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/session.js"></script>
+
+    <!-- Import Components -->
+    <script src="/components/navbar.js"></script>
+    <script src="/components/sidebar2.js"></script>
+    <script src="/components/footer.js"></script>
+    <!-- <script src="components/sidebar.js"></script> -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
+
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="/assets/js/config.js"></script>
+
+    <!-- Script carregar todos Associados -->
+    <script>
+      $(document).ready(function () {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var usuarioId = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            usuarioId = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (usuarioId === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        const apiUrl = `${window.apiBaseUrl}/usuarios/tipo`;
+        const data = {
+          tipos: "Associado",
+        };
+        fetch(apiUrl, {
+          method: "POST", // Use the appropriate method: POST, PUT, or PATCH
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("qtdAssociadosGeral").textContent =
+              data.totalCount;
+          })
+          .catch((error) => console.error("Erro:", error));
+      });
+    </script>
+    <!-- Script carregar Associados da Unidade -->
+    <script>
+      $(document).ready(function () {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var usuarioId = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        const apiUrl = `${window.apiBaseUrl}/usuarios/tipo/${idUsuario}`;
+        const data = {
+          tipo: "Associado",
+        };
+        fetch(apiUrl, {
+          method: "POST", // Use the appropriate method: POST, PUT, or PATCH
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("qtdAssociadosUnidade").textContent =
+              data.totalCount;
+          })
+          .catch((error) => console.error("Erro:", error));
+      });
+    </script>
+    <!-- Script carregar todas Ofertas -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/ofertas`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            //console.log('total de ofertas geral:', data)
+            // Manipule os dados recebidos da API, por exemplo, exiba-os na página
+            const totalGeralOfertas =
+              document.getElementById("totalGeralOfertas");
+            totalGeralOfertas.textContent = data.totalCount; // Supondo que a API retorna um array de objetos com uma propriedade "nome"
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar Ofertas da Unidade -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idAgencia = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idAgencia = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idAgencia === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/ofertas/meus/${idAgencia}`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Manipule os dados recebidos da API, por exemplo, exiba-os na página
+            const totalGeralOfertas = document.getElementById(
+              "totalUnidadeOfertas"
+            );
+            totalGeralOfertas.textContent = data.totalCount; // Supondo que a API retorna um array de objetos com uma propriedade "nome"
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar Transações -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/minhas/${idUsuario}`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const dadosTransacao = data.transacoes;
+            dadosTransacao.forEach(function (transacao) {
+              if (dadosTransacao == "" || dadosTransacao == null) {
+                document.getElementById("ultimaTransacao").textContent =
+                  "Sem transações";
+              }
+              const dataFormatada = formatarData(transacao.createdAt);
+              document.getElementById("ultimaTransacao").textContent =
+                dataFormatada;
+              return;
+            });
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar meus Dados -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var id_usuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/usuarios/meus-dados/${idUsuario}`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const limiteDeCredito = data.dadosOperacoes.limiteCredito;
+            const formattedlimiteDeCredito = limiteDeCredito.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            const saldoDePermuta = data.dadosOperacoes.saldoPermuta;
+            if (saldoDePermuta < 0) {
+              document.getElementById("saldoDePermuta").style.color = "red";
+            } else {
+              document.getElementById("saldoDePermuta").style.color = "green";
+            }
+            const formattedsaldoDePermuta = saldoDePermuta.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            document.getElementById("saldoDePermuta").textContent =
+              "RT$ " + formattedsaldoDePermuta;
+            document.getElementById("limiteDeCredito").textContent =
+              "RT$ " + formattedlimiteDeCredito;
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar a receber Associados -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/a-receber/${idUsuario}`;
+        const receberAssociados = document.getElementById("receberAssociados");
+        const repasseMatriz = document.getElementById("repasseMatriz");
+
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            //console.log('a-receber:', data.totalComissaoAreceberAssociados);
+            //console.log('aPagarMatriz:', data.aPagarMatriz);
+            if (data.message) {
+              receberAgencias.textContent = "R$ 0.00";
+            } else {
+              const valorComissao = data.totalComissaoAreceberAssociados;
+              receberAssociados.textContent = `R$ ${valorComissao}`;
+              repasseMatriz.textContent = `R$ ${data.aPagarMatriz}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar a permuta mes unidade -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/permuta-unidade/${idUsuario}`;
+        const permutaMesUnidadeTxt =
+          document.getElementById("permutaMesUnidade");
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const permutaMesUnidade = data.permutaMesUnidade;
+            const formattedpermutaMesUnidade = permutaMesUnidade.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            const permutaMesUnidadeZerado = "RT$ 0,00";
+            const formattedpermutaMesUnidadeZerado =
+              permutaMesUnidadeZerado.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+            if (data.permutaMesUnidade == 0) {
+              permutaMesUnidadeTxt.textContent =
+                formattedpermutaMesUnidadeZerado;
+            } else {
+              permutaMesUnidadeTxt.textContent = `RT$ ${formattedpermutaMesUnidade}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar a permuta mes geral -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/permuta-geral/${idUsuario}`;
+        const permutaMesGeralTxt = document.getElementById("permutaMesGeral");
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const permutaMesGeral = data.permutaMesGeral;
+            const formattedpermutaMesGeral = permutaMesGeral.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            const permutaMesGeralZero = "RT$ 0,00";
+            const formattedpermutaMesGeralZero =
+              permutaMesGeralZero.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+            if (data.permutaMesGeral == 0) {
+              permutaMesGeralTxt.textContent = formattedpermutaMesGeralZero;
+            } else {
+              permutaMesGeralTxt.textContent = `RT$ ${formattedpermutaMesGeral}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar a permuta total geral -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/permuta-total-geral/${idUsuario}`;
+        const permutaTotalGeralTxt =
+          document.getElementById("permutaTotalGeral");
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const permutaTotalGeral = data.permutaTotalGeral;
+            const formattedpermutaTotalGeral = permutaTotalGeral.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            const permutaTotalGeralZero = "RT$ 0,00";
+            const formattedpermutaTotalGeralZero =
+              permutaTotalGeralZero.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+            if (data.permutaTotalGeral == 0) {
+              permutaTotalGeralTxt.textContent = formattedpermutaTotalGeralZero;
+            } else {
+              permutaTotalGeralTxt.textContent = `RT$ ${formattedpermutaTotalGeral}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script carregar a permuta total unidade -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recupera o cookie
+        var cookies = document.cookie.split(";");
+        var idUsuario = null;
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf("usuarioId=") === 0) {
+            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
+            break;
+          }
+        }
+        // Verifica se o idUsuario foi encontrado
+        if (idUsuario === "") {
+          console.error("O cookie idUsuario não foi encontrado.");
+          return;
+        }
+        // Coloque aqui a sua solicitação Fetch
+        const apiUrl = `${window.apiBaseUrl}/transacoes/permuta-total-unidade/${idUsuario}`;
+        const permutaTotalUnidadeTxt = document.getElementById(
+          "permutaTotalUnidade"
+        );
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const permutaTotalUnidade = data.permutaTotalUnidade;
+            const formattedpermutaTotalUnidade =
+              permutaTotalUnidade.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+            const permutaTotalUnidadeZero = "RT$ 0,00";
+            const formattedpermutaTotalUnidadeZero =
+              permutaTotalUnidadeZero.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+            if (data.permutaTotalUnidade == 0) {
+              permutaTotalUnidadeTxt.textContent =
+                formattedpermutaTotalUnidadeZero;
+            } else {
+              permutaTotalUnidadeTxt.textContent = `RT$ ${formattedpermutaTotalUnidade}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erro na solicitação Fetch:", error);
+          });
+      });
+    </script>
+    <!-- Script formatar data -->
+    <script>
+      function formatarData(data) {
+        const dataObj = new Date(data);
+        const dia = String(dataObj.getDate()).padStart(2, "0");
+        const mes = String(dataObj.getMonth() + 1).padStart(2, "0");
+        const ano = dataObj.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+      }
+    </script>
+    <!-- Script para remover o cookie -->
+    <script>
+      // Função para remover o cookie
+      function removerCookie(nome) {
+        document.cookie =
+          nome + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
+
+      // Quando o botão "SAIR" é clicado
+      const botaoSair = document.getElementById("sair");
+      botaoSair.addEventListener("click", function (event) {
+        event.preventDefault(); // Impede o comportamento padrão do link
+
+        // Chame a função para remover o cookie
+        removerCookie("usuarioId");
+
+        // Redirecione para a página de destino após sair
+        window.location.href = "/";
+      });
+    </script>
+  </body>
+</html>

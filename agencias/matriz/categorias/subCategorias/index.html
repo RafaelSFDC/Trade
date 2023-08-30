@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+    <title>RedeTrade</title>
+    <meta name="author" content="Lucas Santana" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <side-bar></side-bar>
+
+      <!-- Page Content  -->
+      <div id="content">
+        <!-- Navbar -->
+        <nav-bar></nav-bar>
+        <div class="container py-2">
+          <div class="container-simple">
+            <p class="text-muted font-weight-bold">Sub Categorias</p>
+          </div>
+
+          <div class="container alerta p-4 bg-white rounded shadow">
+            <div class="row">
+              <div class="col-md-4 pt-1">
+                <label>Categoria</label>
+                <select class="form-control" id="categoria"></select>
+              </div>
+              <div class="col-md-4 pt-1">
+                <label>Nome da sub categoriasss</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nomeDaSubCategoria"
+                />
+              </div>
+              <div class="col-md-4 pt-1">
+                <label>Data de criação</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataDeCriacao"
+                  readonly
+                />
+              </div>
+              <div class="row button-container">
+                <div class="col-4 offset-8 text-right pt-4 button-container">
+                  <button
+                    type="button"
+                    class="btn btn-orange btn-sm btn-cadastrar"
+                    style="width: 80px"
+                  >
+                    Cadastrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container mt-3 alerta p-4 bg-white rounded shadow">
+            <table
+              class="table table-borderless table-hover"
+              id="unidadesTable"
+            >
+              <thead>
+                <tr id="headerRow">
+                  <th scope="col" class="col-2 text-left">Data</th>
+                  <th scope="col" class="col-2 text-left">
+                    Nome da sub categoria
+                  </th>
+                  <th scope="col" class="col-6 text-right">Operação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="align-middle" id="unidade"></td>
+                  <td class="align-middle" id="conta"></td>
+                  <td class="align-middle" id="email"></td>
+                  <td class="align-middle" id="status"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <footer-bar></footer-bar>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Sub Categoria</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Fechar"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="container p-4 bg-white rounded shadow alert">
+                <div class="row">
+                  <!--<div class="col-md-4 pt-1">
+                    <label>Categoria</label>
+                    <select class="form-control" id="categoria">
+                    </select>
+                  </div>-->
+                  <div class="col-md-4 pt-1">
+                    <label>Nome da sub categoria</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nomeDaSubCategoriaModal"
+                    />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Data de Criação</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="dataDeCriacaoModal"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn"
+              id="salvar-alteracoes-btn"
+              style="background-color: #ff6600; color: #fff"
+            >
+              Salvar alterações
+            </button>
+            <div class="container alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-form {
+        background-color: #fff;
+        padding: 20px;
+      }
+    </style>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.js"
+      integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+
+    <!-- Import Components -->
+    <script src="/components/navbar.js"></script>
+    <script src="/components/sidebar2.js"></script>
+    <script src="/components/footer.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
+
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="/assets/js/config.js"></script>
+    <!-- Script para Cadastrar SubCategoria -->
+    <script>
+      let nomeCategoria;
+      // Obtém o elemento do botão pelo seletor de classe
+      const btnCadastrar = document.querySelector(".btn-cadastrar");
+
+      // Adiciona um evento de clique ao botão
+      btnCadastrar.addEventListener("click", () => {
+        // Obtém os valores dos campos de entrada
+        const nome = document.querySelector("#nomeDaSubCategoria").value;
+        const dataDeCriacao = document.querySelector("#dataDeCriacao").value;
+        const idCategoria = document.querySelector("#categoria").value;
+        const cleanNomeCategoria =
+          document.querySelector("#categoria").textContent;
+        nomeCategoria = cleanNomeCategoria.replace(/\s+/g, "");
+
+        //console.log(typeof cleanNomeCategoria);
+
+        // Monta o objeto de dados a ser enviado na requisição
+        const data = {
+          nome,
+          idCategoria,
+          nomeCategoria,
+          dataDeCriacao,
+        };
+
+        // Configurações da requisição fetch
+        const apiUrl = `${window.apiBaseUrl}/subCategorias`;
+
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+
+        // Faz a chamada fetch para o endpoint desejado
+        fetch(apiUrl, options)
+          .then((response) => {
+            // Manipula a resposta da requisição
+            if (response.ok) {
+              // A requisição foi bem-sucedida
+              //console.log('Requisição enviada com sucesso!');
+              showAlertCadastro(
+                "Sub Categoria cadastrada  com sucesso!",
+                "success"
+              );
+              setTimeout(() => {
+                //$('#myModal').modal('hide');
+                location.reload();
+              }, 4000);
+            } else {
+              // A requisição falhou
+              console.log("Erro na requisição.");
+            }
+          })
+          .catch((error) => {
+            // Captura erros de rede ou outras exceções
+            console.log("Erro na requisição:", error);
+          });
+      });
+    </script>
+    <!-- Script para carregar sub categorias -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtém a data atual
+        const dataAtual = new Date();
+
+        // Obtém o dia, mês e ano da data atual
+        const dia = String(dataAtual.getDate()).padStart(2, "0");
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, "0"); // Os meses são indexados a partir de zero
+        const ano = dataAtual.getFullYear();
+
+        // Formata a data no formato desejado
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+        let dataDeCriacao = document.getElementById("dataDeCriacao");
+        dataDeCriacao.value = dataFormatada;
+        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+        const apiUrl = `${window.apiBaseUrl}/subCategorias`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Processa os dados JSON recebidos
+            const tableBody = document.querySelector("tbody");
+            // Limpa o conteúdo atual da tabela
+            tableBody.innerHTML = "";
+            data.forEach((subCategoria) => {
+              // Cria uma linha na tabela para cada transação
+              const row = document.createElement("tr");
+              // Cria as células da linha com os dados da agência
+              const dataCell = document.createElement("td");
+              const data = new Date(subCategoria.createdAt);
+              dataCell.textContent = data.toLocaleDateString();
+              row.appendChild(dataCell);
+
+              const nomeDaCategoriaCell = document.createElement("td");
+              nomeDaCategoriaCell.textContent = subCategoria.nome;
+              row.appendChild(nomeDaCategoriaCell);
+
+              const operationsCell = document.createElement("td");
+
+              operationsCell.className =
+                "text-right align-middle d-flex justify-content-end";
+              operationsCell.style.gap = "0.1rem";
+
+              // Cria os botões para as operações
+              const editButton = document.createElement("button");
+              editButton.type = "button";
+              editButton.className = "btn btn-purple btn-sm";
+              editButton.innerHTML = '<i class="bi bi-pencil"></i>';
+              operationsCell.appendChild(editButton);
+              // Attach an event listener to the edit button
+              editButton.addEventListener("click", function () {
+                openPopup(subCategoria);
+              });
+
+              const deleteButton = document.createElement("button");
+              deleteButton.type = "button";
+              deleteButton.className = "btn btn-danger btn-sm";
+              deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
+              operationsCell.appendChild(deleteButton);
+              // Attach an event listener to the edit button
+              deleteButton.addEventListener("click", function () {
+                const id = subCategoria.id;
+                const apiUrl = `${window.apiBaseUrl}/subCategorias/${id}`;
+                fetch(apiUrl, {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((response) => response.json())
+                  .then((result) => {
+                    console.log("Resposta do servidor:", result);
+                    location.reload();
+                    // Realizar ações adicionais após o sucesso da requisição...
+                  })
+                  .catch((error) => {
+                    console.error("Erro ao enviar requisição:", error);
+                    // Realizar tratamento de erro, se necessário...
+                  });
+              });
+              row.appendChild(operationsCell);
+              // Adiciona a linha à tabela
+              tableBody.appendChild(row);
+            });
+          })
+          .catch((error) => console.error("Erro:", error));
+      });
+    </script>
+    <!-- Script para carregar categorias -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtém a data atual
+        const dataAtual = new Date();
+
+        // Obtém o dia, mês e ano da data atual
+        const dia = String(dataAtual.getDate()).padStart(2, "0");
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, "0"); // Os meses são indexados a partir de zero
+        const ano = dataAtual.getFullYear();
+
+        // Formata a data no formato desejado
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+        let dataDeCriacao = document.getElementById("dataDeCriacao");
+        dataDeCriacao.value = dataFormatada;
+        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+        const apiUrl = `${window.apiBaseUrl}/categorias`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Processa os dados JSON recebidos
+            data.forEach((categoria) => {
+              // Cria uma linha na tabela para cada transação
+              // Obtém a referência para o elemento <select>
+              const categoriaSelect = document.getElementById("categoria");
+              // Cria um elemento de opção
+              const optionCategoria = document.createElement("option");
+              // Define o texto da opção como o nome do plano
+              optionCategoria.textContent = categoria.nome;
+              // Define o valor da opção como o ID do plano
+              optionCategoria.value = categoria.id;
+              // Adiciona a opção ao elemento <select>
+              categoriaSelect.appendChild(optionCategoria);
+            });
+          })
+          .catch((error) => console.error("Erro:", error));
+      });
+    </script>
+
+    <!-- Função para abrir o Popup de Edição -->
+    <script>
+      function openPopup(subCategoria) {
+        $("#myModal").modal("show");
+        // Obtem os Inputs
+        let nomeDaSubCategoriaInput = document.getElementById(
+          "nomeDaSubCategoriaModal"
+        );
+        let dataDeCriacaoInput = document.getElementById("dataDeCriacaoModal");
+        let categoriaSelect = document.getElementById("categoria");
+
+        // Preenchendo os campos com os dados correspondentes
+        nomeDaSubCategoriaInput.value = subCategoria.nome;
+        const data = new Date(subCategoria.createdAt);
+
+        dataDeCriacaoInput.value = data.toLocaleDateString();
+        // Adicionar evento de clique ao botão de salvar alterações
+        const salvarAlteracoesBtn = document.getElementById(
+          "salvar-alteracoes-btn"
+        );
+        salvarAlteracoesBtn.addEventListener("click", () => {
+          updateSubCategoria(subCategoria);
+        });
+        function updateSubCategoria(subCategoria) {
+          const id = subCategoria.id; // Obter o ID da agência dinamicamente
+          let nomeDaSubCategoriaInput = document.getElementById(
+            "nomeDaSubCategoriaModal"
+          ).value;
+          const data = {
+            nome: nomeDaSubCategoriaInput,
+          };
+          const apiUrl = `${window.apiBaseUrl}/subCategorias/${id}`;
+          fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              //console.log('Resposta do servidor:', result);
+              showAlert("Atualização efetuada com sucesso!", "success");
+              setTimeout(() => {
+                //$('#myModal').modal('hide');
+                location.reload();
+              }, 4000);
+
+              // Realizar ações adicionais após o sucesso da requisição...
+            })
+            .catch((error) => {
+              console.error("Erro ao enviar requisição:", error);
+              // Realizar tratamento de erro, se necessário...
+            });
+        }
+      }
+    </script>
+    <!-- Script de Alerts-->
+    <script>
+      function showAlert(message, type) {
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alert");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
+      function showAlertCadastro(message, type) {
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alerta");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

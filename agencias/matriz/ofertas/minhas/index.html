@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>RedeTrade</title>
+    <meta name="author" content="Lucas Santana" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <side-bar></side-bar>
+
+      <!-- Page Content  -->
+      <div id="content">
+        <!-- Navbar -->
+        <nav-bar></nav-bar>
+        <div class="container py-2">
+          <div class="container-simple">
+            <p class="text-muted font-weight-bold">Minhas Ofertas</p>
+          </div>
+
+          <div class="container p-4 bg-white rounded shadow">
+            <div class="row row-cols-5">
+              <div class="col pt-1">
+                <label>Unidade</label>
+                <select class="form-control" id="unidadeSelect">
+                  <option>Selecionar</option>
+                </select>
+              </div>
+              <div class="col pt-1">
+                <label>Título</label>
+                <select class="form-control" id="tituloSelect">
+                  <option>Selecionar</option>
+                </select>
+              </div>
+              <div class="col pt-1">
+                <label>Cidade</label>
+                <select class="form-control" id="cidadeSelect">
+                  <option>Selecionar</option>
+                </select>
+              </div>
+              <div class="col pt-1">
+                <label>Categoria</label>
+                <select class="form-control" id="categoriaSelect"></select>
+              </div>
+              <div class="col pt-1">
+                <label>Tipo</label>
+                <select class="form-control" id="tipoSelect">
+                  <option value="Produto">Produto</option>
+                  <option value="Serviço">Serviço</option>
+                </select>
+              </div>
+              <div class="col-4 offset-8 text-right pt-4">
+                <button type="button" class="btn btn-orange w-50 btn-sm">
+                  <i class="fas fa-search"></i>
+                  Localizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer-bar></footer-bar>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.js"
+      integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+
+    <!-- Import Components -->
+    <script src="/components/navbar.js"></script>
+    <script src="/components/sidebar2.js"></script>
+    <script src="/components/footer.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
+
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="/assets/js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/LexLuthorDev/formatar-moeda@main/dist/index.js"></script>
+    <!-- Script para carregar ofertas -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const id_usuario = 1;
+        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+        const apiUrl = `${window.apiBaseUrl}/ofertas/minhas/${id_usuario}`;
+        fetch(apiUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            // Processa os dados JSON recebidos
+
+            const container = document.querySelector(".cards .row"); // Assuming you want to append the cards inside the div with class 'row' inside the div with class 'container'
+
+            data.ofertas.forEach((oferta) => {
+              console.log(oferta);
+              // Pegando o select do titulo
+              const selectTituloElement =
+                document.getElementById("tituloSelect");
+              const optionTitulo = document.createElement("option");
+              optionTitulo.text = oferta.titulo; // Substitua 'nome' pelo campo que deseja exibir como opção
+              optionTitulo.value = oferta.titulo; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
+              selectTituloElement.appendChild(optionTitulo);
+              // Pegando o select da cidade
+              const selectCidadeElement =
+                document.getElementById("cidadeSelect");
+              const optionCidade = document.createElement("option");
+              optionCidade.text = oferta.cidade; // Substitua 'nome' pelo campo que deseja exibir como opção
+              optionCidade.value = oferta.cidade; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
+              selectCidadeElement.appendChild(optionCidade);
+              // Pegando o select da categoria
+              const selectCategoriaElement =
+                document.getElementById("categoriaSelect");
+              const optionCategoria = document.createElement("option");
+              optionCategoria.text = oferta.categoria; // Substitua 'nome' pelo campo que deseja exibir como opção
+              optionCategoria.value = oferta.categoria; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
+              selectCategoriaElement.appendChild(optionCategoria);
+            });
+          })
+          .catch((error) => console.error("Erro:", error));
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "redetrade",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass-compiler": "sass --watch assets/scss:assets/css",
+    "ts-compiler": "tsc -w",
+    "serve": "bundle exec jekyll serve",
+    "start": "npm-run-all -p -r sass-compiler ts-compiler serve"
+  },
+  "keywords": [],
+  "author": "Lucas Santana",
+  "homepage": "https://github.com/Quinhas/",
+  "private": true,
+  "license": "ISC",
+  "dependencies": {
+    "@types/jquery": "^3.5.1",
+    "bootstrap": "^4.5.2",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

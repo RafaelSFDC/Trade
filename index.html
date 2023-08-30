@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>RedeTrade</title>
+  </head>
+  <body>
+    <div class="div-left">
+      <img src="./assets/img/imgteste.jpeg" />
+    </div>
+    <div class="div-right" id="div-right">
+      <img src="./assets/img/Logo2.png" />
+      <form action="" method="post" id="form">
+        <div class="text-field">
+          <input
+            class="input"
+            type="text"
+            placeholder="E-mail ou Conta"
+            id="emailouconta" 
+            required
+          />
+        </div>
+        <div class="text-field">
+          <input class="input" type="password" placeholder="Senha" id="senha" required />
+        </div>
+        <div class="remember-container">
+          <div>
+            <input type="checkbox" value="Lembre-me" id="remember" />
+            <label for="remember" style="color: #979797;margin: 0;">Lembre-me</label>
+          </div>
+
+          <a href="#" id="trigger">Esqueceu a senha?</a>
+        </div>
+        <input class="input button" type="submit" value="ENTRAR" />
+      </form>
+      <div class="signup_link" id="signup">
+        <p style="color: #979797;font-size: 1rem;">Não tem conta?</p>
+        <a href="#">Cadastre-se</a>
+      </div>
+      <div class="popup" id="popup">
+        <form class="popup-form">
+          <img src="./assets/img/Logo2.png" alt="RedeTrade" />
+          <h2>Esqueci minha senha</h2>
+          <input
+            type="email"
+            name=""
+            id=""
+            required
+            placeholder="Insira seu E-mail"
+          />
+          <button id="modalButton" class="modal-button" type="submit">
+            ENVIAR SOLICITAÇÃO
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="./assets/js/index.js"></script>
+    <script src="./assets/js/config.js"></script>
+
+  </body>
+</html>
