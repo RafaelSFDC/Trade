@@ -41,11 +41,23 @@
       <!-- Navbar -->
       <nav-bar></nav-bar>
       <div class="container py-2">
-        <div class="container-simple">
-          <p class="text-muted font-weight-bold">Agências</p>
+          <div class="container-simple">
+            <p class="text-muted font-weight-bold">Agências</p>
         </div>
         <div class="container p-4 bg-white rounded shadow">
           <div class="row">
+            <div class="col-md-3 pt-1">
+              <label> </label>
+              <span class="input-icon"><i class="fas fa-search"></i></span>
+              <input
+                placeholder="Pesquisar..."
+                class="form-control search-input"
+                type="search"
+                name="s"
+                title="Search"
+                value=""
+              />
+            </div>
             <div class="col-md-3 pt-1">
               <label>Agência</label>
               <select class="form-control" id="selectAgencia">
@@ -56,7 +68,7 @@
               <label>Nome Fantasia</label>
               <input type="text" class="form-control" id="inputNomeFantasia" placeholder="Digite o nome fantasia">
             </div>
-            <div class="col-md-3 pt-1">
+            <div class="col-md-3 pt-1 lastE">
               <label>N° da Conta</label>
               <input type="text" class="form-control" id="inputNumeroDaConta" placeholder="Digite o N° da Conta">
             </div>

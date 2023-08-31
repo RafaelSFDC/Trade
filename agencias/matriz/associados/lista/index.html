@@ -33,35 +33,64 @@
         <div class="container-simple">
           <p class="text-muted font-weight-bold">Associados</p>
         </div>
-        <div class="container p-4 bg-white rounded shadow">
+        <div class="container p-4 bg-white">
           <div class="row">
-            <div class="col-md-3 pt-1">
-              <label>Associado</label>
-              <select class="form-control" id="selectAssociado">
+            <div class="col-md-4 pt-1">
+              <label> </label>
+              <span class="input-icon"><i class="fas fa-search"></i></span>
+              <input
+                placeholder="Pesquisar..."
+                class="form-control search-input"
+                type="search"
+                name="s"
+                title="Search"
+                value=""
+              />
+            </div>
+
+            <div class="col-md-4 pt-1">
+              <label>Agência</label>
+              <select class="form-control" id="selectAgencia">
                 <option>Selecionar</option>
               </select>
             </div>
-            <div class="col-md-3 pt-1">
-              <label>Nome Fantasia</label>
-              <input type="text" class="form-control" id="inputNomeFantasia" placeholder="Digite o nome fantasia">
+
+            <div class="col-md-4 pt-1 lastE">
+              <label>Categoria</label>
+              <select class="form-control" id="selectCategoria">
+                <option>Selecionar</option>
+              </select>
             </div>
-            <div class="col-md-3 pt-1">
-              <label>N° da Conta</label>
-              <input type="text" class="form-control" id="inputNumeroDaConta" placeholder="Digite o N° da Conta">
+            <div class="col-md-4 pt-1">
+              <label>Número de Conta</label>
+              <input type="text" class="form-control" id="selectCidade" />
             </div>
-            <div class="row button-container">
-              <div class="col-4 offset-8 text-right pt-4 button-container">
-                <button type="button" class="btn btn-orange  btn-sm" id="localizarBtn">
-                  <i class="fas fa-search"></i>
-                  Localizar
-                </button>
-                <a href="../cadastrar/index.html">
-                  <button type="button" class="btn btn-purple  btn-sm" id="btnCadastrar">
-                    <i class="fas fa-plus"></i>
-                    Cadastrar
-                  </button>
-                </a>
-              </div>
+            <div class="col-md-4 pt-1">
+              <label>Estado</label>
+              <select class="form-control" id="selectEstado">
+                <option>Selecionar</option>
+              </select>
+            </div>
+            <div class="col-md-4 pt-1 lastE">
+              <label>Cidade</label>
+              <input type="text" class="form-control" id="selectCidade" />
+            </div>
+            <div
+              class="col-8 d-flex joffset-8 text-right pt-4"
+              style="gap: 5px"
+            ></div>
+            <div
+              class="col-4 d-flex joffset-8 text-right pt-4 justify-content-end"
+              style="gap: 5px"
+            >
+              <button
+                type="button"
+                class="btn btn-orange btn-sm"
+                id="btnLocalizar"
+              >
+                <i class="fas fa-search"></i>
+                Localizar
+              </button>
             </div>
           </div>
         </div>

@@ -11318,6 +11318,76 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   margin-right: 5px; /* Adjust the spacing between the icon and the label */
   font-size: 7px;
 }
+.container.px-0.mb-3.box-param > div {
+  max-width: 1140px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+}
+
+/* Page Layout Adujustment */
+.container.py-2 {
+  padding: 20px 0 20px 0;
+}
+.container.py-2 .box-param .row {
+  padding: 0px;
+  margin: 0;
+}
+
+.card.h-50 {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* Search field */
+.col-md-4.pt-1,
+.col-md-3.pt-1,
+.col.pt-1 {
+  padding-right: 0px;
+}
+
+.lastE {
+  padding-right: 15px !important;
+}
+.search-input {
+  background-color: #f8f8f8;
+  border: none;
+  padding-left: 30px;
+  color: gray;
+  margin-top: 5px;
+}
+.search-input:focus {
+  background-color: #f8f8f8;
+}
+
+.input-icon {
+  position: absolute;
+  top: 41px;
+  left: 23px;
+  color: gray;
+}
+
+.col-md-4 img.rounded.float-left {
+  height: 95.5%;
+}
+
+.col-12 {
+  margin-top: 7px;
+}
+
+.rounded.shadow {
+  box-shadow: none !important;
+}
+
+.row .col p {
+  padding-bottom: 20px;
+}
+
+/* Button Fix */
+.btn-purple {
+  background-color: #7415bd;
+}
 
 /* Footer Fix */
 #content {
