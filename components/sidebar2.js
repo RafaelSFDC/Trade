@@ -310,11 +310,11 @@ class SideBar extends HTMLElement {
             </div>
             <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                 <i class="fas fa-money-bill-alt" style="font-size:25px;color:#787878;"></i>
-                <a class="link mt-2" href="/agencias/matriz/finaceiro/receber/" style="color:#787878;text-decoration: none;">Contas a Receber</a>
+                <a class="link mt-2" href="/agencias/matriz/financeiro/receber/" style="color:#787878;text-decoration: none;">Contas a Receber</a>
             </div>
             <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                 <i class="fas fa-money-check-alt" style="font-size:25px;color:#787878;"></i>
-                <a class="link mt-2" href="/agencias/matriz/finaceiro/pagar/" style="color:#787878;text-decoration: none;">Contas a Pagar</a>
+                <a class="link mt-2" href="/agencias/matriz/financeiro/pagar/" style="color:#787878;text-decoration: none;">Contas a Pagar</a>
             </div>
             <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
                 
