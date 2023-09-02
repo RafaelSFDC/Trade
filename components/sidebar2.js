@@ -258,7 +258,7 @@ class SideBar extends HTMLElement {
               </div>
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                   <i class="bi bi-ticket-perforated-fill" style="font-size:25px;color:#787878;"></i>
-                  <a class="link" href="#" style="color:#787878;text-decoration: none;">Meus Vouchers</a>
+                  <a class="link" href="/agencias/matriz/vouchers/meus/" style="color:#787878;text-decoration: none;">Meus Vouchers</a>
               </div>
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                   <i class="bi bi-trash3" style="font-size:25px;color:#787878;"></i>
@@ -467,11 +467,6 @@ customElements.define("side-bar", SideBar);
 const sidebar = document.querySelector(".sidebar");
 const toggleButton = document.querySelector(".toggle-button");
 const sidebarSpace = document.querySelector(".wrapper");
-const sidebarList = document.querySelector(".list-unstyled");
-
-for (const child of sidebarList.children) {
-  console.log(child.tagName);
-}
 
 toggleButton.addEventListener("click", () => {
   sidebar.classList.toggle("sidebar-collapsed");
