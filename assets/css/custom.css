@@ -11470,6 +11470,7 @@ nav.navbar-light {
 /*  */
 li a {
   font-weight: 350 !important;
+  font-size: 14px;
 }
 li i {
   width: 30px;
