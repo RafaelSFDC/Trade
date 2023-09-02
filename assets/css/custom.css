@@ -11345,13 +11345,21 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding: 20px 0 20px 0;
 }
 .container.py-2 .box-param .row {
-  padding: 0px;
   margin: 0;
+}
+.card.bottom,
+.card-body-bar {
+  width: 278px !important;
 }
 
 .card.h-50 {
   margin-left: 0;
   width: 100%;
+}
+
+/* Associados Cards */
+.container.p-0.d-flex.flex-column.justify-content-center.align-items-center {
+  width: 370px !important;
 }
 
 /* Search field */
