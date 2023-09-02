@@ -11461,3 +11461,15 @@ side-bar aside {
 nav.navbar-light {
   height: 88px !important;
 }
+
+/*  */
+li a {
+  font-weight: 350 !important;
+}
+li i {
+  width: 30px;
+}
+
+.search-input::placeholder {
+  padding-left: 10px;
+}

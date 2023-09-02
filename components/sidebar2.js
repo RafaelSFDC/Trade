@@ -27,7 +27,7 @@ class SideBar extends HTMLElement {
         <i class="fas fa-home"></i><a href="/agencias/matriz/dashboard-matriz.html">INÍCIO</a>
       </li>
       <li class="menu-associados mb-2" data-modal="associadosModal">
-        <i class="fas fa-users"></i><a href="#"> ASSOCIADOS</a>
+        <i class="fas fa-users"></i><a href="#">ASSOCIADOS</a>
         <ul class="sidebar-dropdown list-unstyled">
           <li><a href="/associados/">Associados</a></li>
           <li><a href="/associados/lista/">Lista de associados</a></li>
