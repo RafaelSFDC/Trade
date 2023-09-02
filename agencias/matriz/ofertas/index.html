@@ -23,7 +23,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>RedeTradeddd</title>
+    <title>RedeTrade</title>
     <meta name="author" content="Lucas Santana" />
     <link
       rel="stylesheet"
@@ -46,7 +46,7 @@
           <div class="container-simple">
             <p class="text-muted font-weight-bold">Ofertas</p>
           </div>
-          <div class="container p-4 bg-white rounded shadow marginFix">
+          <div class="container p-4 bg-white rounded shadow">
             <div class="row row-cols-5">
               <div class="col pt-1">
                 <label>Agência</label>
@@ -78,7 +78,7 @@
                   <option>Selecionar</option>
                 </select>
               </div>
-              <div class="col pt-1 lastE">
+              <div class="col pt-1">
                 <label>Tipo</label>
                 <select class="form-control" id="selectTipo">
                   <option>Selecionar</option>
@@ -99,8 +99,11 @@
             </div>
           </div>
 
-          <div class="container cards mt-2 p-4 bg-white rounded shadow">
-            <div class="row"></div>
+          <div class="container cards mt-2" style="padding: 15px">
+            <div
+              class="row"
+              style="align-items: center; justify-content: space-between"
+            ></div>
           </div>
         </div>
         <footer-bar></footer-bar>
@@ -140,7 +143,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-        const apiUrl = `${window.apiBaseUrl}/categorias/todas`;
+        const apiUrl = `${window.apiBaseUrl}/categorias`;
 
         fetch(apiUrl)
           .then((response) => response.json())
@@ -171,30 +174,30 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-        const apiUrl = `${window.apiBaseUrl}/usuarios/`;
-
-        fetch(apiUrl)
+        const apiUrl = `${window.apiBaseUrl}/usuarios/tipo`;
+        const tiposParaFiltrar = ["Master", "Comum", "Matriz", "Filial"];
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tipos: tiposParaFiltrar }),
+        })
           .then((response) => response.json())
           .then((data) => {
             // Processa os dados JSON recebidos
-
-            data.forEach((agencia) => {
-              if (
-                agencia.tipo === "Matriz" ||
-                agencia.tipo == "Master" ||
-                agencia.tipo == "Comum"
-              ) {
-                // Obtém a referência para o elemento <select>
-                const agenciaSelect = document.getElementById("selectAgencia");
-                // Cria um elemento de opção
-                const optionAgencia = document.createElement("option");
-                // Define o texto da opção como o nome do plano
-                optionAgencia.textContent = agencia.nomeFranquia;
-                // Define o valor da opção como o ID do plano
-                optionAgencia.value = agencia.id;
-                // Adiciona a opção ao elemento <select>
-                agenciaSelect.appendChild(optionAgencia);
-              }
+            //console.log(data);
+            data.usuarios.forEach((agencia) => {
+              // Obtém a referência para o elemento <select>
+              const agenciaSelect = document.getElementById("selectAgencia");
+              // Cria um elemento de opção
+              const optionAgencia = document.createElement("option");
+              // Define o texto da opção como o nome do plano
+              optionAgencia.textContent = agencia.dadosAgencias.nomeFranquia;
+              // Define o valor da opção como o ID do plano
+              optionAgencia.value = agencia.id;
+              // Adiciona a opção ao elemento <select>
+              agenciaSelect.appendChild(optionAgencia);
             });
           })
           .catch((error) => console.error("Erro:", error));
@@ -204,97 +207,122 @@
     <!-- Função para adicionar um único card ao container -->
     <script>
       function adicionarCard(oferta) {
-        console.log("agencia", oferta);
-        const container = document.querySelector(".cards .row");
-
-        console.log(oferta);
         if (!oferta) {
           console.log("sem ofertas");
         }
         let valor = oferta.valor;
         let valorFormatado = valor + " RT";
         // Substituir as barras invertidas "\" por barras normais "/"
-        console.log(valorFormatado);
+        console.log(oferta);
 
-        const imagemUrl = `${window.apiBaseUrl}/${oferta.img_path.replace(
+        const imagemUrl = `${window.apiBaseUrl}/${oferta.imagem.replace(
           /\\/g,
           "/"
         )}`;
-        // Creating the card element using template literals with dynamic content
-        const cardHTML = `
-                <div class="col-md-3 pt-2">
-                  <div class="card">
-                    <div class="card-body">
-                      <img
-                        src="${imagemUrl}"
-                        class="py-2 img-fluid rounded img-card"
-                        alt=""
-                      />
-                      <p class="text-center card-subtitle py-2">
-                        ${oferta.titulo} <!-- Replace this with the actual company name property from your data -->
-                      </p>
-                      <h6 class="text-center">${oferta.obs}</h6>
-                      <p class="text-center">${valorFormatado}</p> <!-- Replace this with the actual price property from your data -->
-                      <a href="/agencias/matriz/ofertas/info/?id=${oferta.id}" class="btn btn-orange btn-block">Ver mais</a>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              `;
-
-        // Append the card element to the container
-        container.insertAdjacentHTML("beforeend", cardHTML);
+        const container = document.querySelector(".cards .row");
+        // Criação do novo componente
+        const newComponent = document.createElement("div");
+        newComponent.innerHTML = `
+        <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 352px;height: auto;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;!important">
+        <div class="row  m-0 p-0" style="width:100%;">
+          <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
+              <img src="./imagens/teste.jpeg" class="img-fluid" style="width:100%;height: 200px;">
+          </div>
+        </div>
+        <div class="row w-100 p-0 m-0">
+          <div class="col-7 p-0  d-flex justify-content-start align-items-start">
+            <span class="text-center" style="background-color: #550389;color: #efefef;width: 115px;height: 50px;margin-top: -25px;font-size: 18px;padding-top: 10px;">
+              <strong>${oferta.tipo}</strong> 
+            </span>
+          </div>
+          <div class="col-5 p-0 m-0 d-flex justify-content-end align-items-center" style="margin-top:3px;">
+              <p class="p-0 m-0" style="color: #747474;font-size:0.9rem;">
+                  ${oferta.estado}
+              <img src="./imagens/flagofBrazil_6577.png" class="img-fluid" style="width: 20px;height: 17px;margin-right:10px;">
+              </p>
+          </div>
+        </div>
+        <div class="row w-100" style="margin-top: 18px;">
+          <p class="h6" style="margin-left:10px;">Expira em</p>
+        </div>
+        <div class="row w-100 d-flex justify-content-center align-items-center" style="padding-right: 10px;padding-left: 10px;gap: 0px;">
+          <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;border-right: 2px solid #fff;">
+            <div>
+              <p class="p-0 m-0" id="dia" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoDias" style="margin-right: 5px;font-size: 15px;color: #efefef;">Dias</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;border-right: 2px solid #fff;">
+            <div>
+              <p class="p-0 m-0" id="horas" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoHoras" style="margin-right: 5px;font-size: 15px;color: #efefef;">Horas</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;border-right: 2px solid #fff;">
+            <div>
+              <p class="p-0 m-0" id="minutos" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoMinutos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Minutos</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
+            <div>
+              <p class="p-0 m-0" id="segundos" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoSegundos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Segundos</p>
+            </div>
+           </div>
+           
+        </div>
+        <div class="row p-0 m-0 w-100" style="margin-top:15px!important;">
+          <div class="col p-0 m-0">
+              <p class="text-sm" style="color: #747474;font-size: 1rem;font-weight: 700;margin-left:10px;">
+                ${oferta.titulo}
+              </p>
+          </div>
+        </div>
+        <div class="row p-0 m-0 w-100" style="margin-top:11px!important;">
+          <div class="col p-0 m-0">
+              <p class="text-sm" style="color: #747474;font-size: 1rem;margin-left:10px;">
+                ${oferta.descricao}
+              </p>
+          </div>
+        </div>
+        <div class="row p-0 m-0 w-100 text-center" style="margin-top:25px!important;">
+          <div class="col">
+              <p class="text-sm p-0 m-0 h1" style="color: #747474;font-size: 2rem;">
+                RT$ 450,00
+              </p>
+          </div>
+        </div>
+        <div class="row w-100" style="margin-top:20px;margin-bottom:20px;">
+          <div class="col m-0 p-0 d-flex flex-row justify-content-center align-items-center">
+              <button type="button" class="btn text-white fw-bold" style="width: 330px;height: 40px;line-height: 0.1;background-color: #FF6600;border-radius: 3px;padding: 10px 0px 10px 0px;font-size: 1rem;">Ver Mais</button>
+          </div>
+        </div>
+      </div>
+        `;
+        container.appendChild(newComponent);
       }
     </script>
     <!-- Script para carregar os cards iniciais quando a página carregar -->
     <script>
       function carregarCardsIniciais() {
-        const apiUrl = `${window.apiBaseUrl}/ofertas/todas`;
+        const apiUrl = `${window.apiBaseUrl}/ofertas`;
+
         fetch(apiUrl)
           .then((response) => response.json())
           .then((data) => {
-            console.log(data.ofertas);
             const container = document.querySelector(".cards .row");
+            container.innerHTML = ""; // Remove os cards existentes do container
 
-            data.ofertas.forEach((oferta) => {
-              console.log(oferta);
-              if (!oferta) {
-                console.log("sem ofertas");
-              }
-              let valor = oferta.valor;
-              let valorFormatado = valor + " RT";
-              // Substituir as barras invertidas "\" por barras normais "/"
-              console.log(valorFormatado);
-
-              const imagemUrl = `${window.apiBaseUrl}/${oferta.img_path.replace(
-                /\\/g,
-                "/"
-              )}`;
-              // Creating the card element using template literals with dynamic content
-              const cardHTML = `
-                <div class="col-md-3 pt-2">
-                  <div class="card">
-                    <div class="card-body">
-                      <img
-                        src="${imagemUrl}"
-                        class="py-2 img-fluid rounded img-card"
-                        alt=""
-                      />
-                      <p class="text-center card-subtitle py-2">
-                        ${oferta.titulo} <!-- Replace this with the actual company name property from your data -->
-                      </p>
-                      <h6 class="text-center">${oferta.obs}</h6>
-                      <p class="text-center">${valorFormatado}</p> <!-- Replace this with the actual price property from your data -->
-                      <a href="/agencias/matriz/ofertas/info/?id=${oferta.id}" class="btn btn-orange btn-block">Ver mais</a>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              `;
-
-              // Append the card element to the container
-              container.insertAdjacentHTML("beforeend", cardHTML);
-            });
+            if (data.hasOwnProperty("message")) {
+              const h1 = document.createElement("h5");
+              h1.textContent = "Sem ofertas cadastradas";
+              container.appendChild(h1);
+            } else {
+              data.ofertas.forEach((oferta) => {
+                adicionarCard(oferta); // Usa a função para adicionar o card
+              });
+            }
           })
           .catch((error) =>
             console.error("Erro ao obter os dados da API:", error)
@@ -353,6 +381,89 @@
             });
         });
       });
+    </script>
+    <!-- Script Contador Regressivo-->
+    <script>
+      // Obtenha o horário do servidor (substitua isso pelo horário real)
+      // Isso pode ser obtido usando uma linguagem de script no lado do servidor ou uma API
+      const horarioServidor = new Date("2023-08-31T10:46:00"); // Substitua pelo horário real
+
+      function atualizarContador() {
+        const agora = new Date();
+        const diferencaTempo = horarioServidor - agora;
+
+        if (diferencaTempo <= 0) {
+          // O contador chegou ao fim
+          document.getElementById("contador").innerHTML =
+            "O contador chegou ao fim!";
+          return;
+        }
+
+        const dias = Math.floor(diferencaTempo / (1000 * 60 * 60 * 24));
+        const textoDias = document.getElementById("textoDias");
+        if (dias <= 1) {
+          textoDias.textContent = "Dia";
+        } else {
+          textoDias.textContent = "Dias";
+        }
+        const horas = Math.floor(
+          (diferencaTempo % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        document.getElementById("horas").textContent = horas
+          .toString()
+          .padStart(2, "0");
+        const textoHoras = document.getElementById("textoHoras");
+        if (horas <= 1) {
+          textoHoras.textContent = "Hora";
+        } else {
+          textoHoras.textContent = "Horas";
+        }
+        const minutos = Math.floor(
+          (diferencaTempo % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        document.getElementById("minutos").textContent = minutos
+          .toString()
+          .padStart(2, "0");
+        const textoMinutos = document.getElementById("textoMinutos");
+        if (minutos <= 1) {
+          textoMinutos.textContent = "Minuto";
+        } else {
+          textoMinutos.textContent = "Minutos";
+        }
+
+        const segundos = Math.floor((diferencaTempo % (1000 * 60)) / 1000);
+        document.getElementById("segundos").textContent = segundos
+          .toString()
+          .padStart(2, "0");
+        const textoSegundos = document.getElementById("textoSegundos");
+        if (segundos <= 1) {
+          textoSegundos.textContent = "Segundo";
+        } else {
+          textoSegundos.textContent = "Segundos";
+        }
+
+        //const contadorString = `${dias}d ${horas}h ${minutos}min ${segundos}s`;
+        //document.getElementById('contador').innerHTML = contadorString;
+        // Atualizar os campos de dia, horas, minutos e segundos
+        document.getElementById("dia").textContent = dias
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("horas").textContent = horas
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("minutos").textContent = minutos
+          .toString()
+          .padStart(2, "0");
+        document.getElementById("segundos").textContent = segundos
+          .toString()
+          .padStart(2, "0");
+      }
+
+      // Atualizar o contador a cada segundo
+      setInterval(atualizarContador, 1000);
+
+      // Atualização inicial
+      atualizarContador();
     </script>
   </body>
 </html>

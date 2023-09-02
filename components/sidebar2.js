@@ -467,6 +467,11 @@ customElements.define("side-bar", SideBar);
 const sidebar = document.querySelector(".sidebar");
 const toggleButton = document.querySelector(".toggle-button");
 const sidebarSpace = document.querySelector(".wrapper");
+const sidebarList = document.querySelector(".list-unstyled");
+
+for (const child of sidebarList.children) {
+  console.log(child.tagName);
+}
 
 toggleButton.addEventListener("click", () => {
   sidebar.classList.toggle("sidebar-collapsed");

@@ -11457,6 +11457,11 @@ side-bar aside {
   width: 264px;
 }
 
+.sidebar-icons-closed {
+  width: 40px !important;
+  height: 40px !important;
+}
+
 /* Navbar */
 nav.navbar-light {
   height: 88px !important;
