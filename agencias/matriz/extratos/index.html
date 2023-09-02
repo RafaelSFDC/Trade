@@ -66,7 +66,7 @@
                   <option>Selecionar</option>
                 </select>
               </div>
-              <div class="col-md-3 pt-1">
+              <div class="col-md-3 pt-1 lastE">
                 <label>Ano</label>
                 <select class="form-control">
                   <option>Selecionar</option>
@@ -83,6 +83,76 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="container-simple">
+            <div class="row">
+              <div class="col">
+                <p
+                  class="text-muted font-weight-5"
+                  id="dataConsulta"
+                  style="font-size: 0.95rem !important"
+                >
+                  Data da Consulta: 12/07/2023
+                </p>
+                <p
+                  class="text-muted font-weight-5 mt-1"
+                  style="font-size: 0.95rem !important"
+                >
+                  SALDO ATUAL RT$:
+                </p>
+              </div>
+              <div class="col d-flex flex-column align-items-end">
+                <p
+                  class="lastE"
+                  style="font-size: 0.95rem !important"
+                  id="periodoDaConsulta"
+                >
+                  PERÍODO: 00/00/0000 - 00/00/0000
+                </p>
+                <p
+                  class="mt-1"
+                  style="font-size: 1.5rem !important"
+                  id="saldoAtual"
+                ></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="container" style="background-color: #fff">
+            <table
+              class="table table-borderless table-hover"
+              id="unidadesTable"
+            >
+              <thead>
+                <tr id="headerRow">
+                  <th scope="col" style="font-size: 0.9rem">CÓDIGO</th>
+                  <th scope="col" style="font-size: 0.9rem">DATA</th>
+                  <th scope="col" style="font-size: 0.9rem">
+                    ASSOCIADO (solicitante)
+                  </th>
+                  <th scope="col" style="font-size: 0.9rem">ORIGEM</th>
+                  <th scope="col" style="font-size: 0.9rem">
+                    SALDO ANTERIOR RT$
+                  </th>
+                  <th scope="col" style="font-size: 0.9rem">OPERAÇÃO RT$</th>
+                  <th scope="col" style="font-size: 0.9rem">COMISSÃO R$</th>
+                  <th scope="col" style="font-size: 0.9rem">SALDO RT$</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="align-middle" id="codigo"></td>
+                  <td class="align-middle" id="data"></td>
+                  <td class="align-middle" id="associadoSolicitante"></td>
+                  <td class="align-middle" id="origem"></td>
+                  <td class="align-middle" id="saldoAnterior"></td>
+                  <td class="align-middle" id="operacao"></td>
+                  <td class="align-middle" id="comissao"></td>
+                  <td class="align-middle" id="saldoAtual"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <footer-bar></footer-bar>

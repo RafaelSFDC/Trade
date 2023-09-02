@@ -11326,6 +11326,20 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   justify-content: space-between;
 }
 
+/* General Fix */
+
+.col-12.border-top {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+.col-md-3.pt-1.d-flex.justify-content-center {
+  margin-top: -9px;
+}
+
+.marginFix {
+  margin-bottom: 35px;
+}
+
 /* Page Layout Adujustment */
 .container.py-2 {
   padding: 20px 0 20px 0;
@@ -11417,6 +11431,10 @@ side-bar aside::-webkit-scrollbar {
 side-bar aside {
   position: fixed;
   overflow-x: hidden !important;
+}
+
+.toggle-button {
+  cursor: pointer;
 }
 
 .wrapper {

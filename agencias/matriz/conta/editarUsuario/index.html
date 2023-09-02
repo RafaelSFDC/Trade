@@ -46,9 +46,9 @@
             <p class="text-muted font-weight-bold">Editar Usuário</p>
           </div>
 
-          <div class="container p-4 bg-white rounded shadow">
-            <div class="row row-cols-5">
-              <div class="col pt-1">
+          <div class="container p-4 bg-white rounded shadow marginFix">
+            <div class="row">
+              <div class="col-md-3 pt-1">
                 <label>Agência</label>
                 <select class="form-control">
                   <option>Selecionar</option>
@@ -66,21 +66,25 @@
                 <label>E-mail</label>
                 <input type="text" class="form-control" />
               </div>
-              <div class="col pt-1">
+              <div class="col-md-3 pt-1 lastE">
                 <label>Status</label>
                 <select class="form-control">
-                  <option>Selecionar</option>
+                  <option>Pesquisar</option>
                 </select>
               </div>
-              <div class="col-4 offset-8 text-right pt-4">
-                <button type="button" class="btn btn-purple btn-sm extra">
-                  <i class="fas fa-search"></i>
-                  Localizar
-                </button>
-                <button type="button" class="btn btn-orange btn-sm extra">
-                  <i class="fas fa-plus"></i>
-                  Novo Usuário
-                </button>
+              <div class="row button-container">
+                <div class="col-4 offset-8 text-right pt-4 button-container">
+                  <button type="button" class="btn btn-purple btn-sm space">
+                    <i class="fas fa-search"></i>
+                    Pesquisar
+                  </button>
+                  <button type="button" class="btn btn-orange btn-sm space">
+                    + Novo usuário
+                  </button>
+                </div>
+              </div>
+              <div class="width">
+                <div class="w-100"></div>
               </div>
             </div>
           </div>

@@ -10,7 +10,12 @@
     />
     <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.css" />
     <link rel="stylesheet" href="/assets/css/custom.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
     <title>RedeTrade</title>
     <meta name="author" content="Lucas Santana" />
     <link
@@ -21,7 +26,6 @@
     />
   </head>
   <body>
-
     <div class="wrapper">
       <!-- Sidebar  -->
       <side-bar></side-bar>
@@ -35,7 +39,7 @@
             <p class="text-muted font-weight-bold">Planos Associados</p>
           </div>
 
-          <div class="container alerta p-4 bg-white rounded shadow">
+          <div class="container alerta p-4 bg-white rounded shadow marginFix">
             <div class="row">
               <div class="col-md-4 pt-1">
                 <label>Nome do plano</label>
@@ -43,15 +47,24 @@
               </div>
               <div class="col-md-4 pt-1">
                 <label>Porcentagem</label>
-                <input type="number" class="form-control" id="porcentagem"/>
+                <input type="number" class="form-control" id="porcentagem" />
               </div>
-              <div class="col-md-4 pt-1">
+              <div class="col-md-4 pt-1 lastE">
                 <label>Data</label>
-                <input type="text" class="form-control" id="dataDeCriacao" readonly/>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dataDeCriacao"
+                  readonly
+                />
               </div>
               <div class="row button-container">
                 <div class="col-4 offset-8 text-right pt-4 button-container">
-                  <button type="button" class="btn btn-orange btn-sm btn-cadastrar" style="width: 80px;">
+                  <button
+                    type="button"
+                    class="btn btn-orange btn-sm btn-cadastrar"
+                    style="width: 80px"
+                  >
                     Cadastrar
                   </button>
                 </div>
@@ -59,7 +72,10 @@
             </div>
           </div>
           <div class="container mt-3 alerta p-4 bg-white rounded shadow">
-            <table class="table table-borderless table-hover" id="unidadesTable">
+            <table
+              class="table table-borderless table-hover"
+              id="unidadesTable"
+            >
               <thead>
                 <tr id="headerRow">
                   <th scope="col" class="col-2 text-left">Data</th>
@@ -83,12 +99,24 @@
       </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Editar Plano Agência</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Fechar"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -98,19 +126,40 @@
                 <div class="row">
                   <div class="col-md-4 pt-1">
                     <label>Nome do plano</label>
-                    <input type="text" class="form-control" id="nomeDoPlanoModal" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nomeDoPlanoModal"
+                    />
                   </div>
                   <div class="col-md-4 pt-1">
                     <label>Porcentagem</label>
-                    <input type="number" class="form-control" id="porcentagemModal"/>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="porcentagemModal"
+                    />
                   </div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn" id="salvar-alteracoes-btn" style="background-color: #ff6600;color: #fff;">Salvar alterações</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn"
+              id="salvar-alteracoes-btn"
+              style="background-color: #ff6600; color: #fff"
+            >
+              Salvar alterações
+            </button>
             <div class="container alert"></div>
           </div>
         </div>
@@ -164,36 +213,36 @@
     <!-- Script para Cadastrar Plano -->
     <script>
       // Obtém o elemento do botão pelo seletor de classe
-      const btnCadastrar = document.querySelector('.btn-cadastrar');
-    
+      const btnCadastrar = document.querySelector(".btn-cadastrar");
+
       // Adiciona um evento de clique ao botão
-      btnCadastrar.addEventListener('click', () => {
+      btnCadastrar.addEventListener("click", () => {
         // Obtém os valores dos campos de entrada
-        const nome = document.querySelector('#nomeDoPlano').value;
-        const porcentagem = document.querySelector('#porcentagem').value;
-        const dataDeCriacao = document.querySelector('#dataDeCriacao').value;
+        const nome = document.querySelector("#nomeDoPlano").value;
+        const porcentagem = document.querySelector("#porcentagem").value;
+        const dataDeCriacao = document.querySelector("#dataDeCriacao").value;
         const tipo = "Associado";
         // Monta o objeto de dados a ser enviado na requisição
         const data = {
           nome,
           porcentagem,
           dataDeCriacao,
-          tipo
+          tipo,
         };
-    
+
         // Configurações da requisição fetch
         const apiUrl = `${window.apiBaseUrl}/planos`;
         const options = {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         };
-    
+
         // Faz a chamada fetch para o endpoint desejado
         fetch(apiUrl, options)
-          .then(response => {
+          .then((response) => {
             // Manipula a resposta da requisição
             if (response.ok) {
               // A requisição foi bem-sucedida
@@ -205,73 +254,73 @@
               }, 4000);
             } else {
               // A requisição falhou
-              console.log('Erro na requisição.');
+              console.log("Erro na requisição.");
             }
           })
-          .catch(error => {
+          .catch((error) => {
             // Captura erros de rede ou outras exceções
-            console.log('Erro na requisição:', error);
+            console.log("Erro na requisição:", error);
           });
       });
     </script>
     <!-- Script para carregar planos -->
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-          // Obtém a data atual
-          const dataAtual = new Date();
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtém a data atual
+        const dataAtual = new Date();
 
-          // Obtém o dia, mês e ano da data atual
-          const dia = String(dataAtual.getDate()).padStart(2, '0');
-          const mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); // Os meses são indexados a partir de zero
-          const ano = dataAtual.getFullYear();
+        // Obtém o dia, mês e ano da data atual
+        const dia = String(dataAtual.getDate()).padStart(2, "0");
+        const mes = String(dataAtual.getMonth() + 1).padStart(2, "0"); // Os meses são indexados a partir de zero
+        const ano = dataAtual.getFullYear();
 
-          // Formata a data no formato desejado
-          const dataFormatada = `${dia}/${mes}/${ano}`;
-          let dataDeCriacao = document.getElementById('dataDeCriacao');
-          dataDeCriacao.value = dataFormatada;
-          // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-          const apiUrl = `${window.apiBaseUrl}/planos/tipo`;
-          const tipo = "Associado";
+        // Formata a data no formato desejado
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+        let dataDeCriacao = document.getElementById("dataDeCriacao");
+        dataDeCriacao.value = dataFormatada;
+        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+        const apiUrl = `${window.apiBaseUrl}/planos/tipo`;
+        const tipo = "Associado";
         // Monta o objeto de dados a ser enviado na requisição
         const data = {
-          tipo
+          tipo,
         };
         const options = {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         };
-          fetch(apiUrl, options)
-          .then(response => response.json())
-          .then(data => {
+        fetch(apiUrl, options)
+          .then((response) => response.json())
+          .then((data) => {
             // Processa os dados JSON recebidos
-            const tableBody = document.querySelector('tbody');
+            const tableBody = document.querySelector("tbody");
             // Limpa o conteúdo atual da tabela
-            tableBody.innerHTML = '';
-            data.forEach(plano => {
+            tableBody.innerHTML = "";
+            data.forEach((plano) => {
               // Cria uma linha na tabela para cada transação
               //console.log(plano);
-              const row = document.createElement('tr');
+              const row = document.createElement("tr");
               // Cria as células da linha com os dados da agência
-              const dataCell = document.createElement('td');
+              const dataCell = document.createElement("td");
               const data = new Date(plano.createdAt);
               dataCell.textContent = data.toLocaleDateString();
               row.appendChild(dataCell);
 
-              const nomeDoPlanoCell = document.createElement('td');
+              const nomeDoPlanoCell = document.createElement("td");
               nomeDoPlanoCell.textContent = plano.nome;
               row.appendChild(nomeDoPlanoCell);
 
-              const porcentagemCell = document.createElement('td');
+              const porcentagemCell = document.createElement("td");
               porcentagemCell.textContent = plano.porcentagem;
               row.appendChild(porcentagemCell);
 
-
               const operationsCell = document.createElement("td");
-              
-              operationsCell.className = "text-end align-middle d-flex justify-content-end";
+
+              operationsCell.className =
+                "text-end align-middle d-flex justify-content-end";
               operationsCell.style.gap = "0.1rem";
 
               // Cria os botões para as operações
@@ -281,7 +330,7 @@
               editButton.innerHTML = '<i class="bi bi-pencil"></i>';
               operationsCell.appendChild(editButton);
               // Attach an event listener to the edit button
-              editButton.addEventListener('click', function() {
+              editButton.addEventListener("click", function () {
                 openPopup(plano);
               });
 
@@ -291,133 +340,133 @@
               deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
               operationsCell.appendChild(deleteButton);
               // Attach an event listener to the edit button
-              deleteButton.addEventListener('click', function() {
+              deleteButton.addEventListener("click", function () {
                 const id = plano.id;
                 const apiUrl = `${window.apiBaseUrl}/planos/${id}`;
                 fetch(apiUrl, {
-                  method: 'DELETE',
+                  method: "DELETE",
                 })
-                .then(response => response.json())
-                .then(result => {
-                  //console.log('Resposta do servidor:', result);
-                  location.reload();
-                  // Realizar ações adicionais após o sucesso da requisição...
+                  .then((response) => response.json())
+                  .then((result) => {
+                    //console.log('Resposta do servidor:', result);
+                    location.reload();
+                    // Realizar ações adicionais após o sucesso da requisição...
                   })
-                  .catch(error => {
-                    console.error('Erro ao enviar requisição:', error);
+                  .catch((error) => {
+                    console.error("Erro ao enviar requisição:", error);
                     // Realizar tratamento de erro, se necessário...
                   });
               });
-
-             
 
               row.appendChild(operationsCell);
               // Adiciona a linha à tabela
               tableBody.appendChild(row);
             });
           })
-          .catch(error => console.error('Erro:', error));
-       })
+          .catch((error) => console.error("Erro:", error));
+      });
     </script>
     <script>
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         try {
-          const tipo = 'Associado'; // Substitua isso pelo valor de tipo desejado
+          const tipo = "Associado"; // Substitua isso pelo valor de tipo desejado
           const apiUrl = `${window.apiBaseUrl}/planos/tipo`;
 
           const response = await fetch(apiUrl, {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({ tipo }),
           });
 
           if (!response.ok) {
-            throw new Error('Erro ao buscar o plano por tipo');
+            throw new Error("Erro ao buscar o plano por tipo");
           }
 
           const plano = await response.json();
           //console.log(plano); // Faça algo com o plano retornado
-
         } catch (error) {
-          console.error('Erro ao buscar o plano por tipo:', error);
+          console.error("Erro ao buscar o plano por tipo:", error);
         }
       });
     </script>
     <!-- Função para abrir o Popup de Edição -->
     <script>
       function openPopup(plano) {
-        $('#myModal').modal('show');
+        $("#myModal").modal("show");
         // Obtem os Inputs
-        let nomeDoPlanoInput = document.getElementById('nomeDoPlanoModal');
-        let porcentagemInput = document.getElementById('porcentagemModal');
+        let nomeDoPlanoInput = document.getElementById("nomeDoPlanoModal");
+        let porcentagemInput = document.getElementById("porcentagemModal");
         // Preenchendo os campos com os dados correspondentes
         nomeDoPlanoInput.value = plano.nome;
         porcentagemInput.value = plano.porcentagem;
 
         // Adicionar evento de clique ao botão de salvar alterações
-        const salvarAlteracoesBtn = document.getElementById('salvar-alteracoes-btn');
-        salvarAlteracoesBtn.addEventListener('click', () => {
+        const salvarAlteracoesBtn = document.getElementById(
+          "salvar-alteracoes-btn"
+        );
+        salvarAlteracoesBtn.addEventListener("click", () => {
           updateAgencia(plano);
         });
         function updateAgencia(plano) {
           const id = plano.id; // Obter o ID da agência dinamicamente
-          let nomeDoPlanoInput = document.getElementById('nomeDoPlanoModal').value;
-          let porcentagemInput = document.getElementById('porcentagemModal').value;
+          let nomeDoPlanoInput =
+            document.getElementById("nomeDoPlanoModal").value;
+          let porcentagemInput =
+            document.getElementById("porcentagemModal").value;
           const data = {
             nome: nomeDoPlanoInput,
             porcentagem: porcentagemInput,
-            }
+          };
           const apiUrl = `${window.apiBaseUrl}/planos/${id}`;
           fetch(apiUrl, {
-            method: 'PUT',
+            method: "PUT",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
           })
-          .then(response => response.json())
-          .then(result => {
-            //console.log('Resposta do servidor:', result);
-            showAlert("Atualização efetuada com sucesso!", "success");
-            setTimeout(() => {
-              //$('#myModal').modal('hide');
-              location.reload();
-
-            }, 4000);
+            .then((response) => response.json())
+            .then((result) => {
+              //console.log('Resposta do servidor:', result);
+              showAlert("Atualização efetuada com sucesso!", "success");
+              setTimeout(() => {
+                //$('#myModal').modal('hide');
+                location.reload();
+              }, 4000);
 
               // Realizar ações adicionais após o sucesso da requisição...
             })
-            .catch(error => {
-              console.error('Erro ao enviar requisição:', error);
+            .catch((error) => {
+              console.error("Erro ao enviar requisição:", error);
               // Realizar tratamento de erro, se necessário...
             });
-        };
+        }
       }
     </script>
     <!-- Script de Alerts-->
     <script>
       function showAlert(message, type) {
-          var alert = document.createElement("div");
-          alert.classList.add("alert", "alert-" + type);
-          alert.innerHTML = message;
-          var container = document.querySelector(".alert");
-          container.insertBefore(alert, container.firstChild);
-          setTimeout(function () {
-              alert.remove();
-          }, 3000);
-        }
-        function showAlertCadastro(message, type) {
-          var alert = document.createElement("div");
-          alert.classList.add("alert", "alert-" + type);
-          alert.innerHTML = message;
-          var container = document.querySelector(".alerta");
-          container.insertBefore(alert, container.firstChild);
-          setTimeout(function () {
-              alert.remove();
-          }, 3000);
-        }
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alert");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
+      function showAlertCadastro(message, type) {
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alerta");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
     </script>
   </body>
 </html>
