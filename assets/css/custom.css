@@ -11351,6 +11351,11 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 .container.py-2 {
   padding: 20px 0 20px 0;
 }
+
+.row .pr-1 .card.bottom .card-body.pb-0 .row.pt-2 {
+  margin-top: 20px;
+}
+
 .container.py-2 .box-param .row {
   margin: 0;
 }
@@ -11389,6 +11394,10 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   width: 37.932%;
   padding-right: 0;
   padding-left: 20px;
+}
+
+.card-title.text-purple.mb-5 {
+  padding: 0 15px;
 }
 
 /* Associados Cards */
@@ -11499,6 +11508,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding-bottom: 80px;
 }
 .container.p-4.bg-white.rounded.shadow .row.align-items-center div .mb-0 {
+  margin-bottom: 2px;
   font-size: 16px;
 }
 
@@ -11521,6 +11531,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   height: 24px;
   width: 435px;
   line-height: 1.7;
+  background-color: #6ec1e4 !important;
 }
 
 .container.p-4.bg-white.rounded.shadow
