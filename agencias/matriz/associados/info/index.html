@@ -1,157 +1,209 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+      crossorigin="anonymous"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.css" />
-  <link rel="stylesheet" href="/assets/css/custom.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
-    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>RedeTrade</title>
+    <meta name="author" content="Lucas Santana" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+  </head>
 
-  <title>RedeTrade</title>
-  <meta name="author" content="Lucas Santana" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
-    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous" />
-</head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <side-bar></side-bar>
 
-<body>
+      <!-- Page Content  -->
+      <div id="content">
+        <!-- Navbar -->
+        <nav-bar></nav-bar>
+        <div class="container py-2">
+          <div class="container-simple">
+            <p class="text-muted font-weight-bold">Informação associado</p>
+          </div>
 
+          <div class="container p-4 bg-white rounded shadow secondary">
+            <p class="h4 text-center" id="nome">Canil Click Dogs</p>
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center p-0">
+                <img
+                  class="img-fluid rounded"
+                  src="https://redetrade.com.br/sistemaredetrade/wp-content/uploads/2022/10/WhatsApp-Image-2022-10-19-at-15.53.19.jpeg"
+                  alt=""
+                  id="imagem"
+                  style="width: 450px"
+                />
+              </div>
+              <div class="col-md-6 text-left">
+                <p class="h5 text-center bg-purple text-white" id="categoria">
+                  Animais
+                </p>
+                <p class="font-weight-bold mb-0">Descrição</p>
+                <p id="descricao">Especializados em pratos italianos.</p>
+                <p class="font-weight-bold mb-0">Informações</p>
+                <p class="mb-0" id="telefone">Telefone: 00 0000 0000</p>
+                <p class="mb-0" id="email">
+                  E-mail: adrianogarcia@redetrade.com.br
+                </p>
+                <p class="mb-0" id="logradouro">
+                  Endereço: R. Pedro Escobar, 275
+                </p>
+                <p class="mb-0" id="bairro">Bairro: Campo Grande</p>
+                <p class="mb-0" id="cidade">Cidade: Mato Grosso do Sul</p>
+                <p id="site">Site: www.redetrade.com.br</p>
+                <p class="font-weight-bold mb-0">Atendimento</p>
+                <p class="mb-0" id="voucher">Atendimento / Voucher</p>
+                <p class="mb-0" id="orcamento">Atendimento / Voucher</p>
 
-  <div class="wrapper">
-    <!-- Sidebar  -->
-    <side-bar></side-bar>
+                <p class="font-weight-bold mb-0" id="restricoes">Restrições:</p>
+                <p class="mb-0" id="orcamento">
+                  300 RT$ por Empresa -
+                  <span style="color: #ff6600">Solicitar voucher</span>
+                </p>
 
-    <!-- Page Content  -->
-    <div id="content">
-      <!-- Navbar -->
-      <nav-bar></nav-bar>
-      <div class="container py-2">
-        <div class="container-simple">
-          <p class="text-muted font-weight-bold">Informação associado</p>
-        </div>
-
-        <div class="container p-4 bg-white rounded shadow">
-          <p class="h4 text-center" id="nome">Canil Click Dogs</p>
-          <div class="row align-items-center">
-            <div class="col-md-6 text-center">
-              <img class="img-fluid rounded" src="/imagens/teste.jpg" alt="" id="imagem"
-                style="width: 100%;height: 100%;" />
-            </div>
-            <div class="col-md-6 text-left">
-              <p class="h5 text-center bg-purple text-white" id="categoria">Animais</p>
-              <p class="font-weight-bold mb-0">Descrição</p>
-              <p id="descricao">Especializados em pratos italianos.</p>
-              <p class="font-weight-bold mb-0">Informações</p>
-              <p class="mb-0" id="telefone">Telefone: 00 0000 0000</p>
-              <p class="mb-0" id="email">E-mail: adrianogarcia@redetrade.com.br</p>
-              <p class="mb-0" id="logradouro">Endereço: R. Pedro Escobar, 275</p>
-              <p class="mb-0" id="bairro">Bairro: Campo Grande</p>
-              <p class="mb-0" id="cidade">Cidade: Mato Grosso do Sul</p>
-              <p id="site">Site: www.redetrade.com.br</p>
-              <p class="font-weight-bold mb-0">Atendimento</p>
-              <p class="mb-0" id="voucher">Atendimento / Voucher</p>
-              <p class="mb-0" id="orcamento">Atendimento / Voucher</p>
-
-              <p class="mb-0" id="restricoes">Restrições: 300 RT$ por Empresa</p>
-              <!--<p class="">Solicitar com gerente de conta</p>-->
-              <p class="h5 text-center bg-success text-white" id="status">Cliente Atendendo</p>
+                <!--<p class="">Solicitar com gerente de conta</p>-->
+                <p class="h5 text-center bg-success text-white" id="status">
+                  Cliente Atendendo
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        <footer-bar></footer-bar>
       </div>
-      <footer-bar></footer-bar>
-
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.js"
-    integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-  </script>
-  <script src="/assets/js/bootstrap.js"></script>
-  <script src="/assets/js/main.js"></script>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.js"
+      integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
 
-  <!-- Import Components -->
-  <script src="/components/navbar.js"></script>
-  <script src="/components/sidebar2.js"></script>
-  <script src="/components/footer.js"></script>
+    <!-- Import Components -->
+    <script src="/components/navbar.js"></script>
+    <script src="/components/sidebar2.js"></script>
+    <script src="/components/footer.js"></script>
 
-  <!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-  <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
+    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
 
-  <!-- Initialize Firebase -->
-  <!-- <script src="/__/firebase/init.js"></script> -->
-  <script src="/assets/js/config.js"></script>
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="/assets/js/config.js"></script>
 
-  <script>
-    // Fazer a requisição GET para a API e obter os dados retornados
-    function fetchData() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-      const agenciaData = localStorage.getItem('agenciaData');
-      if (agenciaData) {
-        const agencia = JSON.parse(agenciaData);
-        // Preencher os campos com os dados retornados
-        document.getElementById('nome').textContent = agencia.dadosGerais.nomeFantasia;
-        document.getElementById('email').textContent = "Email: " + agencia.email;
-        document.getElementById('telefone').textContent = "Telefone: " + agencia.dadosContatos.telefone;
-        document.getElementById('categoria').textContent = agencia.dadosGerais.categoria;
-        const imagem = document.getElementById('imagem');
-        const imagemUrl = `${window.apiBaseUrl}/${agencia.imagem.replace(/\\/g, '/')}`;
+    <script>
+      // Fazer a requisição GET para a API e obter os dados retornados
+      function fetchData() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        const agenciaData = localStorage.getItem("agenciaData");
+        if (agenciaData) {
+          const agencia = JSON.parse(agenciaData);
+          // Preencher os campos com os dados retornados
+          document.getElementById("nome").textContent =
+            agencia.dadosGerais.nomeFantasia;
+          document.getElementById("email").textContent =
+            "Email: " + agencia.email;
+          document.getElementById("telefone").textContent =
+            "Telefone: " + agencia.dadosContatos.telefone;
+          document.getElementById("categoria").textContent =
+            agencia.dadosGerais.categoria;
+          const imagem = document.getElementById("imagem");
+          const imagemUrl = `${window.apiBaseUrl}/${agencia.imagem.replace(
+            /\\/g,
+            "/"
+          )}`;
 
-        imagem.src = imagemUrl;
-        console.log('agencia', agencia.imagem);
-        //const status = associado.status;
-        if (agencia.dadosGerais.status == 0) {
-          status = "Não Atendendo";
+          imagem.src = imagemUrl;
+          console.log("agencia", agencia.imagem);
+          //const status = associado.status;
+          if (agencia.dadosGerais.status == 0) {
+            status = "Não Atendendo";
+          } else {
+            status = "Atendendo";
+          }
+          const statusInput = document.getElementById("status");
+
+          statusInput.classList.add(
+            agencia.dadosGerais.status == 1 ? "bg-success" : "bg-danger"
+          );
+
+          document.getElementById("status").textContent = status;
+          document.getElementById("restricoes").textContent =
+            "Restrições: " + agencia.dadosGerais.restricoes;
+          document.getElementById("descricao").textContent =
+            agencia.dadosGerais.descricao;
+          if (agencia.dadosOperacoes.aceitaVoucher == 0) {
+            aceitaVoucher = "Não";
+          } else {
+            aceitaVoucher = "Sim";
+          }
+          if (agencia.dadosOperacoes.aceitaOrcamento == 0) {
+            aceitaOrcamento = "Não";
+          } else {
+            aceitaOrcamento = "Sim";
+          }
+          document.getElementById("orcamento").textContent =
+            "Aceita Orçamento: " + aceitaOrcamento;
+          document.getElementById("voucher").textContent =
+            "Aceita Voucher: " + aceitaVoucher;
+          document.getElementById("logradouro").textContent =
+            "Logradouro: " +
+            agencia.dadosEnderecos.logradouro +
+            ", " +
+            agencia.dadosEnderecos.numero;
+          document.getElementById("bairro").textContent =
+            "Bairro: " + agencia.dadosEnderecos.bairro;
+          document.getElementById("site").textContent =
+            "Site: " + agencia.dadosContatos.site;
+          document.getElementById("cidade").textContent =
+            "Cidade: " + agencia.dadosEnderecos.cidade;
+
+          // Agora você pode usar o objeto "agencia" para exibir os detalhes na página
+          // Certifique-se de remover o item do localStorage quando não precisar mais dele
+          localStorage.removeItem("agenciaData");
         } else {
-          status = "Atendendo";
+          // Caso não haja dados, você pode lidar com isso de acordo com sua lógica
         }
-        const statusInput = document.getElementById('status');
-
-        statusInput.classList.add(agencia.dadosGerais.status == 1 ? 'bg-success' : 'bg-danger');
-
-        document.getElementById('status').textContent = status;
-        document.getElementById('restricoes').textContent = "Restrições: " + agencia.dadosGerais.restricoes;
-        document.getElementById('descricao').textContent = agencia.dadosGerais.descricao;
-        if (agencia.dadosOperacoes.aceitaVoucher == 0) {
-          aceitaVoucher = "Não";
-        } else {
-          aceitaVoucher = "Sim";
-        }
-        if (agencia.dadosOperacoes.aceitaOrcamento == 0) {
-          aceitaOrcamento = "Não";
-        } else {
-          aceitaOrcamento = "Sim";
-        }
-        document.getElementById('orcamento').textContent = "Aceita Orçamento: " + aceitaOrcamento;
-        document.getElementById('voucher').textContent = "Aceita Voucher: " + aceitaVoucher;
-        document.getElementById('logradouro').textContent = "Logradouro: " + agencia.dadosEnderecos.logradouro + ", " + agencia.dadosEnderecos.numero;
-        document.getElementById('bairro').textContent = "Bairro: " + agencia.dadosEnderecos.bairro;
-        document.getElementById('site').textContent = "Site: " + agencia.dadosContatos.site;
-        document.getElementById('cidade').textContent = "Cidade: " + agencia.dadosEnderecos.cidade;
-
-        // Agora você pode usar o objeto "agencia" para exibir os detalhes na página
-        // Certifique-se de remover o item do localStorage quando não precisar mais dele
-        localStorage.removeItem('agenciaData');
-      } else {
-        // Caso não haja dados, você pode lidar com isso de acordo com sua lógica
       }
-    }
-    fetchData();
-  </script>
-
-</body>
-
+      fetchData();
+    </script>
+  </body>
 </html>

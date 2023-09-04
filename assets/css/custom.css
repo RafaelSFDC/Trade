@@ -11340,6 +11340,13 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   margin-bottom: 35px;
 }
 
+.secondary {
+  color: #7a7a7a;
+}
+.p-0 {
+  padding: 0 !important;
+}
+
 /* Page Layout Adujustment */
 .container.py-2 {
   padding: 20px 0 20px 0;
@@ -11474,7 +11481,13 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   justify-content: center;
 }
 
+.row.align-items-center .col-md-6.text-left {
+  padding-right: 0;
+  padding-left: 30px;
+}
+
 .container.p-4.bg-white.rounded.shadow .h4 {
+  margin-top: 16px;
   font-size: 30px;
   font-weight: 500;
   padding: 0;
@@ -11486,18 +11499,23 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding-bottom: 80px;
 }
 .container.p-4.bg-white.rounded.shadow .row.align-items-center div .mb-0 {
-  margin-bottom: 3px !important;
   font-size: 16px;
 }
 
-.container.p-4.bg-white.rounded.shadow .row.align-items-center div h5 {
+.container.p-4.bg-white.rounded.shadow.secondary
+  .row.align-items-center
+  div
+  .h5 {
   width: 435px;
   font-size: 18px;
   height: 28px;
   line-height: 1.5;
 }
 
-.container.p-4.bg-white.rounded.shadow .row.align-items-center div .bg-success {
+.container.p-4.bg-white.rounded.shadow.secondary
+  .row.align-items-center
+  div
+  .bg-success {
   font-size: 14px;
   font-weight: 400;
   height: 24px;
@@ -11514,10 +11532,16 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   font-weight: 500;
 }
 
+#site,
+#descricao,
+#orcamento {
+  margin-bottom: 10px !important;
+}
+
 /* Ofertas Fix */
 
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
-  .row.w-100 {
+  .oferta {
   width: 80% !important;
   padding-right: 0px;
   padding-left: 0px;
