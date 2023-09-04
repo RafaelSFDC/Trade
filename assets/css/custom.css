@@ -11415,8 +11415,8 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   flex-direction: column;
 }
 
-.row.container.p-0 div button {
-  line-height: 0 !important;
+.col.m-0.p-0.d-flex.flex-row.justify-content-center.align-items-center a {
+  line-height: 1.1 !important;
 }
 
 .btn.text-white.fw-bold {
@@ -11525,7 +11525,6 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   flex-wrap: nowrap;
   justify-content: space-between !important;
 }
-
 
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
   .row.w-100.produto {
