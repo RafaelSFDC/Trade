@@ -11514,6 +11514,11 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   font-weight: 500;
 }
 
+/* Ofertas Fix */
+.btn.text-white.fw-bold {
+  font-weight: 500;
+}
+
 /* Button Fix */
 .btn-purple {
   background-color: #7415bd;
