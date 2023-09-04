@@ -11357,11 +11357,71 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   width: 100%;
 }
 
+.py-2 .px-0 .row {
+  justify-content: space-around;
+  margin: 0;
+}
+
+.px-0 .row .col-md-7 {
+  padding-left: 0;
+}
+
+.row .col-md-7 {
+  width: 10%;
+  padding-right: 0;
+}
+
+.col-md-5.d-flex.flex-column {
+  width: 30%;
+}
+.px-0 .row .col-md-7 .h-100 {
+  width: 100% !important;
+}
+
+.px-0 .row .col-md-5 {
+  width: 37.932%;
+  padding-right: 0;
+  padding-left: 20px;
+}
+
 /* Associados Cards */
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center {
   width: 370px !important;
 }
 
+.row .d-flex .row .img-fluid {
+  width: 100%;
+}
+
+.row.w-100.pr-3.pl-3 {
+  justify-content: space-between;
+  background-color: #efefef;
+  background-clip: content-box;
+  margin-top: 20px;
+}
+
+.row.container.p-0 .col .text-sm {
+  height: 100px;
+}
+
+.row.w-100.pr-3.pl-3 div {
+  width: 25%;
+}
+
+.row.w-100.pr-3.pl-3 div a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.row.container.p-0 div button {
+  line-height: 0 !important;
+}
+
+.btn.text-white.fw-bold {
+  line-height: 0.5 !important;
+}
 /* Search field */
 .col-md-4.pt-1,
 .col-md-3.pt-1,
@@ -11404,6 +11464,54 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 
 .row .col p {
   padding-bottom: 20px;
+}
+
+/* Associado Info */
+.container.p-4.bg-white.rounded.shadow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container.p-4.bg-white.rounded.shadow .h4 {
+  font-size: 30px;
+  font-weight: 500;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.container.p-4.bg-white.rounded.shadow .row.align-items-center {
+  width: 900px;
+  padding-bottom: 80px;
+}
+.container.p-4.bg-white.rounded.shadow .row.align-items-center div .mb-0 {
+  margin-bottom: 3px !important;
+  font-size: 16px;
+}
+
+.container.p-4.bg-white.rounded.shadow .row.align-items-center div h5 {
+  width: 435px;
+  font-size: 18px;
+  height: 28px;
+  line-height: 1.5;
+}
+
+.container.p-4.bg-white.rounded.shadow .row.align-items-center div .bg-success {
+  font-size: 14px;
+  font-weight: 400;
+  height: 24px;
+  width: 435px;
+  line-height: 1.7;
+}
+
+.container.p-4.bg-white.rounded.shadow
+  .row.align-items-center
+  div
+  .font-weight-bold {
+  text-decoration: underline;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 /* Button Fix */
