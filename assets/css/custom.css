@@ -11352,7 +11352,12 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding: 20px 0 20px 0;
 }
 
-.row .pr-1 .card.bottom .card-body.pb-0 .row.pt-2 {
+.container.py-2 .container.px-0.mb-3.box-param {
+  margin-bottom: 60px !important;
+}
+
+.card-body.pb-0.px-3 .row.pt-2,
+.card.bottom .card-body.pb-0 .row.pt-2 {
   margin-top: 20px;
 }
 
@@ -11483,7 +11488,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 }
 
 /* Associado Info */
-.container.p-4.bg-white.rounded.shadow {
+.container.p-4.bg-white.rounded.shadow.secondary {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11516,7 +11521,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   .row.align-items-center
   div
   .h5 {
-  width: 435px;
+  width: 420px;
   font-size: 18px;
   height: 28px;
   line-height: 1.5;
@@ -11526,11 +11531,12 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   .row.align-items-center
   div
   .bg-success {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   height: 24px;
-  width: 435px;
-  line-height: 1.7;
+  width: 420px;
+  margin-bottom: 0px;
+  line-height: 1.5;
   background-color: #6ec1e4 !important;
 }
 
@@ -11564,6 +11570,11 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
   .row.w-100.produto {
   width: 100% !important;
+}
+
+.info-value {
+  display: flex;
+  gap: 10px;
 }
 
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
@@ -11612,6 +11623,19 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   font-size: 12px !important;
   font-weight: 400;
   line-height: 1;
+}
+
+.row.align-items-center
+  .col-md-6.text-left
+  .mb-1.text-center.bg-purple.text-white {
+  padding: 3px 0 3px 0;
+}
+
+.row.align-items-center .col-md-6.text-left {
+  display: flex;
+  height: 554px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Button Fix */

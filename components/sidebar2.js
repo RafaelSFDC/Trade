@@ -15,7 +15,7 @@ class SideBar extends HTMLElement {
       </div>
     </div>
     <div class="row justify-content-start nomeAgencia">
-      <p class="mb-0 fw-bold " style="color:#FFF;font-size:1rem;margin-left:50px;margin-top:7px;"><strong>Matriz</strong></p>   
+      <p class="mb-0 fw-bold " style="color:#FFF;font-size:1rem;margin-left:50px;"><strong style="font-weight: 500">Matriz</strong></p>   
     </div>
     <div class="search position-relative text-center px-4 py-3 mt-3">
       <i class="fa fa-search position-absolute d-block fs-3 search-icon" style="color:#fff;margin-top:20px;margin-left:25px;"></i>
