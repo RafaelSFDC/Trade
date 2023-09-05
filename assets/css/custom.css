@@ -11426,7 +11426,11 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 }
 
 .row.w-100.pr-3.pl-3 div {
-  width: 25%;
+  width: 23%;
+}
+
+.row.w-100.pr-3.pl-3 div.name {
+  width: 31%;
 }
 
 .row.w-100.pr-3.pl-3 div a {
