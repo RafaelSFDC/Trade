@@ -11643,6 +11643,12 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   background-color: #7415bd;
 }
 
+button.btn.btn-purple,
+button.btn.btn-orange {
+  width: 155px !important;
+  height: 45px !important;
+}
+
 /* Footer Fix */
 #content {
   display: flex;
