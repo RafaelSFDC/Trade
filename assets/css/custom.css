@@ -11577,6 +11577,10 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   gap: 10px;
 }
 
+div.info-value button.btn.btn-orange {
+  height: auto !important;
+}
+
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
   .row.w-100.produto
   strong {
