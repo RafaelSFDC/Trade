@@ -11500,7 +11500,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding-left: 30px;
 }
 
-.container.p-4.bg-white.rounded.shadow .h4 {
+.container.p-4.bg-white.rounded.shadow .h4.text-center {
   margin-top: 16px;
   font-size: 30px;
   font-weight: 500;
@@ -11567,6 +11567,11 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   justify-content: space-between !important;
 }
 
+.descricao #descricao,
+.restricao #restricao {
+  margin-bottom: 0 !important ;
+}
+
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
   .row.w-100.produto {
   width: 100% !important;
@@ -11579,6 +11584,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 
 div.info-value button.btn.btn-orange {
   height: auto !important;
+  width: 80px !important;
 }
 
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center
@@ -11646,11 +11652,10 @@ div.info-value button.btn.btn-orange {
 .btn-purple {
   background-color: #7415bd;
 }
-
-button.btn.btn-purple,
-button.btn.btn-orange {
-  width: 155px !important;
-  height: 45px !important;
+.col-4.offset-8.text-right.pt-4 button.btn.btn-purple,
+.col-4.offset-8.text-right.pt-4 button.btn.btn-orange {
+  width: 120px !important;
+  height: 35px !important;
 }
 
 /* Footer Fix */
