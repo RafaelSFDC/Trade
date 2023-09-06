@@ -11405,7 +11405,7 @@ aside.sidebar ul .sidebar-dropdown > li > a {
   padding: 0 15px;
 }
 
-/* Associados Cards */
+/* ------------------------------ Associados Cards ------------------------------ */
 .container.p-0.d-flex.flex-column.justify-content-center.align-items-center {
   width: 370px !important;
 }
@@ -11447,7 +11447,26 @@ aside.sidebar ul .sidebar-dropdown > li > a {
 .btn.text-white.fw-bold {
   line-height: 0.5 !important;
 }
-/* Search field */
+
+/* ------------------------------ Associados Icons ------------------------------ */
+.matriz:hover {
+  fill: orangered !important;
+  transition: 0.3s ease-in-out;
+}
+.person:hover {
+  fill: blueviolet !important;
+  transition: 0.3s ease-in-out;
+}
+.contato:hover {
+  color: green !important;
+  transition: 0.3s ease-in-out;
+}
+.web:hover {
+  color: blue !important;
+  transition: 0.3s ease-in-out;
+}
+
+/* ------------------------------ Search Field ------------------------------ */
 .col-md-4.pt-1,
 .col-md-3.pt-1,
 .col.pt-1 {
@@ -11701,7 +11720,7 @@ side-bar aside {
   transition: all 0.3s ease-in-out;
 }
 .sidebarSpace {
-  padding-left: 0;
+  padding-left: 90px;
 }
 
 .card-body-bar {

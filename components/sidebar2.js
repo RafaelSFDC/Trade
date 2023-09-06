@@ -1,4 +1,5 @@
-class SideBar extends HTMLElement {
+// ------------------------------------ Sidebar para Usuário ------------------------------------
+class SideBar2 extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -121,17 +122,15 @@ class SideBar extends HTMLElement {
           <div class="modal-body">
             <!-- Add your modal content here -->
             <div class="row" style="gap:10px;padding-left: 20px; padding-right: 20px;">
-                <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #fff;border-radius:5px;">
-                    <i class="fas fa-users mb-2" style="font-size:25px;color:#787878;"></i>
-                    <a class="link" href="/agencias/matriz/associados/" style="color:#787878;text-decoration: none;">Associados</a>
-                </div>
-                <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #fff;border-radius:5px;">
+            <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #fff;border-radius:5px;">
                     <i class="bi bi-person-vcard" style="font-size:25px;color:#787878;"></i>
                     <a class="link" href="/agencias/matriz/associados/lista/" style="color:#787878;text-decoration: none;">Lista Associados</a>
                 </div>
-                <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #fff;border-radius:5px;">
-                    <i class="bi bi-person-plus" style="font-size:25px;color:#787878;"></i>
-                    <a class="link" href="/agencias/matriz/associados/cadastrar/" style="color:#787878;text-decoration: none;">Novo Associado</a>
+                <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
+                  
+                </div>
+                <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
+                    
                 </div>
                 <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
                     
@@ -462,27 +461,29 @@ class SideBar extends HTMLElement {
       `;
   }
 }
-customElements.define("side-bar", SideBar);
 
+// ------------------------------------ Checar o usuário e definir qual sidebar ------------------------------------
+const userCheck = 2;
+if (userCheck == 1) {
+  customElements.define("side-bar", SideBar);
+} else {
+  customElements.define("side-bar", SideBar2);
+}
+
+// ------------------------------------ Elementos e Classes ------------------------------------
 const sidebar = document.querySelector(".sidebar");
 const toggleButton = document.querySelector(".toggle-button");
 const sidebarSpace = document.querySelector(".wrapper");
+var bootstrapModalsContainer = [];
 
 toggleButton.addEventListener("click", () => {
   sidebar.classList.toggle("sidebar-collapsed");
   sidebarSpace.classList.toggle("sidebarSpace");
 });
 
-function openPopup(event) {
+async function openPopup(event) {
   const menuItem = event.currentTarget;
   const modalId = menuItem.dataset.modal;
-
-  // Verifica se o modalId está definido
-  if (modalId) {
-    const modal = document.getElementById(modalId);
-    const bootstrapModal = new bootstrap.Modal(modal);
-    bootstrapModal.show();
-  }
 
   // Remove a classe "active" de todos os itens de menu
   menuItems.forEach((item) => {
@@ -491,6 +492,22 @@ function openPopup(event) {
 
   // Adiciona a classe "active" ao item de menu clicado
   menuItem.classList.add("active");
+
+  // Verifica se o modalId está definido
+  if (modalId) {
+    const modal = document.getElementById(modalId);
+    const bootstrapModal = new bootstrap.Modal(modal);
+    for (const component of bootstrapModalsContainer) {
+      await component.hide();
+
+      // await component.dispose();
+      bootstrapModalsContainer = [];
+    }
+    bootstrapModalsContainer.push(bootstrapModal);
+    bootstrapModalsContainer.forEach((component) => {
+      component.show();
+    });
+  }
 }
 
 // Adiciona um evento de clique aos itens de menu
