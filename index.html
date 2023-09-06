@@ -14,6 +14,13 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>RedeTrade</title>
   </head>
   <body>
@@ -28,17 +35,37 @@
             class="input"
             type="text"
             placeholder="E-mail ou Conta"
-            id="emailouconta" 
+            id="emailouconta"
             required
           />
         </div>
         <div class="text-field">
-          <input class="input" type="password" placeholder="Senha" id="senha" required />
+          <input
+            class="input"
+            type="password"
+            placeholder="Senha"
+            id="password"
+            required
+          />
+          <i
+            style="
+              position: absolute;
+              right: 55px;
+              top: 61px;
+              color: blueviolet;
+              cursor: pointer;
+            "
+            class="fa-solid fa-eye"
+            id="eye"
+            onclick="toggle()"
+          ></i>
         </div>
         <div class="remember-container">
           <div>
             <input type="checkbox" value="Lembre-me" id="remember" />
-            <label for="remember" style="color: #979797;margin: 0;">Lembre-me</label>
+            <label for="remember" style="color: #979797; margin: 0"
+              >Lembre-me</label
+            >
           </div>
 
           <a href="#" id="trigger">Esqueceu a senha?</a>
@@ -46,7 +73,7 @@
         <input class="input button" type="submit" value="ENTRAR" />
       </form>
       <div class="signup_link" id="signup">
-        <p style="color: #979797;font-size: 1rem;">Não tem conta?</p>
+        <p style="color: #979797; font-size: 1rem">Não tem conta?</p>
         <a href="#">Cadastre-se</a>
       </div>
       <div class="popup" id="popup">
@@ -68,6 +95,17 @@
     </div>
     <script src="./assets/js/index.js"></script>
     <script src="./assets/js/config.js"></script>
-
+    <script>
+      var state = false;
+      function toggle() {
+        if (state) {
+          document.getElementById("password").setAttribute("type", "password");
+          state = false;
+        } else {
+          document.getElementById("password").setAttribute("type", "text");
+          state = true;
+        }
+      }
+    </script>
   </body>
 </html>
