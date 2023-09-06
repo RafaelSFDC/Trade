@@ -1,19 +1,26 @@
+// ------------------------------------ Sidebar para Adiministrador ------------------------------------
 class SideBar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-    <aside class="sidebar fixed-left  top-0 left-0 overflow-hidden h-100 float-left" id="show-side-navigation1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    
+    <aside class="sidebar fixed-left  top-0 left-0 h-100" id="show-side-navigation1">
     <div class="sidebar-header d-flex justify-content-between align-items-center px-3 pt-2">
-      <img class="rounded-pill img-fluid p-2" width="55" src="../../assets/img/mini-logo.jpeg" alt="" style="margin-top:10px;">
+      <a href="/agencias/matriz/dashboard-matriz.html">
+        <img class="rounded-pill img-fluid p-2 " width="65" src="/assets/img/mini-logo.jpeg" alt="" style="margin-top:10px;margin-left:8px;">
+      </a>
       <div class="toggle-button">
-        <i class="fas fa-bars" style="color:#fff;margin-right:15px"></i>
+      <span class="material-symbols-outlined" style="color:#fff;margin-right:15px;">
+        menu
+      </span>
       </div>
     </div>
-    <div class="row justify-content-start">
-      <p class="mb-0 fw-bold" style="color:#FFF;font-size:0.7rem;margin-left:40px;">MATRIZ</p>   
+    <div class="row justify-content-start nomeAgencia">
+      <p class="mb-0 fw-bold " style="color:#FFF;font-size:1rem;margin-left:50px;"><strong style="font-weight: 500">Matriz</strong></p>   
     </div>
-    <div class="search position-relative text-center px-4 py-3 mt-2">
-      <i class="fa fa-search position-absolute d-block fs-3 search-icon" style="color:#fff;margin-top:15px;margin-left:25px;"></i>
-      <input type="text" class="form-control  border-0  search-input" style="width:98%;height:47px;border-radius:10px;background-color:#243459;padding-left: 58px;color: #FFF;" placeholder="Search...">
+    <div class="search position-relative text-center px-4 py-3 mt-3">
+      <i class="fa fa-search position-absolute d-block fs-3 search-icon" style="color:#fff;margin-top:20px;margin-left:25px;"></i>
+      <input type="text" class="form-control  border-0  search-input" style="width:99%;height:46px;border-radius:10px;background-color:#243459;padding-left: 58px;color: #FFF;margin-top:5px;" placeholder="Search...">
     </div>
   
     <ul class="categories list-unstyled">
@@ -21,7 +28,7 @@ class SideBar extends HTMLElement {
         <i class="fas fa-home"></i><a href="/agencias/matriz/dashboard-matriz.html">INÍCIO</a>
       </li>
       <li class="menu-associados mb-2" data-modal="associadosModal">
-        <i class="fas fa-users"></i><a href="#"> ASSOCIADOS</a>
+        <i class="fas fa-users"></i><a href="#">ASSOCIADOS</a>
         <ul class="sidebar-dropdown list-unstyled">
           <li><a href="/associados/">Associados</a></li>
           <li><a href="/associados/lista/">Lista de associados</a></li>
@@ -51,27 +58,13 @@ class SideBar extends HTMLElement {
           <li><a href="/ofertas/cadastrar/">Nova tarefa</a></li>
         </ul>
       </li>
-      <li class="menu-credito mb-2" data-modal="creditoModal">
-        <i class="bi bi-clipboard2-data-fill"></i><a href="#">CRÉDITOS</a>
-        <ul class="sidebar-dropdown list-unstyled">
-          <li><a href="/credito/">Credito</a></li>
-          <li><a href="/credito/solicitacao/">Solicitar credito</a></li>
-          <li><a href="/credito/cancelar/">Cancelar credito</a></li>
-        </ul>
-      </li>
+      
       <li class="menu-voucher mb-2" data-modal="voucherModal">
         <i class="fas fa-percentage"></i><a href="#">VOUCHER</a>
         <ul class="sidebar-dropdown list-unstyled">
           <li><a href="/vouchers/">Vouchers</a></li>
           <li><a href="/vouchers/solicitacao/">Solicitar voucher</a></li>
           <li><a href="/vouchers/cancelar/">Cancelar voucher</a></li>
-        </ul>
-      </li>
-      <li class="menu-extrato mb-2" data-modal="extratoModal">
-        <i class="fas fa-receipt"></i><a href="#">EXTRATO</a>
-        <ul class="sidebar-dropdown list-unstyled">
-          <li><a href="/extratos/">Extratos</a></li>
-          <li><a href="/extratos/meu/">Meus extrato</a></li>
         </ul>
       </li>
       <li class="menu-financeiro mb-2" data-modal="finaceiroModal">
@@ -90,7 +83,7 @@ class SideBar extends HTMLElement {
           <li><a href="/conta/cadastrarUsuario/">Cadastrar usuário</a></li>
         </ul>
       </li>
-      <li class="menu-planos mt-5 mb-2" data-modal="planosModal">
+      <li class="menu-planos mb-2" data-modal="planosModal">
         <i class="fa fa-bookmark" style="color:#FF6600"></i><a href="#">PLANOS</a>
         <ul class="sidebar-dropdown list-unstyled">
           <li><a href="/planos/associados/">Meus dados</a></li>
@@ -247,39 +240,6 @@ class SideBar extends HTMLElement {
         </div>
       </div>
     </div>
-    <!-- Bootstrap Modal Credito -->
-    <div class="modal fade" id="creditoModal" tabindex="-1" aria-labelledby="creditoModalLabel" aria-hidden="true" style="background-color:#0000009e;">
-    <div class="modal-dialog modal-xl" style="padding-top:250px;padding-left:140px;width:100vw;height:100vh;background-color:#00000000;">
-        <div class="modal-content w-100 h-100" style="background-color:#00000000;border:none;">
-          <div class="modal-header" style="border-bottom: none;">
-            <h5 class="modal-title" id="voucherModalLabel" style="color:#fff;">Navegação rápida</h5>
-            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="background: none; border: none; padding: 0;" onfocus="this.style.outline='none';" onblur="this.style.outline='';">
-                <span aria-hidden="true" style="background: none;border: none;font-size: 25px;color: #fff;"><i class="fa fa-times"></i></span>
-            </button>
-          </div>
-          <div class="modal-body">
-          <!-- Add your modal content here -->
-          <div class="row" style="gap:10px;padding-left: 20px; padding-right: 20px;">
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="bi bi-clipboard2-data-fill" style="font-size:25px;color:#787878;"></i>
-                  <a class="link" href="/agencias/matriz/credito/" style="color:#787878;text-decoration: none;">Créditos</a>
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="bi bi-pie-chart-fill" style="font-size:25px;color:#787878;"></i>
-                  <a class="link" href="/agencias/matriz/credito/analise/" style="color:#787878;text-decoration: none;">Analise</a>
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="bi bi-graph-up" style="font-size:25px;color:#787878;"></i>
-                  <a class="link" href="/agencias/matriz/credito/solicitar/" style="color:#787878;text-decoration: none;">Solicitar Crédito</a>
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
-                  
-              </div> 
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- Bootstrap Modal Voucher -->
     <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true" style="background-color:#0000009e;">
     <div class="modal-dialog modal-xl" style="padding-top:250px;padding-left:140px;width:100vw;height:100vh;background-color:#00000000;">
@@ -299,7 +259,7 @@ class SideBar extends HTMLElement {
               </div>
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                   <i class="bi bi-ticket-perforated-fill" style="font-size:25px;color:#787878;"></i>
-                  <a class="link" href="#" style="color:#787878;text-decoration: none;">Meus Vouchers</a>
+                  <a class="link" href="/agencias/matriz/vouchers/meus/" style="color:#787878;text-decoration: none;">Meus Vouchers</a>
               </div>
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
                   <i class="bi bi-trash3" style="font-size:25px;color:#787878;"></i>
@@ -309,38 +269,6 @@ class SideBar extends HTMLElement {
                   <i class="bi bi-ticket-detailed" style="font-size:25px;color:#787878;"></i>
                   <a class="link" href="/agencias/matriz/vouchers/solicitacao/" style="color:#787878;text-decoration: none;">Solicitar Voucher</a>
               </div> 
-          </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Bootstrap Modal Extrato -->
-    <div class="modal fade" id="extratoModal" tabindex="-1" aria-labelledby="extratoModalLabel" aria-hidden="true" style="background-color:#0000009e;">
-    <div class="modal-dialog modal-xl" style="padding-top:250px;padding-left:140px;width:100vw;height:100vh;background-color:#00000000;">
-        <div class="modal-content w-100 h-100" style="background-color:#00000000;border:none;">
-          <div class="modal-header" style="border-bottom: none;">
-            <h5 class="modal-title" id="extratoModalLabel" style="color:#fff;">Navegação rápida</h5>
-            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="background: none; border: none; padding: 0;" onfocus="this.style.outline='none';" onblur="this.style.outline='';">
-                <span aria-hidden="true" style="background: none;border: none;font-size: 25px;color: #fff;"><i class="fa fa-times"></i></span>
-            </button>
-          </div>
-          <div class="modal-body">
-          <!-- Add your modal content here -->
-          <div class="row" style="gap:10px;padding-left: 20px; padding-right: 20px;">
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="fa-solid fa-file-invoice-dollar" style="font-size:25px;color:#787878;"></i>
-                  <a class="link mt-2" href="/agencias/matriz/extratos/" style="color:#787878;text-decoration: none;">Extratos</a>
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="fas fa-file-alt" style="font-size:25px;color:#787878;"></i>
-                  <a class="link mt-2" href="/agencias/matriz/extratos/meu/" style="color:#787878;text-decoration: none;">Meus Extratos</a>
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
-                  
-              </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
-                  
-              </div>
           </div>
           </div>
         </div>
@@ -360,19 +288,38 @@ class SideBar extends HTMLElement {
           <!-- Add your modal content here -->
           <div class="row" style="gap:10px;padding-left: 20px; padding-right: 20px;">
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="fas fa-money-check-alt" style="font-size:25px;color:#787878;"></i>
-                  <a class="link mt-2" href="/agencias/matriz/finaceiro/pagar/" style="color:#787878;text-decoration: none;">Contas a Pagar</a>
+                  <i class="bi bi-clipboard2-data-fill" style="font-size:25px;color:#787878;"></i>
+                  <a class="link" href="/agencias/matriz/credito/" style="color:#787878;text-decoration: none;">Créditos</a>
               </div>
               <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
-                  <i class="fas fa-money-bill-alt" style="font-size:25px;color:#787878;"></i>
-                  <a class="link mt-2" href="/agencias/matriz/finaceiro/receber/" style="color:#787878;text-decoration: none;">Contas a Receber</a>
+                <i class="bi bi-graph-up" style="font-size:25px;color:#787878;"></i>
+                <a class="link" href="/agencias/matriz/credito/solicitar/" style="color:#787878;text-decoration: none;">Solicitar Crédito</a>
               </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
-                  
+              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
+                  <i class="bi bi-pie-chart-fill" style="font-size:25px;color:#787878;"></i>
+                  <a class="link" href="/agencias/matriz/credito/analise/" style="color:#787878;text-decoration: none;">Analisar Créditos</a>
               </div>
-              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
-                  
+              <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
+                <i class="fa-solid fa-file-invoice-dollar" style="font-size:25px;color:#787878;"></i>
+                <a class="link mt-2" href="/agencias/matriz/extratos/" style="color:#787878;text-decoration: none;">Extratos</a>
               </div>
+          </div>
+          <div class="row mt-3" style="gap:10px;padding-left: 20px; padding-right: 20px;">
+            <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
+              <i class="fas fa-file-alt" style="font-size:25px;color:#787878;"></i>
+              <a class="link mt-2" href="/agencias/matriz/extratos/meu/" style="color:#787878;text-decoration: none;">Meus Extratos</a>
+            </div>
+            <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
+                <i class="fas fa-money-bill-alt" style="font-size:25px;color:#787878;"></i>
+                <a class="link mt-2" href="/agencias/matriz/financeiro/receber/" style="color:#787878;text-decoration: none;">Contas a Receber</a>
+            </div>
+            <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;background-color: #ebebeb;border-radius:5px;">
+                <i class="fas fa-money-check-alt" style="font-size:25px;color:#787878;"></i>
+                <a class="link mt-2" href="/agencias/matriz/financeiro/pagar/" style="color:#787878;text-decoration: none;">Contas a Pagar</a>
+            </div>
+            <div class="col d-flex flex-column align-items-center justify-content-center flex-collum" style="height:125px;border-radius:5px;">
+                
+            </div>
           </div>
           </div>
         </div>
@@ -447,7 +394,7 @@ class SideBar extends HTMLElement {
       </div>
     </div>
 
-    <!-- Bootstrap Modal Ctegorias -->
+    <!-- Bootstrap Modal Categorias -->
     <div class="modal fade" id="categoriasModal" tabindex="-1" aria-labelledby="categoriasModalLabel" aria-hidden="true" style="background-color:#0000009e;">
     <div class="modal-dialog modal-xl" style="padding-top:250px;padding-left:140px;width:100vw;height:100vh;background-color:#00000000;">
         <div class="modal-content w-100 h-100" style="background-color:#00000000;border:none;">
@@ -514,17 +461,16 @@ class SideBar extends HTMLElement {
     </div>
   
       `;
-      
   }
 }
+
 customElements.define("side-bar", SideBar);
 
+const sidebar = document.querySelector(".sidebar");
+const toggleButton = document.querySelector(".toggle-button");
 
-const sidebar = document.querySelector('.sidebar');
-const toggleButton = document.querySelector('.toggle-button');
-
-toggleButton.addEventListener('click', () => {
-  sidebar.classList.toggle('sidebar-collapsed');
+toggleButton.addEventListener("click", () => {
+  sidebar.classList.toggle("sidebar-collapsed");
 });
 
 function openPopup(event) {
@@ -540,17 +486,15 @@ function openPopup(event) {
 
   // Remove a classe "active" de todos os itens de menu
   menuItems.forEach((item) => {
-    item.classList.remove('active');
+    item.classList.remove("active");
   });
 
   // Adiciona a classe "active" ao item de menu clicado
-  menuItem.classList.add('active');
+  menuItem.classList.add("active");
 }
 
-
 // Adiciona um evento de clique aos itens de menu
-const menuItems = document.querySelectorAll('.sidebar li');
+const menuItems = document.querySelectorAll(".sidebar li");
 menuItems.forEach((menuItem) => {
-  menuItem.addEventListener('click', openPopup);
+  menuItem.addEventListener("click", openPopup);
 });
-
