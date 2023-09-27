@@ -48,120 +48,180 @@
           </div>
 
           <div class="container p-4 bg-white rounded shadow">
-            <div class="row">
-              <div class="col-md-4">
-                <img
-                  src="/assets/img/default_img.png"
-                  class="rounded float-left img-fluid pb-3"
-                  alt="..."
-                  id="imagem-selecionada"
-                />
-                <div class="custom-file">
-                  <input
-                    type="file"
-                    class="custom-file-input bg-purple"
-                    id="img_path"
-                    name="img_path"
+            <form id="cadastroForm" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-4">
+                  <img
+                    src="/assets/img/default_img.png"
+                    class="rounded float-left img-fluid pb-3"
+                    alt="..."
+                    id="imagem-selecionada"
                   />
-                  <label class="custom-file-label d-hide" for="img_path"
-                    >Selecionar</label
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="custom-file-input bg-purple"
+                      id="img_path"
+                      name="imagem"
+                      required
+                    />
+                    <label class="custom-file-label d-hide" for="img_path"
+                      >Selecionar</label
+                    >
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label>Título</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="titulo"
+                        id="titulo"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label>Tipo</label>
+                      <select
+                        class="form-control"
+                        name="tipo"
+                        id="tipo"
+                        required
+                      >
+                        <option value="">Selecionar</option>
+                        <option value="Produto">Produto</option>
+                        <option value="Serviço">Serviço</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Status</label>
+                      <select
+                        class="form-control"
+                        name="status"
+                        id="status"
+                        required
+                      >
+                        <option value="">Selecionar</option>
+                        <option value="1">Disponível</option>
+                        <option value="0">Indisponível</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Categoria</label>
+                      <select
+                        class="form-control"
+                        name="categoria"
+                        id="categoria"
+                        required
+                      >
+                        <option value="">Selecionar</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12 pt-3">
+                      <label>Descrição</label>
+                      <textarea
+                        class="form-control"
+                        rows="9"
+                        id="descricao"
+                        name="descricao"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="col-md-4">
+                  <label>Quantidade</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="quantidade"
+                    id="quantidade"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>Valor</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="valor"
+                    id="valor"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>Limite de Compra</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="limite_de_compra"
+                    name="limiteCompra"
+                  />
+                </div>
+                <div class="w-100 pt-2"></div>
+                <div class="col-md-4">
+                  <label>Vencimento</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="vencimento"
+                    id="vencimento"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>Cidade</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="cidade"
+                    id="cidade"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label>Retirada</label>
+                  <select
+                    class="form-control"
+                    name="retirada"
+                    id="retirada"
+                    required
                   >
+                    <option value="">Selecionar</option>
+                    <option value="Local">Local</option>
+                    <option value="Entrega">Entrega</option>
+                  </select>
                 </div>
-              </div>
-              <div class="col-md-8">
-                <div class="row">
-                  <div class="col-md-3">
-                    <label>Título</label>
-                    <input type="text" class="form-control" id="titulo" />
-                  </div>
-                  <div class="col-md-3">
-                    <label>Tipo</label>
-                    <select class="form-control" id="tipo">
-                      <option value="">Selecionar</option>
-                      <option value="Produto">Produto</option>
-                      <option value="Serviço">Serviço</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label>Status</label>
-                    <select class="form-control" id="status">
-                      <option value="">Selecionar</option>
-                      <option value="1">Disponível</option>
-                      <option value="0">Indisponível</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label>Categoria</label>
-                    <select class="form-control" id="categoria">
-                      <option value="">Selecionar</option>
-                    </select>
-                  </div>
-                  <div class="col-md-12 pt-3">
-                    <label>Descrição</label>
-                    <textarea
-                      class="form-control"
-                      rows="9"
-                      id="descricao"
-                    ></textarea>
+                <div class="w-100 pt-2"></div>
+                <div class="col-md-12">
+                  <label>Observações</label>
+                  <textarea
+                    class="form-control"
+                    rows="9"
+                    id="observacoes"
+                    name="obs"
+                  ></textarea>
+                </div>
+                <div class="w-100"></div>
+                <div class="row button-container">
+                  <div class="col-4 offset-8 text-right pt-4 button-container">
+                    <button
+                      type="submit"
+                      class="btn-cadastrar btn btn-orange btn-sm space"
+                    >
+                      Salvar
+                    </button>
+                    <button type="button" class="btn btn-purple btn-sm space">
+                      Cancelar
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row pt-4">
-              <div class="col-md-4">
-                <label>Quantidade</label>
-                <input type="number" class="form-control" id="quantidade" />
-              </div>
-              <div class="col-md-4">
-                <label>Valor</label>
-                <input type="number" class="form-control" id="valor" />
-              </div>
-              <div class="col-md-4">
-                <label>Limite de Compra</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="limite_de_compra"
-                />
-              </div>
-              <div class="w-100 pt-2"></div>
-              <div class="col-md-4">
-                <label>Vencimento</label>
-                <input type="date" class="form-control" id="vencimento" />
-              </div>
-              <div class="col-md-4">
-                <label>Cidade</label>
-                <input type="text" class="form-control" id="cidade" />
-              </div>
-              <div class="col-md-4">
-                <label>Retirada</label>
-                <select class="form-control" id="retirada">
-                  <option value="">Selecionar</option>
-                  <option value="Local">Local</option>
-                  <option value="Entrega">Entrega</option>
-                </select>
-              </div>
-              <div class="w-100 pt-2"></div>
-              <div class="col-md-12">
-                <label>Observações</label>
-                <textarea
-                  class="form-control"
-                  rows="9"
-                  id="observacoes"
-                ></textarea>
-              </div>
-              <div class="w-100"></div>
-              <div class="row button-container">
-                <div class="col-4 offset-8 text-right pt-4 button-container">
-                  <button type="button" class="btn btn-orange btn-sm space">
-                    Salvar
-                  </button>
-                  <button type="button" class="btn btn-purple btn-sm space">
-                    Cancelar
-                  </button>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
         <footer-bar></footer-bar>
@@ -178,179 +238,16 @@
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
     ></script>
+    <!-- Import Config -->
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/api.js"></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
 
     <!-- Import Components -->
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
-
-    <!-- Initialize Firebase -->
-    <!-- <script src="/__/firebase/init.js"></script> -->
     <script src="/assets/js/config.js"></script>
-
-    <!-- Script para carregar categorias -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-        const apiUrl = `${window.apiBaseUrl}/categorias/`;
-
-        fetch(apiUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            // Processa os dados JSON recebidos
-
-            data.forEach((categoria) => {
-              // Cria uma linha na tabela para cada transação
-              //console.log('Categoria', categoria);
-              // Obtém a referência para o elemento <select>
-              const categoriaSelect = document.getElementById("categoria");
-              // Cria um elemento de opção
-              const optionCategoria = document.createElement("option");
-              // Define o texto da opção como o nome do plano
-              optionCategoria.textContent = categoria.nome;
-              // Define o valor da opção como o ID do plano
-              optionCategoria.value = categoria.nome;
-              // Adiciona a opção ao elemento <select>
-              categoriaSelect.appendChild(optionCategoria);
-            });
-          })
-          .catch((error) => console.error("Erro:", error));
-      });
-    </script>
-    <!-- Script para Cadastrar Oferta -->
-    <script>
-      // Obtém o elemento do botão pelo seletor de classe
-      const btnCadastrar = document.querySelector(".btn-cadastrar");
-
-      // Adiciona um evento de clique ao botão
-      btnCadastrar.addEventListener("click", () => {
-        // Obtém os valores dos campos de entrada
-        const titulo = document.querySelector("#titulo").value;
-        const tipo = document.querySelector("#tipo").value;
-        const status = document.querySelector("#status").value;
-        const categoria = document.querySelector("#categoria").value;
-        const obs = document.querySelector("#descricao").value;
-        const quantidade = document.querySelector("#quantidade").value;
-        const valor = document.querySelector("#valor").value;
-        const limite_de_compra =
-          document.querySelector("#limite_de_compra").value;
-        const vencimento = document.querySelector("#vencimento").value;
-        const cidade = document.querySelector("#cidade").value;
-        const retirada = document.querySelector("#retirada").value;
-        var cookies = document.cookie.split(";");
-        var idUsuario = null;
-
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          if (cookie.indexOf("usuarioId=") === 0) {
-            idUsuario = cookie.substring("usuarioId=".length, cookie.length);
-            break;
-          }
-        }
-
-        // Crie um objeto FormData para enviar os dados do formulário
-        const formData = new FormData();
-        formData.append("titulo", titulo);
-        formData.append("tipo", tipo);
-        formData.append("status", status);
-        formData.append("categoria", categoria);
-        formData.append("quantidade", quantidade);
-        formData.append("valor", valor);
-        formData.append("limite_de_compra", limite_de_compra);
-        formData.append("vencimento", vencimento);
-        formData.append("cidade", cidade);
-        formData.append("retirada", retirada);
-        formData.append("obs", obs);
-        formData.append("idUsuario", idUsuario);
-
-        // Obtenha o arquivo da imagem
-        const fileInput = document.getElementById("img_path");
-        const img_path = fileInput.files[0];
-        formData.append("img_path", img_path);
-
-        // Configurações da requisição fetch
-        const apiUrl = `${window.apiBaseUrl}/ofertas`;
-        fetch(apiUrl, {
-          method: "POST", // Ou o método HTTP correto (GET, POST, etc.)
-          body: formData,
-        })
-          .then((response) => {
-            // Manipula a resposta da requisição
-            if (response.ok) {
-              // A requisição foi bem-sucedida
-              //console.log('Requisição enviada com sucesso!');
-              showAlertCadastro("Oferta cadastrada  com sucesso!", "success");
-              setTimeout(() => {
-                //$('#myModal').modal('hide');
-                location.reload();
-              }, 4000);
-            } else {
-              // A requisição falhou
-              console.log("Erro na requisição.");
-            }
-          })
-          .catch((error) => {
-            // Captura erros de rede ou outras exceções
-            console.log("Erro na requisição:", error);
-          });
-      });
-    </script>
-    <!-- Script de Alerts-->
-    <script>
-      function showAlert(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".container");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-
-      function showAlertCadastro(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".container");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-    </script>
-    <!-- Carregar Imagem -->
-    <script>
-      // Adiciona um evento de escuta ao input file
-      document
-        .getElementById("img_path")
-        .addEventListener("change", function (event) {
-          // Obtém o elemento da imagem selecionada
-          var imgElement = document.getElementById("imagem-selecionada");
-
-          // Verifica se o usuário selecionou um arquivo
-          if (event.target.files.length > 0) {
-            // Obtém o arquivo selecionado pelo usuário
-            var file = event.target.files[0];
-
-            // Cria um URL temporário para a imagem selecionada
-            var imageURL = URL.createObjectURL(file);
-
-            // Define o URL temporário como o atributo src da tag img
-            imgElement.src = imageURL;
-          } else {
-            // Caso o usuário não tenha selecionado um arquivo, exibe a imagem padrão
-            imgElement.src = "/assets/img/default_img.png";
-          }
-        });
-    </script>
   </body>
 </html>

@@ -36,7 +36,9 @@
         <nav-bar></nav-bar>
         <div class="container py-2">
           <div class="container-simple">
-            <p class="text-muted font-weight-bold">Categorias</p>
+            <p class="text-muted font-weight-bold" id="categoriasPage">
+              Categorias
+            </p>
           </div>
 
           <div class="container alerta p-4 bg-white rounded shadow marginFix">
@@ -217,21 +219,14 @@
     ></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/api.js"></script>
 
     <!-- Import Components -->
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
-
-    <!-- Initialize Firebase -->
-    <!-- <script src="/__/firebase/init.js"></script> -->
-    <script src="/assets/js/config.js"></script>
     <!-- Script para Cadastrar Plano -->
     <script>
       // Obtém o elemento do botão pelo seletor de classe
@@ -286,98 +281,7 @@
           });
       });
     </script>
-    <!-- Script para carregar categorias -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Obtém a data atual
-        const dataAtual = new Date();
 
-        // Obtém o dia, mês e ano da data atual
-        const dia = String(dataAtual.getDate()).padStart(2, "0");
-        const mes = String(dataAtual.getMonth() + 1).padStart(2, "0"); // Os meses são indexados a partir de zero
-        const ano = dataAtual.getFullYear();
-
-        // Formata a data no formato desejado
-        const dataFormatada = `${dia}/${mes}/${ano}`;
-        let dataDeCriacao = document.getElementById("dataDeCriacao");
-        dataDeCriacao.value = dataFormatada;
-        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-        const apiUrl = `${window.apiBaseUrl}/categorias`;
-        fetch(apiUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            // Processa os dados JSON recebidos
-            const tableBody = document.querySelector("tbody");
-            // Limpa o conteúdo atual da tabela
-            tableBody.innerHTML = "";
-            data.forEach((categoria) => {
-              // Cria uma linha na tabela para cada transação
-              console.log(categoria);
-              const row = document.createElement("tr");
-              // Cria as células da linha com os dados da agência
-              const dataCell = document.createElement("td");
-              const data = new Date(categoria.createdAt);
-              dataCell.textContent = data.toLocaleDateString();
-              row.appendChild(dataCell);
-
-              const nomeDaCategoriaCell = document.createElement("td");
-              nomeDaCategoriaCell.textContent = categoria.nome;
-              row.appendChild(nomeDaCategoriaCell);
-
-              const operationsCell = document.createElement("td");
-
-              operationsCell.className =
-                "text-right align-middle d-flex justify-content-end";
-              operationsCell.style.gap = "0.1rem";
-
-              // Cria os botões para as operações
-              const editButton = document.createElement("button");
-              editButton.type = "button";
-              editButton.className = "btn btn-purple btn-sm";
-              editButton.innerHTML = '<i class="bi bi-pencil"></i>';
-              editButton.style.color = "#fff";
-              operationsCell.appendChild(editButton);
-              // Attach an event listener to the edit button
-              editButton.addEventListener("click", function () {
-                openPopup(categoria);
-              });
-
-              const deleteButton = document.createElement("button");
-              deleteButton.type = "button";
-              deleteButton.className = "btn btn-danger btn-sm";
-              deleteButton.innerHTML = '<i class="bi bi-trash3"></i>';
-              operationsCell.appendChild(deleteButton);
-              // Attach an event listener to the edit button
-              deleteButton.addEventListener("click", function () {
-                const id = categoria.id;
-                const apiUrl = `${window.apiBaseUrl}/categorias/${id}`;
-                fetch(apiUrl, {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(data),
-                })
-                  .then((response) => response.json())
-                  .then((result) => {
-                    //console.log('Resposta do servidor:', result);
-                    location.reload();
-                    // Realizar ações adicionais após o sucesso da requisição...
-                  })
-                  .catch((error) => {
-                    console.error("Erro ao enviar requisição:", error);
-                    // Realizar tratamento de erro, se necessário...
-                  });
-              });
-
-              row.appendChild(operationsCell);
-              // Adiciona a linha à tabela
-              tableBody.appendChild(row);
-            });
-          })
-          .catch((error) => console.error("Erro:", error));
-      });
-    </script>
     <!-- Função para abrir o Popup de Edição -->
     <script>
       function openPopup(categoria) {

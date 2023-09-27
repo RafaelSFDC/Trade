@@ -16,13 +16,6 @@
       integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <title>RedeTrade</title>
     <meta name="author" content="Lucas Santana" />
     <link
@@ -43,10 +36,12 @@
         <nav-bar></nav-bar>
         <div class="container py-2">
           <div class="container-simple">
-            <p class="text-muted font-weight-bold">Minhas Ofertas</p>
+            <p class="text-muted font-weight-bold" id="minhasOfertas">
+              Minhas Ofertas
+            </p>
           </div>
 
-          <div class="container p-4 bg-white rounded shadow">
+          <div class="container alerta p-4 bg-white rounded shadow marginFix">
             <div class="row row-cols-5">
               <div class="col-md-4 pt-1">
                 <label> </label>
@@ -61,32 +56,38 @@
                 />
               </div>
               <div class="col-md-4 pt-1">
-                <label>Unidade</label>
-                <select class="form-control" id="unidadeSelect">
+                <label>Agência</label>
+                <select class="form-control">
                   <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-md-4 pt-1 lastE">
                 <label>Título</label>
-                <select class="form-control" id="tituloSelect">
+                <select class="form-control">
                   <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-md-4 pt-1">
                 <label>Cidade</label>
-                <select class="form-control" id="cidadeSelect">
+                <select class="form-control">
                   <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-md-4 pt-1">
                 <label>Categoria</label>
-                <select class="form-control" id="categoriaSelect"></select>
+                <select
+                  class="form-control"
+                  name="categoria"
+                  id="categoria"
+                  required
+                >
+                  <option value="">Selecionar</option>
+                </select>
               </div>
               <div class="col-md-4 pt-1 lastE">
                 <label>Tipo</label>
-                <select class="form-control" id="tipoSelect">
-                  <option value="Produto">Produto</option>
-                  <option value="Serviço">Serviço</option>
+                <select class="form-control">
+                  <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-4 offset-8 text-right pt-4">
@@ -97,10 +98,127 @@
               </div>
             </div>
           </div>
+          <div class="container mt-3 alerta p-4 bg-white rounded shadow">
+            <table
+              class="table table-borderless table-hover"
+              id="unidadesTable"
+            >
+              <thead>
+                <tr id="headerRow">
+                  <th scope="col" class="col-2 text-left">Título</th>
+                  <th scope="col" class="col-2 text-left">Tipo</th>
+                  <th scope="col" class="col-2 text-left">Agência</th>
+                  <th scope="col" class="col-6 text-right">Operação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="align-middle" id="unidade"></td>
+                  <td class="align-middle" id="conta"></td>
+                  <td class="align-middle" id="email"></td>
+                  <td class="align-middle" id="status"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <footer-bar></footer-bar>
       </div>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Plano Agência</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Fechar"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="container p-4 bg-white rounded shadow alert">
+                <div class="row">
+                  <div class="col-md-4 pt-1">
+                    <label>Agência</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nomeDoPlanoModal"
+                    />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Título</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="porcentagemModal"
+                    />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Tipo</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="dataDeCriacaoModal"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn"
+              id="salvar-alteracoes-btn"
+              style="background-color: #ff6600; color: #fff"
+            >
+              Salvar alterações
+            </button>
+            <div class="container alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-form {
+        background-color: #fff;
+        padding: 20px;
+      }
+    </style>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.js"
@@ -114,62 +232,94 @@
     ></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+    <script src="/assets/js/api.js"></script>
 
     <!-- Import Components -->
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
-
-    <!-- Initialize Firebase -->
-    <!-- <script src="/__/firebase/init.js"></script> -->
     <script src="/assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/LexLuthorDev/formatar-moeda@main/dist/index.js"></script>
-    <!-- Script para carregar ofertas -->
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/index.min.js"></script>
+    <!-- Função para abrir o Popup de Edição -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const id_usuario = 1;
-        // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-        const apiUrl = `${window.apiBaseUrl}/ofertas/minhas/${id_usuario}`;
-        fetch(apiUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            // Processa os dados JSON recebidos
+      function openPopup(plano) {
+        $("#myModal").modal("show");
+        // Obtem os Inputs
+        let nomeDoPlanoInput = document.getElementById("nomeDoPlanoModal");
+        let porcentagemInput = document.getElementById("porcentagemModal");
+        let dataDeCriacaoInput = document.getElementById("dataDeCriacaoModal");
 
-            const container = document.querySelector(".cards .row"); // Assuming you want to append the cards inside the div with class 'row' inside the div with class 'container'
-
-            data.ofertas.forEach((oferta) => {
-              console.log(oferta);
-              // Pegando o select do titulo
-              const selectTituloElement =
-                document.getElementById("tituloSelect");
-              const optionTitulo = document.createElement("option");
-              optionTitulo.text = oferta.titulo; // Substitua 'nome' pelo campo que deseja exibir como opção
-              optionTitulo.value = oferta.titulo; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
-              selectTituloElement.appendChild(optionTitulo);
-              // Pegando o select da cidade
-              const selectCidadeElement =
-                document.getElementById("cidadeSelect");
-              const optionCidade = document.createElement("option");
-              optionCidade.text = oferta.cidade; // Substitua 'nome' pelo campo que deseja exibir como opção
-              optionCidade.value = oferta.cidade; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
-              selectCidadeElement.appendChild(optionCidade);
-              // Pegando o select da categoria
-              const selectCategoriaElement =
-                document.getElementById("categoriaSelect");
-              const optionCategoria = document.createElement("option");
-              optionCategoria.text = oferta.categoria; // Substitua 'nome' pelo campo que deseja exibir como opção
-              optionCategoria.value = oferta.categoria; // Substitua 'id' pelo campo que corresponde ao valor da opção (opcional)
-              selectCategoriaElement.appendChild(optionCategoria);
-            });
+        // Preenchendo os campos com os dados correspondentes
+        nomeDoPlanoInput.value = plano.nome;
+        porcentagemInput.value = plano.porcentagem;
+        const data = new Date(plano.createdAt);
+        dataDeCriacaoInput.value = data.toLocaleDateString();
+        // Adicionar evento de clique ao botão de salvar alterações
+        const salvarAlteracoesBtn = document.getElementById(
+          "salvar-alteracoes-btn"
+        );
+        salvarAlteracoesBtn.addEventListener("click", () => {
+          updateAgencia(plano);
+        });
+        function updateAgencia(plano) {
+          const id = plano.id; // Obter o ID da agência dinamicamente
+          let nomeDoPlanoInput =
+            document.getElementById("nomeDoPlanoModal").value;
+          let porcentagemInput =
+            document.getElementById("porcentagemModal").value;
+          const data = {
+            nome: nomeDoPlanoInput,
+            porcentagem: porcentagemInput,
+          };
+          const apiUrl = `${window.apiBaseUrl}/planos/${id}`;
+          fetch(apiUrl, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
           })
-          .catch((error) => console.error("Erro:", error));
-      });
+            .then((response) => response.json())
+            .then((result) => {
+              //console.log('Resposta do servidor:', result);
+              showAlert("Atualização efetuada com sucesso!", "success");
+              setTimeout(() => {
+                //$('#myModal').modal('hide');
+                location.reload();
+              }, 4000);
+
+              // Realizar ações adicionais após o sucesso da requisição...
+            })
+            .catch((error) => {
+              console.error("Erro ao enviar requisição:", error);
+              // Realizar tratamento de erro, se necessário...
+            });
+        }
+      }
+    </script>
+    <!-- Script de Alerts-->
+    <script>
+      function showAlert(message, type) {
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alert");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
+      function showAlertCadastro(message, type) {
+        var alert = document.createElement("div");
+        alert.classList.add("alert", "alert-" + type);
+        alert.innerHTML = message;
+        var container = document.querySelector(".alerta");
+        container.insertBefore(alert, container.firstChild);
+        setTimeout(function () {
+          alert.remove();
+        }, 3000);
+      }
     </script>
   </body>
 </html>
