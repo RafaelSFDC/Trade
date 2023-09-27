@@ -10,6 +10,7 @@ const ofertas = document.getElementById('ofertas');
 const minhasOfertas = document.getElementById('minhasOfertas');
 const categoriasPage = document.getElementById('categoriasPage');
 const subCategoriasPage = document.getElementById('subCategoriasPage');
+const agenciasLista = document.getElementById('agenciasLista');
 // ---------- PLANOS
 const associados = document.getElementById('associados');
 const agencias = document.getElementById('agencias');
@@ -34,6 +35,7 @@ if (form) {
 
     const formData = new FormData(form);
     formData.append("idAgencia", usuarioId);
+
     const method = "POST";
     const page = "ofertas";
     apiHandler(method, page, formData);
@@ -51,14 +53,18 @@ if (imageInput) {
 
     // Verifica se o usuário selecionou um arquivo
     if (event.target.files.length > 0) {
+
       // Obtém o arquivo selecionado pelo usuário
       var file = event.target.files[0];
+      console.log(file)
 
       // Cria um URL temporário para a imagem selecionada
       var imageURL = URL.createObjectURL(file);
+      console.log("img_url", imageURL)
 
       // Define o URL temporário como o atributo src da tag img
       imgElement.src = imageURL;
+
     } else {
       // Caso o usuário não tenha selecionado um arquivo, exibe a imagem padrão
       imgElement.src = "/assets/img/default_img.png";
@@ -91,7 +97,7 @@ if (categoriaSelect) {
 }
 
 //-------------------- REQUISIÇÃO API --------------------
-async function apiHandler(method, page, type, body) {
+async function apiHandler(method, page, body) {
   const destination = `${url}${page}`
   // Fazer uma requisição à sua API para obter os dados
   if (method === "GET") {
@@ -604,3 +610,60 @@ async function categoriasHandler(category) {
   });
 }
 
+// ------------------------------ CONTROLADOR DAS AGÊNCIAS ------------------------------
+// --------- CONDIÇÕES
+if (agenciasLista) {
+  agenciasHandler("agencias")
+}
+
+// --------- FUNÇÕES
+async function agenciasHandler(page) {
+  // const apiUrl = `${url}${page}`;
+
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // };
+
+
+  // const response = await fetch(apiUrl, options);
+  // const responseData = await response.json();
+
+  // const tableBody = document.querySelector("tbody");
+  // tableBody.innerHTML = "";
+  // responseData.ofertas.forEach((categoria) => {
+  //   const row = createTableRow(categoria, "ofertas");
+  //   tableBody.appendChild(row);
+  // });
+
+  const url = 'http://localhost:3000/usuarios/tipo/meus/1';
+
+  const dadosParaEnviar = {
+    tipos: ["Comum", "Matriz", "Master"],
+    pagina: 0,
+    tamanho: 4
+  };
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dadosParaEnviar)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao fazer a solicitação.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data.itensPaginados);
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+    });
+
+}
