@@ -1,5 +1,5 @@
-// const url = "https://api.redetrade.com.br/"
-const url = "http://localhost:3000/"
+const url = "http://147.135.72.49:3000/"
+// const url = "http://localhost:3000/"
 
 // ------------------------------ CONSTANTES ------------------------------
 const categoriaSelect = document.getElementById("categoria");
@@ -23,7 +23,7 @@ if (form) {
     event.preventDefault();
     // Obtén el valor del cookie
     var cookies = document.cookie.split(";");
-    var usuarioId = null;
+    var usuarioId = 5;
 
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i].trim();
@@ -34,7 +34,8 @@ if (form) {
     }
 
     const formData = new FormData(form);
-    formData.append("idAgencia", usuarioId);
+    formData.append("idAgencia", 3);
+    formData.append("usuarioId", "5");
 
     const method = "POST";
     const page = "ofertas";
