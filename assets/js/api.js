@@ -1,31 +1,36 @@
 // const url = "http://147.135.72.49:3000/"
 const url = "http://localhost:3000/"
 
+function getId(id) { return document.getElementById(id) }
+
 // ------------------------------ CONSTANTES ------------------------------
-const categoriaSelect = document.getElementById("categoria");
-const form = document.getElementById("cadastroForm");
-const imageInput = document.getElementById("img_path");
-const cardsContainer = document.getElementById('cardsContainer');
-const ofertas = document.getElementById('ofertas');
-const minhasOfertas = document.getElementById('minhasOfertas');
-const categoriasPage = document.getElementById('categoriasPage');
-const subCategoriasPage = document.getElementById('subCategoriasPage');
-const cardsAssociados = document.getElementById('cardsAssociados');
+const categoriaSelect = getId("categoria");
+const form = getId("cadastroForm");
+const imageInput = getId("img_path");
+const cardsContainer = getId('cardsContainer');
+const ofertas = getId('ofertas');
+const minhasOfertas = getId('minhasOfertas');
+const categoriasPage = getId('categoriasPage');
+const subCategoriasPage = getId('subCategoriasPage');
+const cardsAssociados = getId('cardsAssociados');
 // ---------- LISTAS
-const agenciasLista = document.getElementById('agenciasLista');
-const associadosLista = document.getElementById('associadosLista');
-const gerentesLista = document.getElementById('gerentesLista');
+const agenciasLista = getId('agenciasLista');
+const associadosLista = getId('associadosLista');
+const gerentesLista = getId('gerentesLista');
 // ---------- PLANOS
-const associados = document.getElementById('associados');
-const agencias = document.getElementById('agencias');
-const gerentes = document.getElementById('gerentes');
-const btnCadastrar = document.querySelector(".btn-cadastrar");
+const associados = getId('associados');
+const agencias = getId('agencias');
+const gerentes = getId('gerentes');
+const btnCadastrar = getId(".btn-cadastrar");
 // ---------- USUÁRIOS
-const usuariosList = document.getElementById('usuariosLista');
-const usuariosEdit = document.getElementById('usuariosEdit');
+const usuariosList = getId('usuariosLista');
+const usuariosEdit = getId('usuariosEdit');
+// ---------- TRANSAÇÃO
+const transacoes = getId("transacoes")
 
 // ------------------------------ CADASTRAR OFERTAS ------------------------------
 if (form) {
+  console.log("form")
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     // Obtén el valor del cookie
@@ -41,11 +46,12 @@ if (form) {
     }
 
     const formData = new FormData(form);
-    formData.append("idAgencia", 3);
-    formData.append("usuarioId", "5");
+    // formData.append("idComprador", "1");
+    // formData.append("idVendedor", "2");
+    // formData.append("id", "2");
 
     const method = "POST";
-    const page = "ofertas";
+    const page = "transacoes";
     apiHandler(method, page, formData);
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}: ${pair[1]}`);
@@ -342,6 +348,17 @@ function openPopupEdit(plano, page) {
     ];
     setupEventListener(page, fields, plano);
   }
+  else if (page === "transacoes") {
+    const fields = [
+      { id: "vendedorModal", dataKey: "nomeVendedor", type: 'input', value: (plano) => plano.nomeVendedor },
+      { id: "compradorModal", dataKey: "nomeComprador", type: 'input', value: (plano) => plano.nomeComprador },
+      { id: "descricaoModal", dataKey: "descricao", type: 'input', value: (plano) => plano.descricao },
+      { id: "statusModal", dataKey: "status", type: 'select', value: (plano) => plano.status },
+      { id: "valorModal", dataKey: "valorRt", type: 'input', value: (plano) => plano.valorRt },
+
+    ];
+    setupEventListener(page, fields, plano);
+  }
   // Exemplo para a página "usuario"
   else if (page === "associados") {
     const fields = [
@@ -452,7 +469,6 @@ function formatDate() {
   return formattedDate
 }
 // ----- Cria a tabela
-
 function createTableRow(categoria, page) {
   console.log(page)
   const row = document.createElement("tr");
@@ -517,6 +533,16 @@ function createTableRow(categoria, page) {
     createOperators(row, categoria, page)
     return row;
   }
+  else if (page === "transacoes") {
+    createCell(categoria.nomeVendedor)
+    createCell(categoria.nomeComprador)
+    createCell(categoria.descricao)
+    createCell(formatCreatedAt(categoria.createdAt))
+    createCell(categoria.valorRt)
+    createCell(getStatusString(categoria.status))
+    createOperators(row, categoria, page)
+    return row;
+  }
   else {
     const dataCell = document.createElement("td");
     const formattedData = formatData(categoria.createdAt);
@@ -565,6 +591,13 @@ async function deleteTableRow(categoria, page) {
   } catch (error) {
     console.error("Erro ao enviar requisição:", error);
   }
+}
+function formatCreatedAt(dateString) {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(dateString).toLocaleDateString('pt-BR', options);
+}
+function getStatusString(status) {
+  return status ? 'Ativo' : 'Desativado';
 }
 
 // ------------------------------ CONTROLADOR DAS LISTAS DE OFERTAS ------------------------------
@@ -766,12 +799,33 @@ async function usuariosHandler(page) {
 
 }
 
+// ------------------------------ CONTROLADOR DE ASSOCIADOS E AGÊNCIA ------------------------------
+// --------- CONDIÇÕES
+
 // ------------------------------ CARDS ASSOCIADOS ------------------------------
 // --------- CONDIÇÕES
-if (cardsAssociados) {
+if (transacoes) {
   // Chama a função para carregar os cards iniciais quando a página carregar
-  carregarCardsIniciais();
+  transacoesHandler("transacoes");
 }
+// --------- FUNÇÕES
+async function transacoesHandler(transacoes) {
+
+  const apiUrl = `${url}${transacoes}`;
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+  console.log(data)
+
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = "";
+
+  data.transacoes.forEach((categoria) => {
+    console.log(categoria)
+    const row = createTableRow(categoria, "transacoes");
+    tableBody.appendChild(row);
+  });
+}
+
 // ----- Carrega as páginas
 async function carregarCardsIniciais() {
   const apiUrl = `${url}usuarios/tipo/meus/1`;

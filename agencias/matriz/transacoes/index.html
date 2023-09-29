@@ -57,7 +57,9 @@
         <nav-bar></nav-bar>
         <div class="container py-2">
           <div class="container-simple">
-            <p class="text-muted font-weight-bold">Transações</p>
+            <p class="text-muted font-weight-bold" id="transacoes">
+              Transações
+            </p>
           </div>
 
           <div class="container p-4 bg-white rounded shadow">
@@ -181,82 +183,76 @@
         <footer-bar></footer-bar>
       </div>
     </div>
+
+    <!-- Modal -->
     <div
-      class="modal fade bd-example-modal-xl"
-      id="modalVisualizar"
+      class="modal fade"
+      id="myModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="myLargeModalLabel"
+      aria-labelledby="myModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-          <!-- Conteúdo do pop-up  -->
           <div class="modal-header">
-            <h5 class="modal-title" id="modalVisualizarLabel">
-              Detalhes da Transação
-            </h5>
+            <h5 class="modal-title">Editar Ofertas</h5>
             <button
               type="button"
-              class="Close"
+              class="close"
               data-dismiss="modal"
               aria-label="Fechar"
-            ></button>
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-3">
-                  <h5 class="card-title">Vendedor</h5>
-                  <h6 class="card-subtitle mb-2 text-muted" id="vendedor"></h6>
-                </div>
-                <div class="col-md-3 ml-auto">
-                  <h5 class="card-title">Comprador</h5>
-                  <h6 class="card-subtitle mb-2 text-muted" id="comprador"></h6>
-                </div>
-                <div class="col-md-3">
-                  <h5 class="card-title">Status</h5>
-                  <h6
-                    class="card-subtitle mb-2 text-muted"
-                    id="statusModal"
-                  ></h6>
-                </div>
-                <div class="col-md-3 ml-auto">
-                  <h5 class="card-title">Descrição</h5>
-                  <h6 class="card-subtitle mb-2 text-muted" id="descricao"></h6>
-                </div>
-              </div>
-
-              <div class="w-100 border border-warning mt-3 mb-3"></div>
-
-              <div class="row">
-                <div class="col-md-3">
-                  <h5 class="card-title">Vencimento</h5>
-                  <h6
-                    class="card-subtitle mb-2 text-muted"
-                    id="vencimento"
-                  ></h6>
-                </div>
-                <div class="col-md-3 ml-auto">
-                  <h5 class="card-title">Valor RT$</h5>
-                  <h6 class="card-subtitle mb-2 text-muted" id="valor"></h6>
-                </div>
-                <div class="col-md-3">
-                  <h5 class="card-title">StatusParcela</h5>
-                  <h6
-                    class="card-subtitle mb-2 text-muted"
-                    id="statusParcela"
-                  ></h6>
-                </div>
-                <div class="col-md-3 ml-auto">
-                  <h5 class="card-title">Parcelas</h5>
-                  <h6
-                    class="card-subtitle mb-2 text-muted"
-                    id="numeroDeParcelas"
-                  ></h6>
+            <form>
+              <div class="container p-4 bg-white rounded shadow alert">
+                <div class="row">
+                  <div class="col-md-4 pt-1">
+                    <label>Vendedor</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="vendedorModal"
+                    />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Comprador</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="compradorModal"
+                    />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Descrição</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="descricaoModal"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label>Status</label>
+                    <select
+                      class="form-control"
+                      name="status"
+                      id="statusModal"
+                      required
+                    >
+                      <option value="true">Disponível</option>
+                      <option value="false">Indisponível</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Valor</label>
+                    <input type="number" class="form-control" id="valorModal" />
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button
@@ -266,10 +262,37 @@
             >
               Fechar
             </button>
+            <button
+              type="button"
+              class="btn"
+              id="salvar-alteracoes-btn"
+              style="background-color: #ff6600; color: #fff"
+            >
+              Salvar alterações
+            </button>
+            <div class="container alert"></div>
           </div>
         </div>
       </div>
     </div>
+    <style>
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-form {
+        background-color: #fff;
+        padding: 20px;
+      }
+    </style>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.js"
@@ -283,21 +306,12 @@
     ></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+    <script src="/assets/js/api.js"></script>
 
     <!-- Import Components -->
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
-
-    <!-- Initialize Firebase -->
-    <!-- <script src="/__/firebase/init.js"></script> -->
-    <script src="/assets/js/config.js"></script>
 
     <script
       type="text/javascript"
@@ -321,401 +335,5 @@
       integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
       crossorigin="anonymous"
     ></script>
-    <!-- DataPicker -->
-    <script>
-      $(function () {
-        $('input[name="datefilter"]').daterangepicker(
-          {
-            opens: "left",
-            autoApply: true,
-            locale: {
-              direction: "ltr",
-              format: "DD/MM/YYYY",
-              separator: " - ",
-              fromLabel: "De",
-              toLabel: "até",
-              customRangeLabel: "Custom",
-              daysOfWeek: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
-              monthNames: [
-                "Janeiro",
-                "Fevereiro",
-                "Março",
-                "Abril",
-                "Maio",
-                "Junho",
-                "Julho",
-                "Agosto",
-                "Setembro",
-                "Outubro",
-                "Novembro",
-                "Dezembro",
-              ],
-            },
-          },
-          function (start, end, label) {
-            console.log(
-              "A new date selection was made: " +
-                start.format("YYYY-MM-DD") +
-                " to " +
-                end.format("YYYY-MM-DD")
-            );
-          }
-        );
-      });
-    </script>
-    <!-- Script carregar agencias -->
-    <script>
-      $(document).ready(function () {
-        // Recupera o cookie
-        var cookies = document.cookie.split(";");
-        var usuarioId = null;
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          if (cookie.indexOf("usuarioId=") === 0) {
-            usuarioId = cookie.substring("usuarioId=".length, cookie.length);
-            break;
-          }
-        }
-        // Verifica se o idUsuario foi encontrado
-        if (usuarioId === "") {
-          console.error("O cookie idUsuario não foi encontrado.");
-          return;
-        }
-        const apiUrl = `${window.apiBaseUrl}/usuarios/listar/${usuarioId}`;
-
-        fetch(apiUrl)
-          .then((response) => response.json())
-          .then((agencias) => {
-            // Aqui você pode processar a lista de usuários retornada pela API
-            //console.log(agencias);
-            // Limpa as opções atuais do <select> Associado
-            $("#selectAgencia").empty();
-            // Adiciona uma opção vazia como padrão
-            $("#selectAgencia").append('<option value="">Selecionar</option>');
-            // Itera sobre os usuários retornados pela API
-            agencias.forEach(function (agencia) {
-              $("#selectAgencia").append(
-                '<option value="' +
-                  agencia.id +
-                  '">' +
-                  agencia.nomeFantasia +
-                  "</option>"
-              );
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar agências:", error);
-          });
-      });
-    </script>
-    <!-- Script carregar associados -->
-    <script>
-      $(document).ready(function () {
-        // Recupera o cookie
-        var cookies = document.cookie.split(";");
-        var usuarioId = null;
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = cookies[i].trim();
-          if (cookie.indexOf("usuarioId=") === 0) {
-            usuarioId = cookie.substring("usuarioId=".length, cookie.length);
-            break;
-          }
-        }
-        // Verifica se o idUsuario foi encontrado
-        if (usuarioId === "") {
-          console.error("O cookie idUsuario não foi encontrado.");
-          return;
-        }
-        const apiUrl = `${window.apiBaseUrl}/associados/listar/${usuarioId}`;
-
-        fetch(apiUrl)
-          .then((response) => response.json())
-          .then((associados) => {
-            // Aqui você pode processar a lista de usuários retornada pela API
-            //console.log(associados);
-            // Limpa as opções atuais do <select> Associado
-            $("#selectAssociado").empty();
-            // Adiciona uma opção vazia como padrão
-            $("#selectAssociado").append(
-              '<option value="">Selecionar</option>'
-            );
-            // Itera sobre os usuários retornados pela API
-            associados.forEach(function (associado) {
-              $("#selectAssociado").append(
-                '<option value="' +
-                  associado.id +
-                  '">' +
-                  associado.nomeFantasia +
-                  "</option>"
-              );
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar usuários:", error);
-          });
-      });
-    </script>
-    <!-- Script enviar fetch para o filtro -->
-    <script>
-      document
-        .getElementById("localizarBtn")
-        .addEventListener("click", function () {
-          // Capturar os valores dos campos de entrada e seleção
-          var associado = document.getElementById("selectAssociado").value;
-          var agencia = document.getElementById("selectAgencia").value;
-          var comprador = document.getElementById("inputComprador").value;
-          var vendedor = document.getElementById("inputVendedor").value;
-
-          var datefilter = document.getElementById("datefilter").value;
-          // Dividir a string em duas partes usando o separador " - "
-          const dateParts = datefilter.split(" - ");
-
-          // Obter a data inicial e a data final
-          const dataInicialStr = dateParts[0];
-          const dataFinalStr = dateParts[1];
-
-          // Função para formatar a data no formato "yyyy-dd-mm"
-          function formatDateToYYYYDDMM(dateStr) {
-            const parts = dateStr.split("/");
-            const formattedDate = `${parts[2]}-${parts[0].padStart(
-              2,
-              "0"
-            )}-${parts[1].padStart(2, "0")}`;
-            return formattedDate;
-          }
-
-          // Converter as datas para o formato "yyyy-dd-mm"
-          const dataInicial = formatDateToYYYYDDMM(dataInicialStr);
-          const dataFinal = formatDateToYYYYDDMM(dataFinalStr);
-
-          // Recupera o cookie
-          var cookies = document.cookie.split(";");
-          var usuarioId = null;
-          for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.indexOf("usuarioId=") === 0) {
-              usuarioId = cookie.substring("usuarioId=".length, cookie.length);
-              break;
-            }
-          }
-          // Verifica se o idUsuario foi encontrado
-          if (usuarioId === "") {
-            console.error("O cookie idUsuario não foi encontrado.");
-            return;
-          }
-          const apiUrl = `${window.apiBaseUrl}/transacao/filtrar/`;
-          const data = {
-            associado,
-            agencia,
-            comprador,
-            vendedor,
-            dataInicial,
-            dataFinal,
-          };
-          //console.log(data);
-          //return;
-          fetch(apiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((transacoes) => {
-              // Aqui você pode processar a lista de usuários retornada pela API
-              console.log(transacoes);
-              // Percorrer os resultados filtrados e adicionar linhas à tabela
-              transacoes.forEach(function (transacao) {
-                var dataTransacao = new Date(transacao.data);
-
-                var dataTransacaoFormatada = formatarData(dataTransacao);
-                let valorRt = transacao.valorRt;
-                let valorRtFormatado = valorRt.toLocaleString("pt-BR", {
-                  minimumFractionDigits: 2,
-                });
-                var row = $("<tr></tr>");
-
-                // Adicionar as células da linha com os dados da transação
-                row.append("<td>" + transacao.vendedor + "</td>");
-                row.append("<td>" + transacao.comprador + "</td>");
-                row.append("<td>" + transacao.descricao + "</td>");
-                row.append("<td>" + dataTransacaoFormatada + "</td>");
-                row.append("<td>" + valorRtFormatado + "</td>");
-                // Status cell and span
-                const statusCell = document.createElement("td");
-                const statusSpan = document.createElement("span");
-
-                if (transacao.status === "Aprovada") {
-                  statusSpan.textContent = transacao.status;
-                  statusSpan.classList.add(
-                    "bg-info",
-                    "pr-2",
-                    "pl-2",
-                    "pb-1",
-                    "rounded",
-                    "text-light"
-                  );
-                  statusSpan.style.fontSize = "0.9rem";
-                } else if (transacao.status === "Estornada") {
-                  statusSpan.textContent = transacao.status;
-                  statusSpan.classList.add(
-                    "bg-danger",
-                    "pr-2",
-                    "pl-2",
-                    "pb-1",
-                    "rounded",
-                    "text-light"
-                  );
-                  statusSpan.style.fontSize = "0.9rem";
-                } else {
-                  statusSpan.textContent = transacao.status;
-                  statusSpan.classList.add(
-                    "bg-warning",
-                    "pr-2",
-                    "pl-2",
-                    "pb-1",
-                    "rounded",
-                    "text-light"
-                  );
-                  statusSpan.style.fontSize = "0.9rem";
-                }
-
-                // Append the span to the status cell
-                statusCell.appendChild(statusSpan);
-                // Append the status cell to the row
-                row.append(statusCell);
-                var eyeIcon = $(
-                  "<i class='bi bi-eye' style='cursor: pointer;' data-bs-toggle='modal' data-bs-target='#modalVisualizar' data-bs-toggle='tooltip' title='Visualizar'></i>"
-                );
-
-                // Event listener for the eye icon
-                eyeIcon.click(function () {
-                  let vendedorElement = document.getElementById("vendedor");
-                  let compradorElement = document.getElementById("comprador");
-                  let descricaoElement = document.getElementById("descricao");
-                  let valorElement = document.getElementById("valor");
-                  let statusElement = document.getElementById("statusModal");
-                  let numeroDeParcelasElement =
-                    document.getElementById("numeroDeParcelas");
-                  let vencimento = document.getElementById("vencimento");
-                  let statusParcela = document.getElementById("statusParcela");
-
-                  vendedorElement.textContent = transacao.vendedor;
-                  compradorElement.textContent = transacao.comprador;
-                  descricaoElement.textContent = transacao.descricao;
-                  // Formate a data, valor e status conforme necessário
-                  const dataRecebida = transacao.data;
-                  const data = new Date(dataRecebida);
-
-                  const dia = data.getDate().toString().padStart(2, "0");
-                  const mes = (data.getMonth() + 1).toString().padStart(2, "0");
-                  const ano = data.getFullYear();
-
-                  const dataFormatada = `${dia}/${mes}/${ano}`;
-                  //console.log(dataFormatada);
-                  const valorRt = transacao.valorRt;
-                  let valorRtFormatado = valorRt.toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                  });
-                  valorElement.textContent = valorRtFormatado;
-                  statusElement.textContent = transacao.status;
-                  numeroDeParcelasElement.textContent =
-                    transacao.numeroDeParcelas;
-                  vencimento.textContent = dataFormatada;
-                  let statusParcelaTxt = "";
-                  if (transacao.numeroDeParcelas == 0) {
-                    statusParcelaTxt = "Paga";
-                  } else {
-                    statusParcelaTxt = "Verificar o numero de parcela";
-                  }
-                  statusParcela.textContent = statusParcelaTxt;
-
-                  // Open the modal
-                  $("#modalVisualizar").modal("show");
-                });
-
-                // Add the eye icon to the table cell
-                row.append($("<td class='d-flex ml-2'></td>").append(eyeIcon));
-                // Adicionar a linha à tabela
-                $("#unidadesTable tbody").append(row);
-              });
-
-              if (transacoes == "") {
-                showAlert(
-                  "Nenhuma Transação para o filtro selecionado",
-                  "danger"
-                );
-              }
-            })
-            .catch((error) => {
-              console.error("Erro ao buscar transação:", error);
-            });
-        });
-    </script>
-
-    <!-- Script ShowAlert -->
-    <script>
-      function showAlert(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-
-        var container = document.querySelector(".container");
-        container.insertBefore(alert, container.firstChild);
-
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-    </script>
-    <!-- Script Função para formatar a data no formato "dd/mm/aaaa" -->
-    <script>
-      function formatarData(data) {
-        var dia = ("0" + data.getDate()).slice(-2);
-        var mes = ("0" + (data.getMonth() + 1)).slice(-2);
-        var ano = data.getFullYear();
-        return dia + "/" + mes + "/" + ano;
-      }
-    </script>
-    <!-- Script data -->
-    <script>
-      // Função para obter a data final do mês
-      function getEndOfMonth() {
-        const today = new Date();
-        const endOfMonth = new Date(
-          today.getFullYear(),
-          today.getMonth() + 1,
-          0
-        );
-        return endOfMonth;
-      }
-
-      // Função para formatar a data em formato "dd/mm/yyyy"
-      function formatDate(date) {
-        const day = String(date.getDate()).padStart(2, "0");
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-      }
-
-      // Obtendo a data atual
-      const currentDate = new Date();
-
-      // Obtendo a data final do mês
-      const endOfMonth = getEndOfMonth();
-
-      // Formatando as datas
-      const formattedCurrentDate = formatDate(currentDate);
-      const formattedEndOfMonth = formatDate(endOfMonth);
-
-      let datefilter = document.getElementById("datefilter");
-      datefilter.value = formattedCurrentDate + " - " + formattedEndOfMonth;
-      console.log(datefilter);
-
-      // Exibindo as datas
-      console.log("Data atual:", formattedCurrentDate);
-      console.log("Data final do mês:", formattedEndOfMonth);
-    </script>
   </body>
 </html>
