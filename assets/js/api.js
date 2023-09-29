@@ -10,9 +10,11 @@ const ofertas = document.getElementById('ofertas');
 const minhasOfertas = document.getElementById('minhasOfertas');
 const categoriasPage = document.getElementById('categoriasPage');
 const subCategoriasPage = document.getElementById('subCategoriasPage');
+const cardsAssociados = document.getElementById('cardsAssociados');
+// ---------- LISTAS
 const agenciasLista = document.getElementById('agenciasLista');
 const associadosLista = document.getElementById('associadosLista');
-const cardsAssociados = document.getElementById('cardsAssociados');
+const gerentesLista = document.getElementById('gerentesLista');
 // ---------- PLANOS
 const associados = document.getElementById('associados');
 const agencias = document.getElementById('agencias');
@@ -598,17 +600,21 @@ async function categoriasHandler(category) {
 // ------------------------------ CONTROLADOR DE ASSOCIADOS E AGÊNCIA ------------------------------
 // --------- CONDIÇÕES
 if (agenciasLista) {
-  agenciasHandler("Agencias")
+  usuariosHandler("Agencias")
 } else if (associadosLista) {
-  agenciasHandler("Associados")
+  usuariosHandler("Associados")
+} else if (gerentesLista) {
+  usuariosHandler("Gerente")
 }
 // --------- FUNÇÕES
-async function agenciasHandler(page) {
+async function usuariosHandler(page) {
   var request = []
   if (page === "Agencias") {
     request = ["Comum", "Matriz", "Master"]
   } else if (page === "Associados") {
     request = ["Associado"]
+  } else if (page === "Gerente") {
+    request = ["Gerente"]
   }
 
   const data = {
@@ -635,7 +641,7 @@ async function agenciasHandler(page) {
   tableBody.innerHTML = "";
 
   responseData.itensPaginados.forEach((agencia) => {
-    console.log(agencia)
+    console.log("Logando a Agencia", agencia)
     const row = createTableRow(agencia, "agencias");
     tableBody.appendChild(row);
   });
@@ -784,7 +790,7 @@ if (associadoId) {
 }
 
 async function associadosInfo() {
-  const associadoId = 2;  // Você pode ajustar isso para o ID do associado que deseja obter
+  const associadoId = 1;  // Você pode ajustar isso para o ID do associado que deseja obter
 
   const apiUrl = `http://localhost:3000/usuarios/meus-dados/${associadoId}`;
 
@@ -806,7 +812,6 @@ async function associadosInfo() {
     }
 
     // Atualizar os elementos HTML com os dados obtidos
-    putValue('nome', data.nome)
     putValue('site', data.dadosContatos.site)
     putValue('telefone', data.telefone)
     putValue('email', data.email)
@@ -822,6 +827,7 @@ async function associadosInfo() {
     document.getElementById("restricao").innerText = data.dadosGerais.restricao
     document.getElementById("atendimento").innerText = data.dadosOperacoes.tipoOperacao
     document.getElementById("descricao").innerText = data.dadosGerais.descricao
+    document.getElementById("nome").innerText = data.nome
 
     // Substituir o src da imagem
     const imagemElement = document.getElementById('imagem');
