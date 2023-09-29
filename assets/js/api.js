@@ -1,5 +1,5 @@
-const url = "http://147.135.72.49:3000/"
-// const url = "http://localhost:3000/"
+// const url = "http://147.135.72.49:3000/"
+const url = "http://localhost:3000/"
 
 // ------------------------------ CONSTANTES ------------------------------
 const categoriaSelect = document.getElementById("categoria");
@@ -11,6 +11,8 @@ const minhasOfertas = document.getElementById('minhasOfertas');
 const categoriasPage = document.getElementById('categoriasPage');
 const subCategoriasPage = document.getElementById('subCategoriasPage');
 const agenciasLista = document.getElementById('agenciasLista');
+const associadosLista = document.getElementById('associadosLista');
+const cardsAssociados = document.getElementById('cardsAssociados');
 // ---------- PLANOS
 const associados = document.getElementById('associados');
 const agencias = document.getElementById('agencias');
@@ -148,7 +150,7 @@ function gerarCards(ofertas) {
     <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 352px;height: auto;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;!important">
     <div class="row  m-0 p-0" style="width:100%;">
       <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
-          <img src="${url}/${oferta.imagem}" class="img-fluid" style="width:100%;height: 250px;">
+          <img src="${url}${oferta.imagem.replace(/\\/g, '/')}" class="img-fluid" style="width:100%;height: 250px;">
       </div>
     </div>
     <div class="row w-100 p-0 m-0 produto">
@@ -361,27 +363,10 @@ function formatDate() {
   return formattedDate
 }
 // ----- Cria a tabela
+
 function createTableRow(categoria, page) {
   const row = document.createElement("tr");
-
-  if (page === "ofertas") {
-
-    // const dataCell = document.createElement("td");
-    // const formattedData = formatData(categoria.createdAt);
-    // dataCell.textContent = formattedData;
-    // row.appendChild(dataCell);
-
-    const tituloCell = document.createElement("td");
-    tituloCell.textContent = categoria.titulo;
-    row.appendChild(tituloCell);
-
-    const tipoCell = document.createElement("td");
-    tipoCell.textContent = categoria.tipo;
-    row.appendChild(tipoCell);
-
-    const agenciaCell = document.createElement("td");
-    agenciaCell.textContent = categoria.valor;
-    row.appendChild(agenciaCell);
+  function createOperators(row, categoria, page) {
 
     const operationsCell = document.createElement("td");
     operationsCell.className = "text-right align-middle d-flex justify-content-end";
@@ -400,42 +385,41 @@ function createTableRow(categoria, page) {
     operationsCell.appendChild(deleteButton);
 
     row.appendChild(operationsCell);
+  }
+  function createCell(value) {
+    const cell = document.createElement("td");
+    cell.textContent = value
+    row.appendChild(cell)
+  }
 
+  if (page === "ofertas") {
+    createCell(categoria.titulo)
+    createCell(categoria.tipo)
+    createCell(categoria.valor)
+    createOperators(row, categoria, page)
     return row;
-  } else {
+  }
+  else if (page === "agencias") {
+    createCell(categoria.nome)
+    createCell(categoria.dadosEnderecos.estado)
+    createCell(categoria.conta)
+    createCell(categoria.email)
+    createCell(categoria.statusConta)
+    createCell(categoria.dadosAgencias.nomeAgencia)
+    createOperators(row, categoria, page)
+    return row;
+  }
+  else {
     const dataCell = document.createElement("td");
     const formattedData = formatData(categoria.createdAt);
     dataCell.textContent = formattedData;
+
     row.appendChild(dataCell);
-
-    const nomeDaCategoriaCell = document.createElement("td");
-    nomeDaCategoriaCell.textContent = categoria.nome;
-    row.appendChild(nomeDaCategoriaCell);
-
+    createCell(categoria.nome)
     if (categoria.porcentagem) {
-      const porcentagemCell = document.createElement("td");
-      porcentagemCell.textContent = categoria.porcentagem;
-      row.appendChild(porcentagemCell);
+      createCell(categoria.porcentagem)
     }
-
-    const operationsCell = document.createElement("td");
-    operationsCell.className = "text-right align-middle d-flex justify-content-end";
-    operationsCell.style.gap = "0.1rem";
-
-    const editButton = createButton("bi-pencil", "btn-purple");
-    editButton.addEventListener("click", function () {
-      openPopupEdit(categoria, page);
-    });
-    operationsCell.appendChild(editButton);
-
-    const deleteButton = createButton("bi-trash3", "btn-danger");
-    deleteButton.addEventListener("click", function () {
-      deleteTableRow(categoria, page);
-    });
-    operationsCell.appendChild(deleteButton);
-
-    row.appendChild(operationsCell);
-
+    createOperators(row, categoria, page)
     return row;
   }
 
@@ -611,60 +595,391 @@ async function categoriasHandler(category) {
   });
 }
 
-// ------------------------------ CONTROLADOR DAS AGÊNCIAS ------------------------------
+// ------------------------------ CONTROLADOR DE ASSOCIADOS E AGÊNCIA ------------------------------
 // --------- CONDIÇÕES
 if (agenciasLista) {
-  agenciasHandler("agencias")
+  agenciasHandler("Agencias")
+} else if (associadosLista) {
+  agenciasHandler("Associados")
 }
-
 // --------- FUNÇÕES
 async function agenciasHandler(page) {
-  // const apiUrl = `${url}${page}`;
+  var request = []
+  if (page === "Agencias") {
+    request = ["Comum", "Matriz", "Master"]
+  } else if (page === "Associados") {
+    request = ["Associado"]
+  }
 
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // };
-
-
-  // const response = await fetch(apiUrl, options);
-  // const responseData = await response.json();
-
-  // const tableBody = document.querySelector("tbody");
-  // tableBody.innerHTML = "";
-  // responseData.ofertas.forEach((categoria) => {
-  //   const row = createTableRow(categoria, "ofertas");
-  //   tableBody.appendChild(row);
-  // });
-
-  const url = 'http://localhost:3000/usuarios/tipo/meus/1';
-
-  const dadosParaEnviar = {
-    tipos: ["Comum", "Matriz", "Master"],
+  const data = {
+    tipos: request,
     pagina: 0,
     tamanho: 4
   };
 
-  fetch(url, {
-    method: 'POST',
+  const apiUrl = `${url}usuarios/tipo/meus/1`;
+
+  const options = {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(dadosParaEnviar)
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erro ao fazer a solicitação.');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data.itensPaginados);
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-    });
+    body: JSON.stringify(data),
+  };
+
+
+  const response = await fetch(apiUrl, options);
+  const responseData = await response.json();
+
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = "";
+
+  responseData.itensPaginados.forEach((agencia) => {
+    console.log(agencia)
+    const row = createTableRow(agencia, "agencias");
+    tableBody.appendChild(row);
+  });
 
 }
+
+
+// ------------------------------ CARDS ASSOCIADOS ------------------------------
+// --------- CONDIÇÕES
+if (cardsAssociados) {
+  // Chama a função para carregar os cards iniciais quando a página carregar
+  carregarCardsIniciais();
+}
+// ----- Carrega as páginas
+async function carregarCardsIniciais() {
+  const apiUrl = `${url}usuarios/tipo/meus/1`;
+  const tiposParaFiltrar = ["Associado"];
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tipos: tiposParaFiltrar }),
+    });
+
+    const data = await response.json();
+
+    const container = document.querySelector(".cards .row");
+    container.innerHTML = ""; // Remove os cards existentes do container
+
+    if (data.hasOwnProperty("message")) {
+      const h1 = document.createElement("h5");
+      h1.textContent = "Sem associados cadastrados";
+      container.appendChild(h1);
+    } else {
+      data.itensPaginados.forEach((agencia) => {
+        adicionarCard(agencia); // Usa a função para adicionar o card
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao obter os dados da API:", error);
+  }
+}
+function adicionarCard(agencia) {
+  console.log("agencia", agencia);
+  const imagemUrl = agencia.imagem
+    ? `${url}${agencia.imagem.replace(/\\/g, "/")}`
+    : "/assets/img/default_img.png";
+  const container = document.querySelector(".cards .row");
+  // Criação do novo componente
+  const newComponent = document.createElement("div");
+  newComponent.innerHTML = `
+    <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 357px;height: 100%;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;">
+      <div class="row m-0 p-0" style="width:100%;">
+        <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
+            <img src="${imagemUrl}" class="img-fluid" style="width:80S%;height: 200px;">
+        </div>
+      </div>
+      <div class="row w-100" style="margin-top:15px;">
+        <div class="col-7 d-flex justify-content-start align-items-start">
+            <i class="fa fa-tags" aria-hidden="true" style="color: #550389;font-size:0.9rem;margin-top:5px;"></i>
+            <p class="text-sm m-0 p-0" style="color: #747474;margin-left:5px!important;">
+                ${agencia.dadosGerais.categoria}
+            </p>
+        </div>
+        <div class="col-5 d-flex justify-content-end align-items-center">
+            <p class="text-sm" style="color: #747474;">
+                ${agencia.dadosEnderecos.estado}
+            <img src="imagens/flagofBrazil_6577.png" class="img-fluid" style="width: 17px;height: 17px;">
+            </p>
+        </div>
+      </div>
+      <div class="row p-0 m-0 w-100" style="margin-top:11px!important;">
+        <div class="col">
+            <p class="text-sm p-0 m-0" style="color: #747474;font-size: 1rem;font-weight: 500;">
+              ${agencia.dadosGerais.nomeFantasia}
+            </p>
+        </div>
+      </div>
+      <div class="row container p-0" style="margin-top:16px!important;">
+        <div class="col w-100 d-flex justify-content-center align-items-center ">
+            <button class="btn btn-sm text-white" style="width:100%; height: 30px;line-height: 0.2;background-color: #6EC1E4;text-align:start;padding-left:15px;">Atendendo</button>
+        </div>
+      </div>
+      <div class="row container p-0" style="margin-top:20px!important;">
+        <div class="col">
+            <p class="text-sm" style="color: #747474;font-size: 1rem;">
+              ${agencia.dadosGerais.descricao}
+            </p>
+        </div>
+      </div>
+      <div class="row w-100 pr-3 pl-3">
+        <div class=" p-0 m-0 d-flex flex-column justify-content-center align-items-center" style="background-color:#efefef;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#550389" class="bi bi-globe matriz" viewBox="0 0 16 16" style="color:#550389;">
+              <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
+            </svg>
+            <p class="text-sm mt-2 fw-bold p-0 m-0" style="font-size: 0.7rem;color: #550389;">
+              ${agencia.dadosAgencias.nomeAgencia}
+            </p>
+        </div>
+        
+        <div class="  d-flex flex-column  align-items-center name" style="background-color:#efefef;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#550389" class=" person bi bi-universal-access-circle" viewBox="0 0 16 16" style="margin-top:17px;">
+              <path d="M8 4.143A1.071 1.071 0 1 0 8 2a1.071 1.071 0 0 0 0 2.143Zm-4.668 1.47 3.24.316v2.5l-.323 4.585A.383.383 0 0 0 7 13.14l.826-4.017c.045-.18.301-.18.346 0L9 13.139a.383.383 0 0 0 .752-.125L9.43 8.43v-2.5l3.239-.316a.38.38 0 0 0-.047-.756H3.379a.38.38 0 0 0-.047.756Z"/>
+              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Z"/>
+            </svg>
+            <p class="text-sm mt-2 fw-bold" style="font-size: 0.7rem;color: #550389;">Adriano Garcia</p>
+        </div>
+        <div class=" p-0 m-0 d-flex flex-column justify-content-center align-items-center" style="background-color:#efefef;">
+          <i aria-hidden="true" class="fab fa-whatsapp contato" style="font-size: 1.8rem;margin-top:15px;color:#550389;"></i>
+          <a href="#" class="link-unstyled">
+                <p class="text-sm mt-1 fw-bold change-color" style="font-size: 0.7rem;color: #550389;">Contato</p>
+            </a>
+        </div>
+        <div class=" p-0 m-0 d-flex flex-column justify-content-center align-items-center" style="background-color:#efefef;">
+          <i aria-hidden="true" class="fab fa-edge web" style="font-size: 1.8rem;margin-top:15px;color:#550389;"></i>
+          <a href="#" class="link-unstyled">
+                <p class="text-sm mt-1 fw-bold change-color" style="font-size: 0.7rem;color: #550389;">Site</p>
+            </a>
+        </div>
+      </div>
+      <div class="row w-100" style="margin-top:20px;margin-bottom:20px;">
+        <div class="col m-0 p-0 d-flex flex-row justify-content-end align-items-center">
+            <a href="./info/index.html?id=${agencia.id}" type="button" class="btn text-white fw-bold" style="width: 65px;height: 20px;line-height: 0.1;background-color: #FF6600;border-radius: 3px;padding: 10px 0px 15px 0px;margin-right: 15px;font-size: 0.8rem;">Ver +</a>
+        </div>
+      </div>
+    </div>
+    `;
+  container.appendChild(newComponent);
+}
+
+// ------------------------------ ASSOCIADOS INFO ------------------------------
+// Obtém a URL atual
+const infoUrl = window.location.href;
+
+// Extrai o parâmetro 'id' da URL
+const urlParams = new URLSearchParams(new URL(infoUrl).search);
+const associadoId = urlParams.get('id');
+// Agora, 'associadoId' contém o ID do associado obtido da URL
+console.log('ID do Associado:', associadoId);
+if (associadoId) {
+  console.log("fetching")
+  associadosInfo()
+}
+
+async function associadosInfo() {
+  const associadoId = 2;  // Você pode ajustar isso para o ID do associado que deseja obter
+
+  const apiUrl = `http://localhost:3000/usuarios/meus-dados/${associadoId}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Erro ao obter dados da API');
+    }
+
+    const data = await response.json();
+    function putValue(id, value) {
+      // Garante que a primeira letra do ID seja maiúscula
+      const idMaiusculo = id.charAt(0).toUpperCase() + id.slice(1);
+
+      // Concatena o ID e o valor no formato desejado
+      const fusao = `${idMaiusculo}: ${value}`;
+
+      document.getElementById(id).innerText = fusao
+    }
+
+    // Atualizar os elementos HTML com os dados obtidos
+    putValue('nome', data.nome)
+    putValue('site', data.dadosContatos.site)
+    putValue('telefone', data.telefone)
+    putValue('email', data.email)
+    putValue('telefone', data.dadosContatos.celular)
+    putValue('endereço', data.dadosEnderecos.logradouro)
+    putValue('bairro', data.dadosEnderecos.bairro)
+    putValue('cidade', data.dadosEnderecos.cidade)
+
+    // Mudar 
+
+
+    document.getElementById("categoria").innerText = data.dadosGerais.categoria
+    document.getElementById("restricao").innerText = data.dadosGerais.restricao
+    document.getElementById("atendimento").innerText = data.dadosOperacoes.tipoOperacao
+    document.getElementById("descricao").innerText = data.dadosGerais.descricao
+
+    // Substituir o src da imagem
+    const imagemElement = document.getElementById('imagem');
+    const imagemUrl = `${url}${data.imagem}`;
+    imagemElement.src = imagemUrl;  // Supondo que 'data.imagem' seja a URL da imagem
+
+    console.log('Dados obtidos:', data);
+  } catch (error) {
+    console.error('Erro ao obter dados da API:', error);
+  }
+}
+
+// //  Script para carregar categorias
+// document.addEventListener("DOMContentLoaded", function () {
+//   // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+//   const apiUrl = `${url}categorias`;
+
+//   fetch(apiUrl)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Processa os dados JSON recebidos
+
+//       data.forEach((categoria) => {
+//         // Cria uma linha na tabela para cada transação
+//         //console.log('Categoria', categoria);
+//         // Obtém a referência para o elemento <select>
+//         const categoriaSelect =
+//           document.getElementById("selectCategoria");
+//         // Cria um elemento de opção
+//         const optionCategoria = document.createElement("option");
+//         // Define o texto da opção como o nome do plano
+//         optionCategoria.textContent = categoria.nome;
+//         // Define o valor da opção como o ID do plano
+//         optionCategoria.value = categoria.nome;
+//         // Adiciona a opção ao elemento <select>
+//         categoriaSelect.appendChild(optionCategoria);
+//       });
+//     })
+//     .catch((error) => console.error("Erro:", error));
+// });
+// // Script carregar estados
+// // Array com as siglas dos estados brasileiros (UF)
+// const estadosBrasileirosUF = [
+//   "AC",
+//   "AL",
+//   "AP",
+//   "AM",
+//   "BA",
+//   "CE",
+//   "DF",
+//   "ES",
+//   "GO",
+//   "MA",
+//   "MT",
+//   "MS",
+//   "MG",
+//   "PA",
+//   "PB",
+//   "PR",
+//   "PE",
+//   "PI",
+//   "RJ",
+//   "RN",
+//   "RS",
+//   "RO",
+//   "RR",
+//   "SC",
+//   "SP",
+//   "SE",
+//   "TO",
+// ];
+// estadosBrasileirosUF.forEach((estado) => {
+//   // Obtém a referência para o elemento <select>
+//   const estadoSelect = document.getElementById("selectEstado");
+//   // Cria um elemento de opção
+//   const optionEstado = document.createElement("option");
+//   // Define o texto da opção como o nome do plano
+//   optionEstado.textContent = estado;
+//   // Define o valor da opção como o ID do plano
+//   optionEstado.value = estado;
+//   // Adiciona a opção ao elemento <select>
+//   estadoSelect.appendChild(optionEstado);
+// });
+// // Script para carregar Agencias
+// document.addEventListener("DOMContentLoaded", function () {
+//   // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
+//   const apiUrl = `${url}usuarios/tipo`;
+//   const tiposParaFiltrar = ["Master", "Comum", "Matriz", "Filial"];
+//   fetch(apiUrl, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ tipos: tiposParaFiltrar }),
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Processa os dados JSON recebidos
+//       //console.log(data);
+//       data.usuarios.forEach((agencia) => {
+//         // Obtém a referência para o elemento <select>
+//         const agenciaSelect = document.getElementById("selectAgencia");
+//         // Cria um elemento de opção
+//         const optionAgencia = document.createElement("option");
+//         // Define o texto da opção como o nome do plano
+//         optionAgencia.textContent = agencia.dadosAgencias.nomeFranquia;
+//         // Define o valor da opção como o ID do plano
+//         optionAgencia.value = agencia.id;
+//         // Adiciona a opção ao elemento <select>
+//         agenciaSelect.appendChild(optionAgencia);
+//       });
+//     })
+//     .catch((error) => console.error("Erro:", error));
+// });
+// Função para adicionar um único card ao container
+
+
+// //  Script para filtrar e substituir os cards
+// document.addEventListener("DOMContentLoaded", function () {
+//   const btnLocalizar = document.getElementById("btnLocalizar");
+
+//   btnLocalizar.addEventListener("click", function () {
+//     const agencia = document.getElementById("selectAgencia").value;
+//     const categoria = document.getElementById("selectCategoria").value;
+//     const estado = document.getElementById("selectEstado").value;
+//     const cidade = document.getElementById("selectCidade").value;
+//     const dadosFiltro = {
+//       agencia: agencia,
+//       categoria: categoria,
+//       estado: estado,
+//       cidade: cidade,
+//     };
+//     const apiUrl = `${url}usuarios/filtro-associado`;
+
+//     fetch(apiUrl, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(dadosFiltro),
+//     })
+//       .then((response) => response.json())
+//       .then((resultado) => {
+//         const container = document.querySelector(".cards .row");
+//         container.innerHTML = ""; // Remove os cards existentes do container
+
+//         if (resultado.hasOwnProperty("message")) {
+//           const h1 = document.createElement("h3");
+//           h1.textContent = "Sem associados encontrados";
+//           container.appendChild(h1);
+//         } else {
+//           resultado.forEach((agencia) => {
+//             adicionarCard(agencia); // Usa a função para adicionar o card filtrado
+//           });
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Erro ao enviar requisição:", error);
+//       });
+//   });
+// });
