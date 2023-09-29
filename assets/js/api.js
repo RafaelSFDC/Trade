@@ -111,7 +111,8 @@ async function apiHandler(method, page, body) {
       .then(response => response.json())
       .then(data => {
         // Chamar a função para gerar os cards com os dados obtidos
-        gerarCards(data.ofertas);
+        gerarCards(data.itensPaginados);
+        console.log(data)
       })
       .catch(error => console.error('Erro ao obter dados da API:', error));
   }
@@ -586,11 +587,12 @@ async function ofertasHandler(page) {
 
 
   const response = await fetch(apiUrl, options);
-  const responseData = await response.json();
+  const responseData = await response.json()
+  console.log(responseData)
 
   const tableBody = document.querySelector("tbody");
   tableBody.innerHTML = "";
-  responseData.ofertas.forEach((categoria) => {
+  responseData.itensPaginados.forEach((categoria) => {
     const row = createTableRow(categoria, "ofertas");
     tableBody.appendChild(row);
   });
