@@ -666,7 +666,7 @@ async function carregarCardsIniciais() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ tipos: tiposParaFiltrar }),
+      body: JSON.stringify({ tipos: tiposParaFiltrar, pagina: 0, tamanho: 50 }),
     });
 
     const data = await response.json();
@@ -786,11 +786,11 @@ const associadoId = urlParams.get('id');
 console.log('ID do Associado:', associadoId);
 if (associadoId) {
   console.log("fetching")
-  associadosInfo()
+  associadosInfo(associadoId)
 }
 
-async function associadosInfo() {
-  const associadoId = 1;  // Você pode ajustar isso para o ID do associado que deseja obter
+async function associadosInfo(associadoId) {
+
 
   const apiUrl = `http://localhost:3000/usuarios/meus-dados/${associadoId}`;
 
