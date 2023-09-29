@@ -43,7 +43,9 @@
         <nav-bar></nav-bar>
         <div class="container py-2">
           <div class="container-simple">
-            <p class="text-muted font-weight-bold">Editar Usuário</p>
+            <p class="text-muted font-weight-bold" id="usuariosEdit">
+              Editar Usuário
+            </p>
           </div>
 
           <div class="container p-4 bg-white rounded shadow marginFix">
@@ -176,6 +178,77 @@
         <footer-bar></footer-bar>
       </div>
     </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Plano Agência</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Fechar"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="container p-4 bg-white rounded shadow alert">
+                <div class="row">
+                  <div class="col-md-4 pt-1">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" id="nomeModal" />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Tipo do usuário</label>
+                    <input type="text" class="form-control" id="tipoModal" />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="emailModal" />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Status</label>
+                    <select class="form-control" required id="status">
+                      <option value="" disabled selected>Selecionar</option>
+                      <option value="true">Ativo</option>
+                      <option value="false">Desativado</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Fechar
+            </button>
+            <button
+              type="button"
+              class="btn"
+              id="salvar-alteracoes-btn"
+              style="background-color: #ff6600; color: #fff"
+            >
+              Salvar alterações
+            </button>
+            <div class="container alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.js"
@@ -189,8 +262,7 @@
     ></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+    <script src="/assets/js/api.js"></script>
 
     <!-- Import Components -->
     <script src="/components/navbar.js"></script>

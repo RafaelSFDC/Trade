@@ -166,8 +166,8 @@
                 <div class="col-md-3 pt-1">
                   <label>Status</label>
                   <select class="form-control" id="status">
-                    <option value="1">Atendendo</option>
-                    <option value="0">Não Atendendo</option>
+                    <option value="true">Atendendo</option>
+                    <option value="false">Não Atendendo</option>
                   </select>
                 </div>
                 <div class="w-100"></div>
@@ -201,8 +201,8 @@
                 <div class="col-md-3 pt-1">
                   <label>Mostrar no site</label>
                   <select class="form-control" id="mostrarNoSite">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
                   </select>
                 </div>
                 <div class="col-md-3 pt-1">
@@ -706,19 +706,7 @@
     }
   </script>
 
-  <!-- Função para abrir o popup e preencher os campos -->
-  <script>
-    function openPopupEdit(usuario) {
-      $('#myModal').modal('show');
-      preencherCampos(usuario);
 
-      // Adicionar ouvinte de evento ao botão "Salvar Alterações"
-      const salvarAlteracoesBtn = document.getElementById('salvar-alteracoes-btn');
-      salvarAlteracoesBtn.addEventListener('click', () => {
-        enviarDadosFormulario(usuario);
-      });
-    }
-  </script>
   <!-- Função para preencher os campos com dados -->
   <script>
     function preencherCampos(usuario) {
@@ -864,29 +852,6 @@
       }
     }
   </script>
-  <!-- Carregar Imagem -->
-  <script>
-    // Adiciona um evento de escuta ao input file
-    document.getElementById('imagem').addEventListener('change', function (event) {
-      // Obtém o elemento da imagem selecionada
-      var imgElement = document.getElementById('imagem-selecionada');
-
-      // Verifica se o usuário selecionou um arquivo
-      if (event.target.files.length > 0) {
-        // Obtém o arquivo selecionado pelo usuário
-        var file = event.target.files[0];
-
-        // Cria um URL temporário para a imagem selecionada
-        var imageURL = URL.createObjectURL(file);
-
-        // Define o URL temporário como o atributo src da tag img
-        imgElement.src = imageURL;
-      } else {
-        // Caso o usuário não tenha selecionado um arquivo, exibe a imagem padrão
-        imgElement.src = "/assets/img/default_img.png";
-      }
-    });
-  </script>
   <!-- Script para carregar categorias -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -943,21 +908,6 @@
         })
         .catch(error => console.error('Erro:', error));
     })
-  </script>
-  <!-- Show Alert -->
-  <script>
-    function showAlertEdit(message, type) {
-      var alert = document.createElement("div");
-      alert.classList.add("alert", "alert-" + type);
-      alert.innerHTML = message;
-
-      var container = document.querySelector(".showAlertEdit");
-      container.insertBefore(alert, container.firstChild);
-
-      setTimeout(function () {
-        alert.remove();
-      }, 3000);
-    }
   </script>
 </body>
 

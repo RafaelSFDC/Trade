@@ -20,6 +20,9 @@ const associados = document.getElementById('associados');
 const agencias = document.getElementById('agencias');
 const gerentes = document.getElementById('gerentes');
 const btnCadastrar = document.querySelector(".btn-cadastrar");
+// ---------- USUÁRIOS
+const usuariosList = document.getElementById('usuariosLista');
+const usuariosEdit = document.getElementById('usuariosEdit');
 
 // ------------------------------ CADASTRAR OFERTAS ------------------------------
 if (form) {
@@ -61,11 +64,9 @@ if (imageInput) {
 
       // Obtém o arquivo selecionado pelo usuário
       var file = event.target.files[0];
-      console.log(file)
 
       // Cria um URL temporário para a imagem selecionada
       var imageURL = URL.createObjectURL(file);
-      console.log("img_url", imageURL)
 
       // Define o URL temporário como o atributo src da tag img
       imgElement.src = imageURL;
@@ -263,49 +264,132 @@ function padLeft(value, length) {
 function openPopupEdit(plano, page) {
   const modal = $("#myModal");
   modal.modal("show");
-
+  console.log(plano)
   const salvarAlteracoesBtn = document.getElementById("salvar-alteracoes-btn");
 
-  if (page === "categorias") {
-    const categoria = document.getElementById("nomeDaCategoriaModal");
-    categoria.value = plano.nome;
+  function setupEventListener(page, fields, plano) {
+    const data = {};
 
-    salvarAlteracoesBtn.addEventListener("click", () => {
-      const data = {
-        nome: categoria.value,
-      };
-      updateRow(plano, page, data);
+
+    const updateData = () => {
+      fields.forEach((field) => {
+        const element = document.getElementById(field.id);
+        let value;
+
+        // Verifica se é um input
+        if (field.type === 'input') {
+          value = element.value; // Obtém o valor do input
+        }
+        // Verifica se é um select
+        else if (field.type === 'select') {
+          value = element.options[element.selectedIndex].value; // Obtém o valor selecionado do select
+        }
+
+        data[field.dataKey] = value; // Armazena o valor no objeto de dados
+      });
+    };
+
+    // Configura os valores dos inputs ou selects
+    fields.forEach((field) => {
+      const element = document.getElementById(field.id);
+
+      // Configura o valor para um input ou select
+      if (field.type === 'input' || field.type === 'select') {
+        element.value = field.value(plano); // Define o valor do input ou select baseado no plano
+      }
     });
-  } else if (page === "planos") {
-    const nome = document.getElementById("nomeDoPlanoModal");
-    const porcentagem = document.getElementById("porcentagemModal");
-    nome.value = plano.nome;
-    porcentagem.value = plano.porcentagem;
 
+    // Adiciona um event listener para o botão "Salvar Alterações"
     salvarAlteracoesBtn.addEventListener("click", () => {
-      const data = {
-        nome: nome.value,
-        porcentagem: porcentagem.value,
-      };
-      updateRow(plano, page, data);
-    });
-  } else if (page === "ofertas") {
-    const titulo = document.getElementById("tituloModal");
-    const tipo = document.getElementById("tipoModal");
-    const valor = document.getElementById("valorModal");
-    titulo.value = plano.titulo
-    tipo.value = plano.tipo
-    valor.value = plano.valor
-
-    salvarAlteracoesBtn.addEventListener("click", () => {
-      const data = {
-        titulo: titulo.value,
-        tipo: tipo.value,
-        valor: valor.value,
-      };
-      updateRow(plano, page, data);
+      updateData(); // Atualiza os dados com os valores atuais dos inputs ou selects
+      updateRow(plano, page, data); // Chama a função para atualizar a linha
     });
   }
+
+  // Exemplo para a página "categorias"
+  if (page === "categorias") {
+    const fields = [
+      { id: "nomeDaCategoriaModal", dataKey: "nome", type: 'input', value: (plano) => plano.nome }
+    ];
+    setupEventListener(page, fields, plano);
+  }
+  // Exemplo para a página "planos"
+  else if (page === "planos") {
+    const fields = [
+      { id: "nomeDoPlanoModal", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+      { id: "porcentagemModal", dataKey: "porcentagem", type: 'input', value: (plano) => plano.porcentagem }
+    ];
+    setupEventListener(page, fields, plano);
+  }
+  // Exemplo para a página "ofertas"
+  else if (page === "ofertas") {
+    const fields = [
+      { id: "tituloModal", dataKey: "titulo", type: 'input', value: (plano) => plano.titulo },
+      { id: "tipoModal", dataKey: "tipo", type: 'input', value: (plano) => plano.tipo },
+      { id: "valorModal", dataKey: "valor", type: 'input', value: (plano) => plano.valor }
+    ];
+    setupEventListener(page, fields, plano);
+  }
+  // Exemplo para a página "usuario"
+  else if (page === "usuario") {
+    const fields = [
+      { id: "nomeModal", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+      { id: "tipoModal", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.tipo },
+      { id: "emailModal", dataKey: "email", type: 'input', value: (plano) => plano.email },
+      { id: "status", dataKey: "statusConta", type: 'select', value: (plano) => plano.statusConta }
+
+    ];
+    setupEventListener(page, fields, plano);
+  }
+  // Exemplo para a página "usuario"
+  else if (page === "associados") {
+    const fields = [
+      { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
+      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "descricao", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.descricao },
+      { id: "restricoes", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.restricao },
+      { id: "status", dataKey: "statusConta", type: 'select', value: (plano) => plano.statusConta },
+      { id: "cnpj", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
+      { id: "inscEstadual", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
+      { id: "inscMunicipal", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
+      { id: "mostrarNoSite", dataKey: "statusConta", type: 'select', value: (plano) => plano.dadosGerais.mostrarNoSite },
+      // mexer aqui
+      { id: "tipo", dataKey: "statusConta", type: 'input', value: (plano) => plano.statusConta },
+      { id: "nomeContato", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.nomeContato },
+      { id: "telefone", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.telefone },
+      { id: "celular", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.celular },
+      { id: "emailContato", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.emailContato },
+      { id: "emailSecundario", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.emailSecundario },
+      { id: "logradouro", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.logradouro },
+      { id: "numero", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.numero },
+      { id: "cep", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.cep },
+      { id: "complemento", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.complemento },
+      { id: "bairro", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.bairro },
+      { id: "cidade", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
+      { id: "regiao", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
+      { id: "estado", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
+      { id: "planoDeInscricao", dataKey: "statusConta", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "porcentagemPlanoDeInscricao", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
+      { id: "limiteCredito", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
+      { id: "dataVencimentoFatura", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
+      { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+      { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
+      { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
+      { id: "imagem-selecionada", dataKey: "statusConta", type: 'input', value: (plano) => plano.statusConta },
+
+    ];
+    setupEventListener(page, fields, plano);
+  }
+
+  // Exemplo para uma página com um select
+  if (page === "alguma_pagina_com_select") {
+    const fields = [
+      { id: "seuSelectModal", dataKey: "valorSelecionado", type: 'input', value: (plano) => plano.valorSelecionado }
+    ];
+    setupEventListener(page, fields, plano);
+  }
+
+
 
   function updateRow(plano, page, data) {
     const { id } = plano;
@@ -332,28 +416,30 @@ function openPopupEdit(plano, page) {
 }
 // ----- Alerta no popup de editar
 function showAlert(message, type) {
-  var alert = document.createElement("div");
-  alert.classList.add("alert", "alert-" + type);
-  alert.innerHTML = message;
-
-  var container = document.querySelector(".alert");
-  container.insertBefore(alert, container.firstChild);
-
+  const alertElement = document.createElement("div");
+  alertElement.classList.add("alert", "alert-" + type);
+  alertElement.innerHTML = message;
+  const container = document.querySelector(".alert");
+  container.insertBefore(alertElement, container.firstChild);
   setTimeout(function () {
-    alert.remove();
+    alertElement.remove();
   }, 3000);
 }
-// ----- Alerta no cadastro
 function showAlertCadastro(message, type) {
-  var alert = document.createElement("div");
-  alert.classList.add("alert", "alert-" + type);
-  alert.innerHTML = message;
+  // Create alert element
+  let alertElement = document.createElement("div");
+  alertElement.classList.add("alert", "alert-" + type);
+  alertElement.innerHTML = message;
 
-  var container = document.querySelector(".alerta");
-  container.insertBefore(alert, container.firstChild);
+  // Get container element
+  let container = document.querySelector(".alerta");
 
+  // Insert alert as the first child of the container
+  container.insertBefore(alertElement, container.firstChild);
+
+  // Remove alert after 3 seconds
   setTimeout(function () {
-    alert.remove();
+    alertElement.remove();
   }, 3000);
 }
 //----- Cria a data atual do cadastro
@@ -367,6 +453,7 @@ function formatDate() {
 // ----- Cria a tabela
 
 function createTableRow(categoria, page) {
+  console.log(page)
   const row = document.createElement("tr");
   function createOperators(row, categoria, page) {
 
@@ -408,6 +495,24 @@ function createTableRow(categoria, page) {
     createCell(categoria.email)
     createCell(categoria.statusConta)
     createCell(categoria.dadosAgencias.nomeAgencia)
+    createOperators(row, categoria, page)
+    return row;
+  }
+  else if (page === "associados") {
+    createCell(categoria.nome)
+    createCell(categoria.dadosEnderecos.estado)
+    createCell(categoria.conta)
+    createCell(categoria.email)
+    createCell(categoria.statusConta)
+    createCell(categoria.dadosAgencias.nomeAgencia)
+    createOperators(row, categoria, page)
+    return row;
+  }
+  else if (page === "usuario") {
+    createCell(categoria.nome)
+    createCell(categoria.dadosGerais.tipo)
+    createCell(categoria.email)
+    createCell(categoria.statusConta)
     createOperators(row, categoria, page)
     return row;
   }
@@ -460,7 +565,6 @@ async function deleteTableRow(categoria, page) {
     console.error("Erro ao enviar requisição:", error);
   }
 }
-
 
 // ------------------------------ CONTROLADOR DAS LISTAS DE OFERTAS ------------------------------
 // --------- CONDIÇÕES
@@ -580,6 +684,8 @@ if (categoriasPage) {
     .catch((error) => console.error("Erro:", error));
 } else if (subCategoriasPage) {
 
+} else if (subCategoriasPage) {
+
 }
 // --------- FUNÇÕES
 async function categoriasHandler(category) {
@@ -605,22 +711,33 @@ if (agenciasLista) {
   usuariosHandler("Associados")
 } else if (gerentesLista) {
   usuariosHandler("Gerente")
+} else if (usuariosList) {
+  usuariosHandler("Usuarios")
+} else if (usuariosEdit) {
+  usuariosHandler("Usuarios")
 }
+
 // --------- FUNÇÕES
 async function usuariosHandler(page) {
   var request = []
+  var actualPage = ""
   if (page === "Agencias") {
     request = ["Comum", "Matriz", "Master"]
+    actualPage = "agencias"
   } else if (page === "Associados") {
     request = ["Associado"]
+    actualPage = "associados"
   } else if (page === "Gerente") {
     request = ["Gerente"]
+    actualPage = "agencias"
+  } else if (page === "Usuarios") {
+    request = ["Associado", "Matriz", "Comum", "Master", "Gerente"]
+    actualPage = "usuario"
   }
-
   const data = {
     tipos: request,
     pagina: 0,
-    tamanho: 4
+    tamanho: 50
   };
 
   const apiUrl = `${url}usuarios/tipo/meus/1`;
@@ -641,13 +758,11 @@ async function usuariosHandler(page) {
   tableBody.innerHTML = "";
 
   responseData.itensPaginados.forEach((agencia) => {
-    console.log("Logando a Agencia", agencia)
-    const row = createTableRow(agencia, "agencias");
+    const row = createTableRow(agencia, actualPage);
     tableBody.appendChild(row);
   });
 
 }
-
 
 // ------------------------------ CARDS ASSOCIADOS ------------------------------
 // --------- CONDIÇÕES
@@ -687,8 +802,8 @@ async function carregarCardsIniciais() {
     console.error("Erro ao obter os dados da API:", error);
   }
 }
+// --------- FUNÇÕES
 function adicionarCard(agencia) {
-  console.log("agencia", agencia);
   const imagemUrl = agencia.imagem
     ? `${url}${agencia.imagem.replace(/\\/g, "/")}`
     : "/assets/img/default_img.png";
@@ -776,23 +891,15 @@ function adicionarCard(agencia) {
 }
 
 // ------------------------------ ASSOCIADOS INFO ------------------------------
-// Obtém a URL atual
-const infoUrl = window.location.href;
-
-// Extrai o parâmetro 'id' da URL
-const urlParams = new URLSearchParams(new URL(infoUrl).search);
+// --------- CONDIÇÕES
+const urlParams = new URLSearchParams(window.location.search);
 const associadoId = urlParams.get('id');
-// Agora, 'associadoId' contém o ID do associado obtido da URL
-console.log('ID do Associado:', associadoId);
 if (associadoId) {
-  console.log("fetching")
-  associadosInfo(associadoId)
+  associadosInfo(associadoId);
 }
-
+// --------- FUNÇÕES
 async function associadosInfo(associadoId) {
-
-
-  const apiUrl = `http://localhost:3000/usuarios/meus-dados/${associadoId}`;
+  const apiUrl = `${url}usuarios/meus-dados/${associadoId}`;
 
   try {
     const response = await fetch(apiUrl);
@@ -811,7 +918,7 @@ async function associadosInfo(associadoId) {
       document.getElementById(id).innerText = fusao
     }
 
-    // Atualizar os elementos HTML com os dados obtidos
+    // Gera o conteudo com :
     putValue('site', data.dadosContatos.site)
     putValue('telefone', data.telefone)
     putValue('email', data.email)
@@ -820,9 +927,7 @@ async function associadosInfo(associadoId) {
     putValue('bairro', data.dadosEnderecos.bairro)
     putValue('cidade', data.dadosEnderecos.cidade)
 
-    // Mudar 
-
-
+    // Gera os conteudos que não precisam de :
     document.getElementById("categoria").innerText = data.dadosGerais.categoria
     document.getElementById("restricao").innerText = data.dadosGerais.restricao
     document.getElementById("atendimento").innerText = data.dadosOperacoes.tipoOperacao
@@ -832,7 +937,7 @@ async function associadosInfo(associadoId) {
     // Substituir o src da imagem
     const imagemElement = document.getElementById('imagem');
     const imagemUrl = `${url}${data.imagem}`;
-    imagemElement.src = imagemUrl;  // Supondo que 'data.imagem' seja a URL da imagem
+    imagemElement.src = imagemUrl;
 
     console.log('Dados obtidos:', data);
   } catch (error) {
