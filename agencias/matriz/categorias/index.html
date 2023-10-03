@@ -42,10 +42,10 @@
           </div>
 
           <div class="container alerta p-4 bg-white rounded shadow marginFix">
-            <div class="row">
+            <form class="row" id="categoriasForm">
               <div class="col-md-4 pt-1">
                 <label>Nome da categoria</label>
-                <input type="text" class="form-control" id="nomeDaCategoria" />
+                <input type="text" class="form-control" name="nome" />
               </div>
               <div class="col-md-4 pt-1">
                 <label>Data de criação</label>
@@ -59,7 +59,7 @@
               <div class="row button-container">
                 <div class="col-4 offset-8 text-right pt-4 button-container">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn btn-orange btn-sm btn-cadastrar"
                     style="width: 80px"
                   >
@@ -67,7 +67,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
           <div class="container mt-3 alerta p-4 bg-white rounded shadow">
             <table
@@ -226,139 +226,5 @@
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
-
-    <!-- Script para Cadastrar Plano -->
-    <script>
-      // Obtém o elemento do botão pelo seletor de classe
-      const btnCadastrar = document.querySelector(".btn-cadastrar");
-
-      // Adiciona um evento de clique ao botão
-      btnCadastrar.addEventListener("click", () => {
-        // Obtém os valores dos campos de entrada
-        const nome = document.querySelector("#nomeDaCategoria").value;
-        const dataDeCriacao = document.querySelector("#dataDeCriacao").value;
-        console.log(dataDeCriacao);
-
-        // Monta o objeto de dados a ser enviado na requisição
-        const data = {
-          nome,
-          dataDeCriacao,
-        };
-
-        // Configurações da requisição fetch
-        const apiUrl = `${window.apiBaseUrl}/categorias`;
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        };
-
-        // Faz a chamada fetch para o endpoint desejado
-        fetch(apiUrl, options)
-          .then((response) => {
-            // Manipula a resposta da requisição
-            if (response.ok) {
-              // A requisição foi bem-sucedida
-              //console.log('Requisição enviada com sucesso!');
-              showAlertCadastro(
-                "Categoria cadastrada  com sucesso!",
-                "success"
-              );
-              setTimeout(() => {
-                //$('#myModal').modal('hide');
-                location.reload();
-              }, 4000);
-            } else {
-              // A requisição falhou
-              console.log("Erro na requisição.");
-            }
-          })
-          .catch((error) => {
-            // Captura erros de rede ou outras exceções
-            console.log("Erro na requisição:", error);
-          });
-      });
-    </script>
-
-    <!-- Função para abrir o Popup de Edição -->
-    <script>
-      function openPopup(categoria) {
-        $("#myModal").modal("show");
-        // Obtem os Inputs
-        let nomeDaCategoriaInput = document.getElementById(
-          "nomeDaCategoriaModal"
-        );
-        let dataDeCriacaoInput = document.getElementById("dataDeCriacaoModal");
-
-        // Preenchendo os campos com os dados correspondentes
-        nomeDaCategoriaInput.value = categoria.nome;
-        const data = new Date(categoria.createdAt);
-        dataDeCriacaoInput.value = data.toLocaleDateString();
-        // Adicionar evento de clique ao botão de salvar alterações
-        const salvarAlteracoesBtn = document.getElementById(
-          "salvar-alteracoes-btn"
-        );
-        salvarAlteracoesBtn.addEventListener("click", () => {
-          updateCategoria(categoria);
-        });
-        function updateCategoria(categoria) {
-          const id = categoria.id; // Obter o ID da agência dinamicamente
-          let nomeDaCategoriaInput = document.getElementById(
-            "nomeDaCategoriaModal"
-          ).value;
-          const data = {
-            nome: nomeDaCategoriaInput,
-          };
-          const apiUrl = `${window.apiBaseUrl}/categorias/${id}`;
-          fetch(apiUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((result) => {
-              //console.log('Resposta do servidor:', result);
-              showAlert("Atualização efetuada com sucesso!", "success");
-              setTimeout(() => {
-                //$('#myModal').modal('hide');
-                location.reload();
-              }, 4000);
-
-              // Realizar ações adicionais após o sucesso da requisição...
-            })
-            .catch((error) => {
-              console.error("Erro ao enviar requisição:", error);
-              // Realizar tratamento de erro, se necessário...
-            });
-        }
-      }
-    </script>
-    <!-- Script de Alerts-->
-    <script>
-      function showAlert(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".alert");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-      function showAlertCadastro(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".alerta");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-    </script>
   </body>
 </html>

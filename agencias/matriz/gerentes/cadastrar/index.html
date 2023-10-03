@@ -45,7 +45,7 @@
 			</div>
 
 			<div class="container p-4 bg-white rounded shadow">
-				<form id="cadastroForm" enctype="multipart/form-data">
+				<form id="gerenteForm" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-6 pt-1">
 							<label class="required-field-label">Razão Social</label>
@@ -152,13 +152,13 @@
 					<div class="row d-flex align-items-center">
 						<div class="col-md-4 pt-1">
 							<label class="required-field-label">Plano de Inscrição</label>
-							<select class="form-control" id="planoDeInscricao" name="planoDeInscricao" required>
+							<select class="form-control" id="planosSelect" name="planoDeInscricao" required>
 								<option value="">Selecionar</option>
 							</select>
 						</div>
 						<div class="col-md-4 pt-1">
 							<label class="required-field-label">Porcentagem Plano de Inscrição %</label>
-							<input type="text" class="form-control" id="porcentagemPlanoDeInscricao"
+							<input type="text" class="form-control" id="porcentagemPlano"
 								name="porcentagemPlanoDeInscricao" readonly required>
 						</div>
 						<div class="col-md-4 pt-1 lastE">
@@ -184,7 +184,13 @@
 						<div class="col-md-3 pt-1">
 							<label class="required-field-label">Selecionar Foto</label>
 							<div class="custom-file mb-3">
-								<input type="file" class="custom-file-input" id="imagem" name="imagem" />
+								<input
+								type="file"
+								class="custom-file-input bg-purple"
+								id="img_path"
+								name="imagem"
+								required
+							  />
 								<label class="custom-file-label d-hide" for="customFile">Selecionar</label>
 							</div>
 						</div>
@@ -221,265 +227,13 @@
 </script>
 <script src="/assets/js/bootstrap.js"></script>
 <script src="/assets/js/main.js"></script>
-<script src="/assets/js/session.js"></script>
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<!-- <script src="/__/firebase/7.21.0/firebase-app.js"></script> -->
+<script src="/assets/js/api.js"></script>
 
 <!-- Import Components -->
 <script src="/components/navbar.js"></script>
 <script src="/components/sidebar2.js"></script>
 <script src="/components/footer.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<!-- <script src="/__/firebase/7.21.0/firebase-analytics.js"></script> -->
-
-<!-- Initialize Firebase -->
-<!-- <script src="/__/firebase/init.js"></script> -->
-<script src="/assets/js/config.js"></script>
-
-<!-- Enviando os dados para a rota  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-
-<!-- ViaCep-->
-<script>
-	function obterRegiaoPorCEP(cep) {
-		cep = cep.replace(/\D/g, '');
-
-		const regioes = {
-			'Norte': [69000000, 69999999],
-			'Nordeste': [40000000, 49999999],
-			'Centro-Oeste': [70000000, 78999999],
-			'Sudeste': [1000000, 39999999],
-			'Sul': [80000000, 99999999]
-		};
-
-		for (const regiao in regioes) {
-			const intervalo = regioes[regiao];
-			const cepNumerico = parseInt(cep);
-
-			if (cepNumerico >= intervalo[0] && cepNumerico <= intervalo[1]) {
-				return regiao;
-			}
-		}
-
-		return null;
-	}
-
-	document.getElementById('cep').addEventListener('input', function () {
-		var cep = document.getElementById('cep').value;
-		if (cep.length === 8) {
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', 'https://viacep.com.br/ws/' + cep + '/json/');
-			xhr.onload = function () {
-				if (xhr.status === 200) {
-					var endereco = JSON.parse(xhr.responseText);
-					//console.log(endereco);
-					document.getElementById('logradouro').value = endereco.logradouro;
-					document.getElementById('bairro').value = endereco.bairro;
-					document.getElementById('cidade').value = endereco.localidade;
-					document.getElementById('estado').value = endereco.uf;
-
-					var regiao = obterRegiaoPorCEP(cep);
-					if (regiao) {
-						//console.log(`O CEP ${cep} está na região ${regiao}.`);
-						document.getElementById('regiao').value = regiao;
-					} else {
-						//console.log(`Não foi possível determinar a região para o CEP ${cep}.`);
-					}
-				} else {
-					alert('Erro ao consultar CEP. Por favor, tente novamente mais tarde.');
-				}
-			};
-			xhr.send();
-		}
-	});
-
-	function formatarCep(event) {
-		const cepInput = document.getElementById('cep');
-		const cepValue = cepInput.value.trim();
-
-		if (cepValue.length === 5 && event.key !== 'Backspace') {
-			cepInput.value = cepValue + '-';
-		}
-	}
-</script>
-<!-- Script Cadastrar-->
-<script>
-    // Adicione um evento de "submit" ao formulário para enviar os dados
-    const form = document.getElementById('cadastroForm');
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      // Perform validation
-      function isEmpty(value) {
-        return value === undefined || value === null || value === '';
-      }
-
-      function areFieldsEmpty(field1, field2) {
-        return isEmpty(field1) || isEmpty(field2);
-      }
-      const apiUrl = `${window.apiBaseUrl}/usuarios/associado`;
-      // Obtén el valor del cookie
-      var cookies = document.cookie.split(';');
-      var usuarioId = null;
-
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.indexOf('usuarioId=') === 0) {
-          usuarioId = cookie.substring('usuarioId='.length, cookie.length);
-          break;
-        }
-      }
-      const email = document.getElementById('email');
-      const nomeFantasia = document.getElementById('nomeFantasia');
-      if (areFieldsEmpty(email, nomeFantasia)) {
-        showAlert("Por favor, preencha todos os campos obrigatorios. nome Fantasia e Email", "danger");
-        return; // Stop form submission
-      }
-      //const form = document.getElementById('cadastroForm');
-      
-      const formData = new FormData(form);
-      formData.append('idUsuario', usuarioId);
-      formData.append('statusConta', 1);
-      // Mostra os valores de todos os campos do FormData
-      for (const [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-      try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        // Handle specific error messages
-        if (errorData.error === 'NomeFantasia já existe') {
-          showAlert("NomeFantasia já existe", "danger");
-        } else if (errorData.error === 'Email já existe') {
-          showAlert("Email já existe", "danger");
-        } else {
-          showAlert(errorData.error, "danger");
-        }
-        return;
-      }
-      // Request successful
-	  showAlert("Cadastro efetuado com Sucesso", "info");
-	  setTimeout(() => {
-            location.reload();
-          }, 5000);
-      // ... (show success message, reload page, etc.)
-    } catch (error) {
-      console.error('Erro ao enviar requisição:', error);
-      // Realizar tratamento de erro, se necessário...
-    }
-    });
-  </script>
-<!-- Script Mascaras-->
-<script>
-	$(document).ready(function () {
-		$('#cpf').inputmask('999.999.999-99', {
-			placeholder: '___.___.___-__'
-		});
-		$('#cnpj').inputmask('99.999.999/9999-99', {
-			placeholder: '__.___.___/____-__'
-		});
-	});
-</script>
-<!-- Carregar Imagem -->
-<script>
-	// Adiciona um evento de escuta ao input file
-	document.getElementById('imagem').addEventListener('change', function (event) {
-		// Obtém o elemento da imagem selecionada
-		var imgElement = document.getElementById('imagem-selecionada');
-
-		// Verifica se o usuário selecionou um arquivo
-		if (event.target.files.length > 0) {
-			// Obtém o arquivo selecionado pelo usuário
-			var file = event.target.files[0];
-
-			// Cria um URL temporário para a imagem selecionada
-			var imageURL = URL.createObjectURL(file);
-
-			// Define o URL temporário como o atributo src da tag img
-			imgElement.src = imageURL;
-		} else {
-			// Caso o usuário não tenha selecionado um arquivo, exibe a imagem padrão
-			imgElement.src = "/assets/img/default_img.png";
-		}
-	});
-</script>
-
-<!-- Script para carregar planos -->
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-		// Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-		const apiUrl = `${window.apiBaseUrl}/planos/tipo`;
-		const tipo = "Gerente";
-		// Monta o objeto de dados a ser enviado na requisição
-		const data = {
-			tipo
-		};
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
-		};
-		fetch(apiUrl, options)
-			.then(response => response.json())
-			.then(planos => {
-				// Processar os dados recebidos da API
-				planos.forEach((plano, index) => {
-					console.log(plano);
-					// Obtém a referência para o elemento <select>
-					const planoInscricao = document.getElementById('planoDeInscricao');
-					// Cria um elemento de opção
-					const option = document.createElement('option');
-					// Define o texto da opção como o nome do plano
-					option.textContent = plano.nome;
-					// Define o valor da opção como o ID do plano
-					option.value = plano.porcentagem;
-					// Adiciona a opção ao elemento <select>
-					planoInscricao.appendChild(option);
-
-					// Verifica se é o primeiro resultado e define como selecionado por padrão
-					/*if (index === 0) {
-						option.selected = true;
-						const valorSelecionado = document.getElementById(
-						'porcentagemPlanoDeInscricao');
-						valorSelecionado.value = option.value;
-					}*/
-				});
-				const valorSelecionado = document.getElementById('porcentagemPlanoDeInscricao');
-				const planoInscricao = document.getElementById('planoDeInscricao');
-
-				planoInscricao.addEventListener('change', () => {
-					const selectedValue = planoInscricao.value;
-					valorSelecionado.value = selectedValue + " %";
-				});
-			})
-			.catch(error => console.error('Erro:', error));
-	})
-</script>
-<!-- Show Alert -->
-<script>
-    function showAlert(message, type) {
-      var alert = document.createElement("div");
-      alert.classList.add("alert", "alert-" + type);
-      alert.innerHTML = message;
-
-      var container = document.querySelector(".alert");
-      container.insertBefore(alert, container.firstChild);
-
-      setTimeout(function () {
-        alert.remove();
-      }, 3000);
-    }
-</script>
 </body>
 
 </html>

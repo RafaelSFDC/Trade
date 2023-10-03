@@ -108,6 +108,7 @@
                   <th scope="col" class="col-2 text-left">Título</th>
                   <th scope="col" class="col-2 text-left">Tipo</th>
                   <th scope="col" class="col-2 text-left">Agência</th>
+                  <th scope="col" class="col-2 text-left">Valor</th>
                   <th scope="col" class="col-6 text-right">Operação</th>
                 </tr>
               </thead>
@@ -152,29 +153,24 @@
               <div class="container p-4 bg-white rounded shadow alert">
                 <div class="row">
                   <div class="col-md-4 pt-1">
-                    <label>Agência</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nomeDoPlanoModal"
-                    />
-                  </div>
-                  <div class="col-md-4 pt-1">
                     <label>Título</label>
                     <input
                       type="number"
                       class="form-control"
-                      id="porcentagemModal"
+                      id="tituloModal"
                     />
                   </div>
                   <div class="col-md-4 pt-1">
                     <label>Tipo</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="dataDeCriacaoModal"
-                      readonly
-                    />
+                    <input type="text" class="form-control" id="tipoModal" />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Agência</label>
+                    <input type="text" class="form-control" id="agenciaModal" />
+                  </div>
+                  <div class="col-md-4 pt-1">
+                    <label>Valor</label>
+                    <input type="text" class="form-control" id="valorModal" />
                   </div>
                 </div>
               </div>
@@ -241,85 +237,5 @@
 
     <script src="/assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/date-fns@2.30.0/index.min.js"></script>
-    <!-- Função para abrir o Popup de Edição -->
-    <script>
-      function openPopup(plano) {
-        $("#myModal").modal("show");
-        // Obtem os Inputs
-        let nomeDoPlanoInput = document.getElementById("nomeDoPlanoModal");
-        let porcentagemInput = document.getElementById("porcentagemModal");
-        let dataDeCriacaoInput = document.getElementById("dataDeCriacaoModal");
-
-        // Preenchendo os campos com os dados correspondentes
-        nomeDoPlanoInput.value = plano.nome;
-        porcentagemInput.value = plano.porcentagem;
-        const data = new Date(plano.createdAt);
-        dataDeCriacaoInput.value = data.toLocaleDateString();
-        // Adicionar evento de clique ao botão de salvar alterações
-        const salvarAlteracoesBtn = document.getElementById(
-          "salvar-alteracoes-btn"
-        );
-        salvarAlteracoesBtn.addEventListener("click", () => {
-          updateAgencia(plano);
-        });
-        function updateAgencia(plano) {
-          const id = plano.id; // Obter o ID da agência dinamicamente
-          let nomeDoPlanoInput =
-            document.getElementById("nomeDoPlanoModal").value;
-          let porcentagemInput =
-            document.getElementById("porcentagemModal").value;
-          const data = {
-            nome: nomeDoPlanoInput,
-            porcentagem: porcentagemInput,
-          };
-          const apiUrl = `${window.apiBaseUrl}/planos/${id}`;
-          fetch(apiUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => response.json())
-            .then((result) => {
-              //console.log('Resposta do servidor:', result);
-              showAlert("Atualização efetuada com sucesso!", "success");
-              setTimeout(() => {
-                //$('#myModal').modal('hide');
-                location.reload();
-              }, 4000);
-
-              // Realizar ações adicionais após o sucesso da requisição...
-            })
-            .catch((error) => {
-              console.error("Erro ao enviar requisição:", error);
-              // Realizar tratamento de erro, se necessário...
-            });
-        }
-      }
-    </script>
-    <!-- Script de Alerts-->
-    <script>
-      function showAlert(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".alert");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-      function showAlertCadastro(message, type) {
-        var alert = document.createElement("div");
-        alert.classList.add("alert", "alert-" + type);
-        alert.innerHTML = message;
-        var container = document.querySelector(".alerta");
-        container.insertBefore(alert, container.firstChild);
-        setTimeout(function () {
-          alert.remove();
-        }, 3000);
-      }
-    </script>
   </body>
 </html>

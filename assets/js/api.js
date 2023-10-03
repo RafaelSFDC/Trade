@@ -2,63 +2,51 @@
 const url = "http://localhost:3000/"
 
 function getId(id) { return document.getElementById(id) }
-
-// ------------------------------ CONSTANTES ------------------------------
-const categoriaSelect = getId("categoria");
-const form = getId("cadastroForm");
+// ---------------------------------------------------------------------------------------------------------
+// ---------------------------------------------- CONSTANTES -----------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 const imageInput = getId("img_path");
 const cardsContainer = getId('cardsContainer');
-const ofertas = getId('ofertas');
-const minhasOfertas = getId('minhasOfertas');
-const categoriasPage = getId('categoriasPage');
-const subCategoriasPage = getId('subCategoriasPage');
+const categoriaSelect = getId('categoria');
+const planosSelect = getId('planosSelect');
+const subCategoriaSelect = getId('subCategoriaSelect')
+const porcentagemPlano = getId('porcentagemPlano')
+const gerentesSelect = getId('gerentesSelect')
+const urlParams = new URLSearchParams(window.location.search);
+
+// ---------- FORMULÁRIOS
+const ofertasForm = getId("ofertasForm");
+const transacoesForm = getId("transacoesForm");
+const associadosForm = getId("associadosForm");
+const gerenteForm = getId("gerenteForm");
+const agenciaForm = getId("agenciaForm");
+// ---------- CARDS
+const ofertasCards = getId('ofertasCards');
 const cardsAssociados = getId('cardsAssociados');
+// ---------- CATEGORIAS
+const categoriasForm = getId('categoriasForm');
 // ---------- LISTAS
 const agenciasLista = getId('agenciasLista');
 const associadosLista = getId('associadosLista');
 const gerentesLista = getId('gerentesLista');
+const minhasOfertas = getId('minhasOfertas');
+const excluirOfertas = getId('excluirOfertas');
+const categoriasPage = getId('categoriasPage');
+const subCategoriasPage = getId('subCategoriasPage');
 // ---------- PLANOS
 const associados = getId('associados');
 const agencias = getId('agencias');
 const gerentes = getId('gerentes');
-const btnCadastrar = getId(".btn-cadastrar");
+const btnCadastrar = getId("cadastro");
 // ---------- USUÁRIOS
 const usuariosList = getId('usuariosLista');
 const usuariosEdit = getId('usuariosEdit');
 // ---------- TRANSAÇÃO
 const transacoes = getId("transacoes")
 
-// ------------------------------ CADASTRAR OFERTAS ------------------------------
-if (form) {
-  console.log("form")
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    // Obtén el valor del cookie
-    var cookies = document.cookie.split(";");
-    var usuarioId = 5;
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.indexOf("usuarioId=") === 0) {
-        usuarioId = cookie.substring("usuarioId=".length, cookie.length);
-        break;
-      }
-    }
-
-    const formData = new FormData(form);
-    // formData.append("idComprador", "1");
-    // formData.append("idVendedor", "2");
-    // formData.append("id", "2");
-
-    const method = "POST";
-    const page = "transacoes";
-    apiHandler(method, page, formData);
-    for (const pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-  });
-}
-
+// ---------------------------------------------------------------------------------------------------------
+// ------------------------------------------ FUNÇÕES UNIVERSAIS -------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 // ---------- PEGAR A IMAGEM ----------
 if (imageInput) {
   imageInput.addEventListener("change", function (event) {
@@ -83,33 +71,102 @@ if (imageInput) {
     }
   });
 }
-
 // ---------- CARREGAR CATEGORIAS ----------
 if (categoriaSelect) {
   const apiUrl = `${url}categorias/`;
+
   fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
-      // Processa os dados JSON recebidos
-
       data.forEach((categoria) => {
-        // Obtém a referência para o elemento <select>
-        const categoriaSelect = document.getElementById("categoria");
-        // Cria um elemento de opção
         const optionCategoria = document.createElement("option");
-        // Define o texto da opção como o nome do plano
         optionCategoria.textContent = categoria.nome;
-        // Define o valor da opção como o ID do plano
         optionCategoria.value = categoria.nome;
-        // Adiciona a opção ao elemento <select>
+        optionCategoria.id = categoria.id;
         categoriaSelect.appendChild(optionCategoria);
       });
     })
     .catch((error) => console.error("Erro:", error));
 }
+// ---------- CARREGAR SUBCATEGORIAS ----------
+if (subCategoriaSelect) {
+  const apiUrl = `${url}subCategorias/`;
 
-//-------------------- REQUISIÇÃO API --------------------
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        subCategoriaSelect.appendChild(optionCategoria);
+      });
+    })
+    .catch((error) => console.error("Erro:", error));
+}
+// ---------- CARREGAR PLANOS ----------
+if (planosSelect) {
+  const apiUrl = `${url}planos`;
+  console.log("working")
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        optionCategoria.name = categoria.porcentagem;
+        planosSelect.appendChild(optionCategoria);
+      });
+    })
+    .catch((error) => console.error("Erro:", error));
+  if (porcentagemPlano) {
+    planosSelect.addEventListener('change', (event) => {
+      const idOpcaoSelecionada = event.target.options[event.target.selectedIndex].name;
+      porcentagemPlano.value = idOpcaoSelecionada;
+    });
+  }
+}
+// ---------- CARREGAR SUBCATEGORIAS ----------
+if (gerentesSelect) {
+  const apiUrl = `${url}subCategorias/`;
+
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        gerentesSelect.appendChild(optionCategoria);
+      });
+    })
+    .catch((error) => console.error("Erro:", error));
+}
+// FORMATA PRA JSON
+function formDataToJson(formData) {
+  const jsonObject = {};
+  formData.forEach((value, key) => {
+    jsonObject[key] = value;
+  });
+  return JSON.stringify(jsonObject);
+}
+
+
+
+
+// ---------------------------------------------------------------------------------------------------------
+// --------------------------------------------- FORMULÁRIOS -----------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
+// -------------------- REQUISIÇÃO API 
 async function apiHandler(method, page, body) {
+  var header = {}
+  if (page === "transacoes") {
+    header = { 'Content-Type': 'application/json' }
+  }
   const destination = `${url}${page}`
   // Fazer uma requisição à sua API para obter os dados
   if (method === "GET") {
@@ -126,7 +183,7 @@ async function apiHandler(method, page, body) {
   if (method === "POST") {
     fetch(destination, {
       method: "POST",
-      headers: {},
+      headers: header,
       body: body,
     })
       .then((response) => {
@@ -151,122 +208,98 @@ async function apiHandler(method, page, body) {
   }
 
 }
+// ---------- CADASTRAR OFERTAS ----------
+if (ofertasForm) {
+  ofertasForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(ofertasForm);
+    formData.append("id", "2");
 
-// Função para gerar as divs para cada objeto
-function gerarCards(ofertas) {
-  for (const oferta of ofertas) {
-    const cardDiv = document.createElement('div');
-    cardDiv.innerHTML = `
-    <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 352px;height: auto;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;!important">
-    <div class="row  m-0 p-0" style="width:100%;">
-      <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
-          <img src="${url}${oferta.imagem.replace(/\\/g, '/')}" class="img-fluid" style="width:100%;height: 250px;">
-      </div>
-    </div>
-    <div class="row w-100 p-0 m-0 produto">
-      <div class="col-7 p-0  d-flex justify-content-start align-items-start">
-        <span class="text-center" style="background-color: #550389;color: #efefef;margin-top: -25px;font-size: 18px;padding-top: 10px; font-weight: 400">
-          <strong>${oferta.tipo}</strong> 
-        </span>
-      </div>
-      <div class="col-5 p-0 m-0 d-flex justify-content-end align-items-center" style="margin-top:3px;">
-          <p class=" m-0" style="color: #747474;font-size:0.9rem; padding-top: 5px; padding-right: 15px";>
-              ${oferta.estado}
-          <img src="./imagens/flagofBrazil_6577.png" class="img-fluid" style=" width: 17px; height: 17px;">
-          </p>
-      </div>
-    </div>
-    <div class="row w-100 oferta" style="margin-top: 18px;">
-      <p class="h6">Expira em</p>
-    </div>
-    <div class="row w-100 oferta d-flex justify-content-center align-items-center">
-      <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
-        <div>
-          <p class="p-0 m-0" id="dia" style="margin-right: 5px;color: #efefef;">00</p>
-          <p class="p-0 m-0" id="textoDias" style="margin-right: 5px;font-size: 15px;color: #efefef;">Dias</p>
-        </div>
-      </div>
-      <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
-        <div>
-          <p class="p-0 m-0" id="horas" style="margin-right: 5px;color: #efefef;">00</p>
-          <p class="p-0 m-0" id="textoHoras" style="margin-right: 5px;font-size: 15px;color: #efefef;">Horas</p>
-        </div>
-      </div>
-      <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
-        <div>
-          <p class="p-0 m-0" id="minutos" style="margin-right: 5px;color: #efefef;">00</p>
-          <p class="p-0 m-0" id="textoMinutos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Minutos</p>
-        </div>
-      </div>
-      <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
-        <div>
-          <p class="p-0 m-0" id="segundos" style="margin-right: 5px;color: #efefef;">00</p>
-          <p class="p-0 m-0" id="textoSegundos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Segundos</p>
-        </div>
-      </div>
-      
-    </div>
-    <div class="row p-0 m-0 w-100 oferta" style="margin-top:15px!important;">
-      <div class="col p-0 m-0">
-          <p class="text-sm" style="color: #747474;font-size: 1rem;font-weight: 700;margin-left:10px;">
-            ${oferta.titulo}
-          </p>
-      </div>
-    </div>
-    <div class="row p-0 m-0 w-100 oferta" style="margin-top:11px!important;">
-      <div class="col p-0 m-0">
-          <p class="text-sm" style="color: #747474;font-size: 1rem;margin-left:10px;">
-            ${oferta.descricao}
-          </p>
-      </div>
-    </div>
-    <div class="row p-0 m-0 w-100 text-center" style="margin-top:25px!important;">
-      <div class="col">
-          <p class="text-sm p-0 m-0 h1" style="color: #747474;font-size: 2rem;">
-            ${oferta.valor}
-          </p>
-      </div>
-    </div>
-    <div class="row w-100" style="margin-top:20px;margin-bottom:20px;">
-      <div class="col m-0 p-0 d-flex flex-row justify-content-center align-items-center">
-          <a type="button" href="/agencias/matriz/ofertas/info/" class="btn text-white fw-bold" style="width: 278px;height: 40px;line-height: 0.1;background-color: #FF6600;border-radius: 5px;padding: 10px 0px 10px 0px;font-size: 15px; margin-bottom: 11px">Ver Mais</a>
-      </div>
-    </div>
-  </div>
-    `;
-
-    // Adicione a estrutura do card no contêiner
-    cardsContainer.appendChild(cardDiv);
-
-    // Chame a função para calcular a contagem regressiva para esta oferta
-    calcularContagemRegressiva(oferta.vencimento, cardDiv);
-  }
-
+    const method = "POST";
+    const page = "ofertas";
+    apiHandler(method, page, formData);
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  });
 }
+// ---------- CADASTRAR TRANSAÇÕES 
+if (transacoesForm) {
+  transacoesForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const method = "POST";
+    const page = "transacoes";
+    const formTrasacao = new FormData(transacoesForm);
+    formTrasacao.append("idComprador", 1);
+    formTrasacao.append("idVendedor", 4);
+    formTrasacao.append("voucher", 0);
 
-// ---------- Calcular Contagem Regressiva ----------
-function calcularContagemRegressiva(dataDeEntrega, cardDiv) {
-  setInterval(() => {
-    const dataAtual = new Date();
-    const diferencaEmMilissegundos = Math.max(new Date(dataDeEntrega) - dataAtual, 0);
-    const dias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diferencaEmMilissegundos % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((diferencaEmMilissegundos % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diferencaEmMilissegundos % (1000 * 60)) / 1000);
-    cardDiv.querySelector('#dia').textContent = padLeft(dias, 2);
-    cardDiv.querySelector('#horas').textContent = padLeft(horas, 2);
-    cardDiv.querySelector('#minutos').textContent = padLeft(minutos, 2);
-    cardDiv.querySelector('#segundos').textContent = padLeft(segundos, 2);
-  }, 1000);
+    const formData = formDataToJson(formTrasacao);
+
+    console.log(formData);
+    apiHandler(method, page, formData);
+  });
 }
-function padLeft(value, length) {
-  return String(value).padStart(length, '0');
+// ---------- CADASTRAR GERENTE
+if (gerenteForm) {
+  gerenteForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const method = "POST"
+    const page = "usuarios/gerente"
+    const formGerente = new FormData(gerenteForm);
+    formGerente.append("statusConta", "1");
+    formGerente.append("limiteCredito", "0");
+    formGerente.append("saldoPermuta", "0");
+    formGerente.append("tipoOperacao", "tipoOperacao");
+    formGerente.append("tipoOperacaoTaxa", "tipoOperacaoTaxa");
+    formGerente.append("idUsuario", "1");
+    formGerente.append("dataDeAfiliacao", new Date());
+    apiHandler(method, page, formGerente);
+    // for (const pair of formGerente.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`);
+    // }
+  });
 }
-// ---------- Calcular Contagem Regressiva ----------
+// ---------- CADASTRAR AGENCIA
+if (agenciaForm) {
+  agenciaForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const method = "POST"
+    const page = "usuarios/agencia"
+    const formAgencia = new FormData(agenciaForm);
+    formAgencia.append("statusConta", "1");
+    formAgencia.append("saldoPermuta", "0");
+    formAgencia.append("tipoOperacaoTaxa", "tipoOperacaoTaxa");
+    formAgencia.append("idUsuario", "1");
+    formAgencia.append("gerenteConta", 0);
+    formAgencia.append("taxaGerenteConta", null);
+    formAgencia.append("dataDeAfiliacao", new Date());
+    apiHandler(method, page, formAgencia);
+    for (const pair of formAgencia.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  });
+}
+// ---------- CADASTRAR ASSOCIADO
+if (associadosForm) {
+  associadosForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const method = "POST"
+    const page = "usuarios/associado"
+    const formAssociados = new FormData(associadosForm);
+    formAssociados.append("idUsuario", "1");
 
+    console.log(formAssociados)
 
-
-// ------------------------------ FUNÇÕES DOS CONTROLADORES ------------------------------
+    apiHandler(method, page, formAssociados);
+    for (const pair of formAssociados.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  });
+}
+// ---------------------------------------------------------------------------------------------------------
+// --------------------------------------- FUNÇÕES DOS CONTROLADORES ---------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 // ----- Open the edit popup
 function openPopupEdit(plano, page) {
   const modal = $("#myModal");
@@ -501,6 +534,7 @@ function createTableRow(categoria, page) {
   if (page === "ofertas") {
     createCell(categoria.titulo)
     createCell(categoria.tipo)
+    createCell(categoria.idAgencia)
     createCell(categoria.valor)
     createOperators(row, categoria, page)
     return row;
@@ -576,6 +610,7 @@ function createButton(iconClass, buttonClass) {
 async function deleteTableRow(categoria, page) {
   const id = categoria.id;
   const apiUrl = `${url}${page}/${id}`;
+  console.log(apiUrl)
   try {
     fetch(apiUrl, {
       method: 'DELETE'
@@ -596,41 +631,30 @@ function formatCreatedAt(dateString) {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   return new Date(dateString).toLocaleDateString('pt-BR', options);
 }
-function getStatusString(status) {
-  return status ? 'Ativo' : 'Desativado';
-}
+function getStatusString(status) { return status ? 'Ativo' : 'Desativado' }
 
+// ---------------------------------------------------------------------------------------------------------
+// -------------------------------------------- CONTROLADORES ----------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 // ------------------------------ CONTROLADOR DAS LISTAS DE OFERTAS ------------------------------
 // --------- CONDIÇÕES
-if (ofertas) {
-  ofertasHandler("ofertas")
-} else if (minhasOfertas) {
-  ofertasHandler("ofertas/minhas/5")
-}
+if (excluirOfertas) ofertasHandler("ofertas/0/50")
+if (minhasOfertas) ofertasHandler("ofertas/minhas/5/0/2")
 // --------- FUNÇÕES
 async function ofertasHandler(page) {
   const apiUrl = `${url}${page}`;
-
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-
-  const response = await fetch(apiUrl, options);
-  const responseData = await response.json()
-  console.log(responseData)
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+  console.log(data)
 
   const tableBody = document.querySelector("tbody");
   tableBody.innerHTML = "";
-  responseData.itensPaginados.forEach((categoria) => {
+
+  data.itensPaginados.forEach((categoria) => {
     const row = createTableRow(categoria, "ofertas");
     tableBody.appendChild(row);
   });
 }
-
 
 // ------------------------------ CONTROLADOR DOS PLANOS ------------------------------
 // --------- CONDIÇÕES
@@ -649,11 +673,39 @@ if (associados) {
   createPlans(plan)
 }
 // --------- FUNÇÕES
+async function plansHandler(plans) {
+  formatDate();
+  const apiUrl = `${url}planos/tipo`;
+  const data = {
+    tipo: plans,
+  };
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+
+  const response = await fetch(apiUrl, options);
+  const responseData = await response.json();
+
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = "";
+
+  responseData.forEach((categoria) => {
+    const row = createTableRow(categoria, "planos");
+    tableBody.appendChild(row);
+  });
+
+}
 async function createPlans(plan) {
   btnCadastrar.addEventListener("click", async () => {
     const nome = document.querySelector("#nomeDoPlano").value;
     const porcentagem = document.querySelector("#porcentagem").value;
     const dataDeCriacao = document.querySelector("#dataDeCriacao").value;
+
     const tipo = plan;
     const data = {
       nome,
@@ -684,44 +736,11 @@ async function createPlans(plan) {
     }
   });
 }
-async function plansHandler(plans) {
-  formatDate();
-  const apiUrl = `${url}planos/tipo`;
-  const data = {
-    tipo: plans,
-  };
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-
-  const response = await fetch(apiUrl, options);
-  const responseData = await response.json();
-
-  const tableBody = document.querySelector("tbody");
-  tableBody.innerHTML = "";
-
-  responseData.forEach((categoria) => {
-    const row = createTableRow(categoria, "planos");
-    tableBody.appendChild(row);
-  });
-
-}
 
 // ------------------------------ CONTROLADOR DAS CATEGORIAS ------------------------------
 // --------- CONDIÇÕES
-if (categoriasPage) {
-  categoriasHandler("categorias")
-    .catch((error) => console.error("Erro:", error));
-} else if (subCategoriasPage) {
-
-} else if (subCategoriasPage) {
-
-}
+if (categoriasPage) categoriasHandler("categorias")
+else if (subCategoriasPage) categoriasHandler("subCategorias")
 // --------- FUNÇÕES
 async function categoriasHandler(category) {
   formatDate();
@@ -733,9 +752,40 @@ async function categoriasHandler(category) {
   tableBody.innerHTML = "";
 
   data.forEach((categoria) => {
-    const row = createTableRow(categoria, "categorias");
+    console.log(data)
+    const row = createTableRow(categoria, category);
     tableBody.appendChild(row);
   });
+
+  categoriasForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(categoriasForm);
+    var opcaoSelecionada = formData.get('idCategoria');
+    if (opcaoSelecionada) {
+      var idOpcaoSelecionada = document.querySelector(`option[value="${opcaoSelecionada}"]`).id;
+      formData.set("idCategoria", idOpcaoSelecionada)
+    }
+
+
+    function formDataToJson(formData) {
+      const jsonObject = {};
+      formData.forEach((value, key) => {
+        jsonObject[key] = value;
+      });
+      return JSON.stringify(jsonObject);
+    }
+
+    const jsonData = formDataToJson(formData);
+    const method = "POST";
+    const page = category
+    apiHandler(method, page, jsonData);
+    showAlertCadastro("Plano cadastrado com sucesso!", "success");
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+  });
+
 }
 
 // ------------------------------ CONTROLADOR DE ASSOCIADOS E AGÊNCIA ------------------------------
@@ -751,7 +801,6 @@ if (agenciasLista) {
 } else if (usuariosEdit) {
   usuariosHandler("Usuarios")
 }
-
 // --------- FUNÇÕES
 async function usuariosHandler(page) {
   var request = []
@@ -775,7 +824,7 @@ async function usuariosHandler(page) {
     tamanho: 50
   };
 
-  const apiUrl = `${url}usuarios/tipo/meus/1`;
+  const apiUrl = `${url}usuarios/tipo/todos/1`;
 
   const options = {
     method: "POST",
@@ -799,15 +848,9 @@ async function usuariosHandler(page) {
 
 }
 
-// ------------------------------ CONTROLADOR DE ASSOCIADOS E AGÊNCIA ------------------------------
+// ------------------------------ CONTROLADOR TRANSAÇÕES ------------------------------
 // --------- CONDIÇÕES
-
-// ------------------------------ CARDS ASSOCIADOS ------------------------------
-// --------- CONDIÇÕES
-if (transacoes) {
-  // Chama a função para carregar os cards iniciais quando a página carregar
-  transacoesHandler("transacoes");
-}
+if (transacoes) transacoesHandler("transacoes/0")
 // --------- FUNÇÕES
 async function transacoesHandler(transacoes) {
 
@@ -826,43 +869,182 @@ async function transacoesHandler(transacoes) {
   });
 }
 
-// ----- Carrega as páginas
-async function carregarCardsIniciais() {
-  const apiUrl = `${url}usuarios/tipo/meus/1`;
-  const tiposParaFiltrar = ["Associado"];
 
+// ---------------------------------------------------------------------------------------------------------
+// ------------------------------------------------ CARDS --------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
+
+// ------------------------------ OFERTAS CARDS ------------------------------
+// --------- CONDIÇÕES
+if (ofertasCards) createOfertasCards()
+// --------- FUNÇÕES
+async function createOfertasCards() {
+  const apiUrl = `${url}ofertas/0/6`;
   try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tipos: tiposParaFiltrar, pagina: 0, tamanho: 50 }),
-    });
-
+    const response = await fetch(apiUrl);
     const data = await response.json();
-
     const container = document.querySelector(".cards .row");
-    container.innerHTML = ""; // Remove os cards existentes do container
-
+    container.innerHTML = "";
     if (data.hasOwnProperty("message")) {
       const h1 = document.createElement("h5");
-      h1.textContent = "Sem associados cadastrados";
+      h1.textContent = "Sem ofertas cadastradas";
       container.appendChild(h1);
     } else {
-      data.itensPaginados.forEach((agencia) => {
-        adicionarCard(agencia); // Usa a função para adicionar o card
+      data.itensPaginados.forEach((oferta) => {
+        createOfertasCard(oferta);
       });
     }
   } catch (error) {
     console.error("Erro ao obter os dados da API:", error);
   }
 }
+function createOfertasCard(oferta) {
+  // ---------- CALCULAR CONTAGEM REGRESSIVA 
+  function calcularContagemRegressiva(dataDeEntrega, cardDiv) {
+    function padLeft(value, length) { return String(value).padStart(length, '0') }
+    setInterval(() => {
+      const dataAtual = new Date();
+      const diferencaEmMilissegundos = Math.max(new Date(dataDeEntrega) - dataAtual, 0);
+      const dias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diferencaEmMilissegundos % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diferencaEmMilissegundos % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencaEmMilissegundos % (1000 * 60)) / 1000);
+      cardDiv.querySelector('#dia').textContent = padLeft(dias, 2);
+      cardDiv.querySelector('#horas').textContent = padLeft(horas, 2);
+      cardDiv.querySelector('#minutos').textContent = padLeft(minutos, 2);
+      cardDiv.querySelector('#segundos').textContent = padLeft(segundos, 2);
+    }, 1000);
+  }
+  if (!oferta) {
+    console.log("sem ofertas");
+  }
+  console.log(oferta)
+  const ofertaId = oferta.id
+  const container = document.querySelector(".cards .row");
+  // Criação do novo componente
+  const newComponent = document.createElement("div");
+  calcularContagemRegressiva(oferta.vencimento, newComponent)
+
+  newComponent.innerHTML = `
+        <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 352px;height: auto;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;!important">
+        <div class="row  m-0 p-0" style="width:100%;">
+          <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
+              <img src=${url}${oferta.imagem} class="img-fluid" style="width:100%;height: 250px;">
+          </div>
+        </div>
+        <div class="row w-100 p-0 m-0 produto">
+          <div class="col-7 p-0  d-flex justify-content-start align-items-start">
+            <span class="text-center" style="background-color: #550389;color: #efefef;margin-top: -25px;font-size: 18px;padding-top: 10px; font-weight: 400">
+              <strong>${oferta.tipo}</strong> 
+            </span>
+          </div>
+          <div class="col-5 p-0 m-0 d-flex justify-content-end align-items-center" style="margin-top:3px;">
+              <p class=" m-0" style="color: #747474;font-size:0.9rem; padding-top: 5px; padding-right: 15px";>
+                  ${oferta.estado}
+              <img src="./imagens/flagofBrazil_6577.png" class="img-fluid" style=" width: 17px; height: 17px;">
+              </p>
+          </div>
+        </div>
+        <div class="row w-100 oferta" style="margin-top: 18px;">
+          <p class="h6">Expira em</p>
+        </div>
+        <div class="row w-100 oferta d-flex justify-content-center align-items-center">
+          <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
+            <div>
+              <p class="p-0 m-0" id="dia" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoDias" style="margin-right: 5px;font-size: 15px;color: #efefef;">Dias</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
+            <div>
+              <p class="p-0 m-0" id="horas" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoHoras" style="margin-right: 5px;font-size: 15px;color: #efefef;">Horas</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
+            <div>
+              <p class="p-0 m-0" id="minutos" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoMinutos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Minutos</p>
+            </div>
+           </div>
+           <div class="col-3 text-center d-flex justify-content-center align-items-center" style="background-color: #6EC1E4;">
+            <div>
+              <p class="p-0 m-0" id="segundos" style="margin-right: 5px;color: #efefef;">00</p>
+              <p class="p-0 m-0" id="textoSegundos" style="margin-right: 5px;font-size: 15px;color: #efefef;">Segundos</p>
+            </div>
+           </div>
+           
+        </div>
+        <div class="row p-0 m-0 w-100 oferta" style="margin-top:15px!important;">
+          <div class="col p-0 m-0">
+              <p class="text-sm" style="color: #747474;font-size: 1rem;font-weight: 700;margin-left:10px;">
+                ${oferta.titulo}
+              </p>
+          </div>
+        </div>
+        <div class="row p-0 m-0 w-100 oferta" style="margin-top:11px!important;">
+          <div class="col p-0 m-0">
+              <p class="text-sm" style="color: #747474;font-size: 1rem;margin-left:10px;">
+                ${oferta.descricao}
+              </p>
+          </div>
+        </div>
+        <div class="row p-0 m-0 w-100 text-center" style="margin-top:25px!important;">
+          <div class="col">
+              <p class="text-sm p-0 m-0 h1" style="color: #747474;font-size: 2rem;">
+                ${oferta.valor}
+              </p>
+          </div>
+        </div>
+        <div class="row w-100" style="margin-top:20px;margin-bottom:20px;">
+          <div class="col m-0 p-0 d-flex flex-row justify-content-center align-items-center">
+              <a type="button" href="/agencias/matriz/ofertas/info/?oferta=${ofertaId}" class="btn text-white fw-bold" style="width: 278px;height: 40px;line-height: 0.1;background-color: #FF6600;border-radius: 5px;padding: 10px 0px 10px 0px;font-size: 15px; margin-bottom: 11px">Ver Mais</a>
+          </div>
+        </div>
+      </div>
+        `;
+  container.appendChild(newComponent);
+}
+// ------------------------------ ASSOCIADOS CARDS ------------------------------
+// --------- CONDIÇÕES
+if (cardsAssociados) createAssociadoCard()
 // --------- FUNÇÕES
-function adicionarCard(agencia) {
-  const imagemUrl = agencia.imagem
-    ? `${url}${agencia.imagem.replace(/\\/g, "/")}`
-    : "/assets/img/default_img.png";
+async function createAssociadoCard() {
+  const apiUrl = `${url}usuarios/tipo/meus/1`;
+  const tiposParaFiltrar = {
+    "tipos": ["Associado"],
+    "pagina": 0,
+    "tamanho": 50
+  }
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tiposParaFiltrar),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const container = document.querySelector(".cards .row");
+      container.innerHTML = ""; // Remove os cards existentes do container
+      console.log("THE DATA: ", data.itensPaginados)
+      if (data.hasOwnProperty("message")) {
+        const h1 = document.createElement("h5");
+        h1.textContent = "Sem associados cadastrados";
+        container.appendChild(h1);
+      } else {
+        data.itensPaginados.forEach((associado) => {
+          associadoCard(associado); // Usa a função para adicionar o card
+        });
+      }
+    })
+    .catch((error) =>
+      console.error("Erro ao obter os dados da API:", error)
+    );
+}
+function associadoCard(associado) {
+  console.log("associado", associado);
+  const userID = associado.id
   const container = document.querySelector(".cards .row");
   // Criação do novo componente
   const newComponent = document.createElement("div");
@@ -870,19 +1052,19 @@ function adicionarCard(agencia) {
     <div class="container p-0 d-flex flex-column justify-content-center align-items-center" style="width: 357px;height: 100%;border: 1px solid #dddddd;background-color:#fff;margin-top:20px;">
       <div class="row m-0 p-0" style="width:100%;">
         <div class="col p-0 m-0 d-flex justify-content-center align-items-center">
-            <img src="${imagemUrl}" class="img-fluid" style="width:80S%;height: 200px;">
+            <img src="${url}${associado.imagem}" class="img-fluid" style="width:80S%;height: 200px;">
         </div>
       </div>
       <div class="row w-100" style="margin-top:15px;">
         <div class="col-7 d-flex justify-content-start align-items-start">
             <i class="fa fa-tags" aria-hidden="true" style="color: #550389;font-size:0.9rem;margin-top:5px;"></i>
             <p class="text-sm m-0 p-0" style="color: #747474;margin-left:5px!important;">
-                ${agencia.dadosGerais.categoria}
+                ${associado.dadosGerais.categoria}
             </p>
         </div>
         <div class="col-5 d-flex justify-content-end align-items-center">
             <p class="text-sm" style="color: #747474;">
-                ${agencia.dadosEnderecos.estado}
+                ${associado.dadosEnderecos.estado}
             <img src="imagens/flagofBrazil_6577.png" class="img-fluid" style="width: 17px;height: 17px;">
             </p>
         </div>
@@ -890,7 +1072,7 @@ function adicionarCard(agencia) {
       <div class="row p-0 m-0 w-100" style="margin-top:11px!important;">
         <div class="col">
             <p class="text-sm p-0 m-0" style="color: #747474;font-size: 1rem;font-weight: 500;">
-              ${agencia.dadosGerais.nomeFantasia}
+              ${associado.dadosGerais.nomeFantasia}
             </p>
         </div>
       </div>
@@ -902,7 +1084,7 @@ function adicionarCard(agencia) {
       <div class="row container p-0" style="margin-top:20px!important;">
         <div class="col">
             <p class="text-sm" style="color: #747474;font-size: 1rem;">
-              ${agencia.dadosGerais.descricao}
+              ${associado.dadosGerais.descricao}
             </p>
         </div>
       </div>
@@ -912,7 +1094,7 @@ function adicionarCard(agencia) {
               <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
             </svg>
             <p class="text-sm mt-2 fw-bold p-0 m-0" style="font-size: 0.7rem;color: #550389;">
-              ${agencia.dadosAgencias.nomeAgencia}
+              ${associado.dadosAgencias.nomeAgencia}
             </p>
         </div>
         
@@ -938,7 +1120,7 @@ function adicionarCard(agencia) {
       </div>
       <div class="row w-100" style="margin-top:20px;margin-bottom:20px;">
         <div class="col m-0 p-0 d-flex flex-row justify-content-end align-items-center">
-            <a href="./info/index.html?id=${agencia.id}" type="button" class="btn text-white fw-bold" style="width: 65px;height: 20px;line-height: 0.1;background-color: #FF6600;border-radius: 3px;padding: 10px 0px 15px 0px;margin-right: 15px;font-size: 0.8rem;">Ver +</a>
+            <a href="./info/index.html?id=${userID}" type="button" class="btn text-white fw-bold" style="width: 65px;height: 20px;line-height: 0.1;background-color: #FF6600;border-radius: 3px;padding: 10px 0px 15px 0px;margin-right: 15px;font-size: 0.8rem;">Ver +</a>
         </div>
       </div>
     </div>
@@ -946,13 +1128,10 @@ function adicionarCard(agencia) {
   container.appendChild(newComponent);
 }
 
-// ------------------------------ ASSOCIADOS INFO ------------------------------
+// ------------------------------ ASSOCIADOS INFO CARD ------------------------------
 // --------- CONDIÇÕES
-const urlParams = new URLSearchParams(window.location.search);
 const associadoId = urlParams.get('id');
-if (associadoId) {
-  associadosInfo(associadoId);
-}
+if (associadoId) associadosInfo(associadoId)
 // --------- FUNÇÕES
 async function associadosInfo(associadoId) {
   const apiUrl = `${url}usuarios/meus-dados/${associadoId}`;
@@ -1001,152 +1180,66 @@ async function associadosInfo(associadoId) {
   }
 }
 
-// //  Script para carregar categorias
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-//   const apiUrl = `${url}categorias`;
+// ------------------------------ OFERTAS INFO CARD ------------------------------
+// --------- CONDIÇÕES
+const ofertaId = urlParams.get('oferta');
+if (ofertaId) ofertasInfo(ofertaId)
+// --------- FUNÇÕES
+async function ofertasInfo(ofertaId) {
+  const apiUrl = `${url}ofertas/${ofertaId}`;
 
-//   fetch(apiUrl)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // Processa os dados JSON recebidos
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Erro ao obter dados da API');
+    }
 
-//       data.forEach((categoria) => {
-//         // Cria uma linha na tabela para cada transação
-//         //console.log('Categoria', categoria);
-//         // Obtém a referência para o elemento <select>
-//         const categoriaSelect =
-//           document.getElementById("selectCategoria");
-//         // Cria um elemento de opção
-//         const optionCategoria = document.createElement("option");
-//         // Define o texto da opção como o nome do plano
-//         optionCategoria.textContent = categoria.nome;
-//         // Define o valor da opção como o ID do plano
-//         optionCategoria.value = categoria.nome;
-//         // Adiciona a opção ao elemento <select>
-//         categoriaSelect.appendChild(optionCategoria);
-//       });
-//     })
-//     .catch((error) => console.error("Erro:", error));
-// });
-// // Script carregar estados
-// // Array com as siglas dos estados brasileiros (UF)
-// const estadosBrasileirosUF = [
-//   "AC",
-//   "AL",
-//   "AP",
-//   "AM",
-//   "BA",
-//   "CE",
-//   "DF",
-//   "ES",
-//   "GO",
-//   "MA",
-//   "MT",
-//   "MS",
-//   "MG",
-//   "PA",
-//   "PB",
-//   "PR",
-//   "PE",
-//   "PI",
-//   "RJ",
-//   "RN",
-//   "RS",
-//   "RO",
-//   "RR",
-//   "SC",
-//   "SP",
-//   "SE",
-//   "TO",
-// ];
-// estadosBrasileirosUF.forEach((estado) => {
-//   // Obtém a referência para o elemento <select>
-//   const estadoSelect = document.getElementById("selectEstado");
-//   // Cria um elemento de opção
-//   const optionEstado = document.createElement("option");
-//   // Define o texto da opção como o nome do plano
-//   optionEstado.textContent = estado;
-//   // Define o valor da opção como o ID do plano
-//   optionEstado.value = estado;
-//   // Adiciona a opção ao elemento <select>
-//   estadoSelect.appendChild(optionEstado);
-// });
-// // Script para carregar Agencias
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-//   const apiUrl = `${url}usuarios/tipo`;
-//   const tiposParaFiltrar = ["Master", "Comum", "Matriz", "Filial"];
-//   fetch(apiUrl, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ tipos: tiposParaFiltrar }),
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // Processa os dados JSON recebidos
-//       //console.log(data);
-//       data.usuarios.forEach((agencia) => {
-//         // Obtém a referência para o elemento <select>
-//         const agenciaSelect = document.getElementById("selectAgencia");
-//         // Cria um elemento de opção
-//         const optionAgencia = document.createElement("option");
-//         // Define o texto da opção como o nome do plano
-//         optionAgencia.textContent = agencia.dadosAgencias.nomeFranquia;
-//         // Define o valor da opção como o ID do plano
-//         optionAgencia.value = agencia.id;
-//         // Adiciona a opção ao elemento <select>
-//         agenciaSelect.appendChild(optionAgencia);
-//       });
-//     })
-//     .catch((error) => console.error("Erro:", error));
-// });
-// Função para adicionar um único card ao container
+    const result = await response.json();
+    const data = result.ofertaComNomeAgencia
+    console.log(data)
+    function putValue(id, value) {
+      // Garante que a primeira letra do ID seja maiúscula
+      const idMaiusculo = id.charAt(0).toUpperCase() + id.slice(1);
+
+      // Concatena o ID e o valor no formato desejado
+      const fusao = `${idMaiusculo}: ${value}`;
+
+      document.getElementById(id).innerText = fusao
+    }
+
+    // Gera o conteudo com :
+    putValue('cidade', data.cidade)
+    putValue('tipo', data.tipo)
+
+    // // Gera os conteudos que não precisam de :
+    document.getElementById("titulo").innerText = data.titulo
+    function converterData(data) {
+      const vencimento = new Date(data);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return vencimento.toLocaleDateString('pt-BR', options);
+    }
+
+    const dataVencimento = converterData(data.vencimento);
+    document.getElementById("data_encerramento").innerText = dataVencimento
+    document.getElementById("valor").innerText = data.valor
+    document.getElementById("descricao").innerText = data.descricao
+    document.getElementById("observacao").innerText = data.obs
+    document.getElementById("vendedor").innerText = data.nomeVendedor
+    document.getElementById("agencia").innerText = data.nomeAgencia
+
+    // Substituir o src da imagem
+    const imagemElement = document.getElementById('imagem');
+    const imagemUrl = `${url}${data.imagem}`;
+    imagemElement.src = imagemUrl;
+
+    console.log('Dados obtidos:', data);
+  } catch (error) {
+    console.error('Erro ao obter dados da API:', error);
+  }
+}
 
 
-// //  Script para filtrar e substituir os cards
-// document.addEventListener("DOMContentLoaded", function () {
-//   const btnLocalizar = document.getElementById("btnLocalizar");
 
-//   btnLocalizar.addEventListener("click", function () {
-//     const agencia = document.getElementById("selectAgencia").value;
-//     const categoria = document.getElementById("selectCategoria").value;
-//     const estado = document.getElementById("selectEstado").value;
-//     const cidade = document.getElementById("selectCidade").value;
-//     const dadosFiltro = {
-//       agencia: agencia,
-//       categoria: categoria,
-//       estado: estado,
-//       cidade: cidade,
-//     };
-//     const apiUrl = `${url}usuarios/filtro-associado`;
 
-//     fetch(apiUrl, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(dadosFiltro),
-//     })
-//       .then((response) => response.json())
-//       .then((resultado) => {
-//         const container = document.querySelector(".cards .row");
-//         container.innerHTML = ""; // Remove os cards existentes do container
 
-//         if (resultado.hasOwnProperty("message")) {
-//           const h1 = document.createElement("h3");
-//           h1.textContent = "Sem associados encontrados";
-//           container.appendChild(h1);
-//         } else {
-//           resultado.forEach((agencia) => {
-//             adicionarCard(agencia); // Usa a função para adicionar o card filtrado
-//           });
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Erro ao enviar requisição:", error);
-//       });
-//   });
-// });
+

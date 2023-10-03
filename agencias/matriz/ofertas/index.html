@@ -44,7 +44,7 @@
         <nav-bar></nav-bar>
         <div class="container py-2">
           <div class="container-simple">
-            <p class="text-muted font-weight-bold">Ofertas</p>
+            <p class="text-muted font-weight-bold" id="ofertasCards">Ofertas</p>
           </div>
           <div class="container p-4 bg-white rounded shadow">
             <div class="row row-cols-5">
@@ -133,7 +133,7 @@
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
     ></script>
-    <script src="../../../assets/js/api.js"></script>
+    <script src="/assets/js/api.js"></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/session.js"></script>
@@ -142,9 +142,5 @@
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
-
-    <script>
-      apiHandler("GET", "ofertas");
-    </script>
   </body>
 </html>

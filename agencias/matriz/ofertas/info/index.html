@@ -55,47 +55,57 @@
                   class="img-fluid"
                   src="https://redetrade.com.br/sistemaredetrade/wp-content/uploads/2022/10/WhatsApp-Image-2022-10-19-at-15.53.19.jpeg"
                   alt=""
-                  id="img_path"
+                  id="imagem"
                   name="img_path"
-                  style="    width: 450px ;
-                  height: 554px;"
+                  style="width: 450px; height: 554px"
                 />
               </div>
               <div class="col-md-6 text-left">
-                <p
-                  class="mb-1 text-center bg-purple text-white"
-                  id="data_encerramento"
-                >Termina em 15/10/2022</p>
-                <div class="preco">  <p class="h4" id="titulo" style="margin-bottom: 5px;">RT$ 450,00</p>
+                <p class="mb-1 text-center bg-purple text-white">
+                  Termina em <span id="data_encerramento">15/10/2022</span>
+                </p>
+                <div class="preco">
+                  <p class="h4" style="margin-bottom: 5px">
+                    RT$ <span id="valor">450,00</span>
+                  </p>
                   <div class="info-value">
-                    <input type="number" placeholder="Quantidade" class="form-control col-6 " id="inputNomeFantasia"> 
-                    <button type="button" class="btn btn-orange  btn-sm" id="localizarBtn">
-                    Permultar
+                    <input
+                      type="number"
+                      placeholder="Quantidade"
+                      class="form-control col-6"
+                      id="inputNomeFantasia"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-orange btn-sm"
+                      id="localizarBtn"
+                    >
+                      Permultar
                     </button>
-                  </div></div>
+                  </div>
+                </div>
                 <div class="informacoes">
                   <p class="font-weight-bold mb-0">Informações</p>
-                <p class="mb-0" id="vendedor">Vendido por : Click Dogs</p>
-                <p class="mb-0" id="cidade">Cidade : São Paulo - SP</p>
-                <p class="mb-0" id="agencia">Agência : Matriz</p>
-                <p class="mb-0" id="atendimento">Atendimento : Vouchers</p>
+                  <p class="mb-0">
+                    Vendido por : <span id="vendedor">Ninguem</span>
+                  </p>
+                  <p class="mb-0" id="cidade">Cidade : Nenhuma</p>
+                  <p class="mb-0">
+                    Agência : <span id="agencia">Nenhuma</span>
+                  </p>
+                  <p class="mb-0" id="tipo">Tipo : Nenhum</p>
                 </div>
                 <div class="descricao">
                   <p class="font-weight-bold mb-0">Descrição da Oferta</p>
-                  <p id="descricao"">
-                  luctus nec ullamcorper mattis, pulvinar dapibus leo.nec
-                  ullamcorper mattis, pulvinar dapibus leo.nec ullamcorper
-                  mattis, pulvinar dapibus
+                  <p id="descricao">
+                    luctus nec ullamcorper mattis, pulvinar dapibus leo.nec
+                    ullamcorper mattis, pulvinar dapibus leo.nec ullamcorper
+                    mattis, pulvinar dapibus
                   </p>
                 </div>
                 <div class="restricao">
-                  <p class="font-weight-bold mb-0">Restrições da oferta</p>
-                  <p id="restricao"">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Optio, eaque alias rem tempora corporis iusto, dolorem
-                    eligendi doloremque ullam velit suscipit aperiam voluptatibus
-                    sint debitis veritatis. Quia qui recusandae fuga!
-                  </p>
+                  <p class="font-weight-bold mb-0">Observações</p>
+                  <p id="observacao">Nenhuma</p>
                 </div>
                 <p class="h5 text-center bg-success text-white" id="status">
                   Oferta Ativa
@@ -126,39 +136,5 @@
     <script src="/components/navbar.js"></script>
     <script src="/components/sidebar2.js"></script>
     <script src="/components/footer.js"></script>
-
-    
-    <script src="/assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/LexLuthorDev/formatar-moeda@main/dist/index.js"></script>
-    <script>
-      // JavaScript code to extract the 'id' from the URL
-      const queryParams = new URLSearchParams(window.location.search);
-      const id = queryParams.get("id");
-      //console.log(id); // You can use this 'id' variable to fetch the data related to the offer.
-      // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-      const apiUrl = `${window.apiBaseUrl}/ofertas/${id}`;
-      fetch(apiUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          let valor = data.valor;
-          //let valorFormatado = format.formatarMoeda(valor, 'RT');
-          let valorFormatado = valor + " RT";
-
-          document.getElementById("valor").innerText = valorFormatado;
-          document.getElementById("titulo").innerText = data.titulo;
-          document.getElementById("informacoes").innerText = data.obs;
-          document.getElementById("descricao").innerText = data.descricao;
-          // Atribua o caminho da imagem ao atributo src da imagem
-          const img_path = document.getElementById("img_path");
-          // Substituir as barras invertidas "\" por barras normais "/"
-          const imagemUrl = `${window.apiBaseUrl}/${data.img_path.replace(
-            /\\/g,
-            "/"
-          )}`;
-          img_path.src = imagemUrl;
-        })
-        .catch((error) => console.error("Erro:", error));
-    </script>
   </body>
 </html>
