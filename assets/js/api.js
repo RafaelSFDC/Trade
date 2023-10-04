@@ -1,5 +1,5 @@
-const url = "http://147.135.72.49:3000/"
-// const url = "http://localhost:3000/"
+// const url = "http://147.135.72.49:3000/"
+const url = "http://localhost:3000/"
 
 function getId(id) { return document.getElementById(id) }
 // ---------------------------------------------------------------------------------------------------------
@@ -9,6 +9,7 @@ const imageInput = getId("img_path");
 const cardsContainer = getId('cardsContainer');
 const categoriaSelect = getId('categoria');
 const planosSelect = getId('planosSelect');
+const planosAssociadoSelect = getId('planosAssociadoSelect');
 const subCategoriaSelect = getId('subCategoriaSelect')
 const porcentagemPlano = getId('porcentagemPlano')
 const gerentesSelect = getId('gerentesSelect')
@@ -166,11 +167,19 @@ if (planosSelect) {
     });
   }
 }
-// ---------- CARREGAR SUBCATEGORIAS ----------
-if (gerentesSelect) {
-  const apiUrl = `${url}subCategorias/`;
+// ---------- CARREGAR PLANOS ASSOCIADO ----------
+if (planosAssociadoSelect) {
+  const apiUrl = `${url}planos/tipo`;
+  console.log("working")
+  body = {
+    "tipo": "Associado"
+  }
 
-  fetch(apiUrl)
+  fetch(apiUrl, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
     .then((response) => response.json())
     .then((data) => {
       data.forEach((categoria) => {
@@ -178,11 +187,57 @@ if (gerentesSelect) {
         optionCategoria.textContent = categoria.nome;
         optionCategoria.value = categoria.nome;
         optionCategoria.id = categoria.id;
+        optionCategoria.name = categoria.porcentagem;
+        planosAssociadoSelect.appendChild(optionCategoria);
+      });
+      console.log(data)
+    })
+    .catch((error) => {
+      console.error("Erro ao enviar requisição:", error);
+      // Realizar tratamento de erro, se necessário...
+    });
+
+  if (porcentagemPlano) {
+    planosAssociadoSelect.addEventListener('change', (event) => {
+      const idOpcaoSelecionada = event.target.options[event.target.selectedIndex].name;
+      porcentagemPlano.value = idOpcaoSelecionada;
+    });
+  }
+
+}
+// ---------- CARREGAR GERENTES ----------
+if (gerentesSelect) {
+  const apiUrl = `${url}usuarios/tipo/meus/1`;
+  console.log("working")
+  body = {
+    "tipos": ["Gerente"],
+    "pagina": 0,
+    "tamanho": 50
+  }
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.itensPaginados.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        optionCategoria.name = categoria.porcentagem;
         gerentesSelect.appendChild(optionCategoria);
       });
+      console.log(data)
     })
-    .catch((error) => console.error("Erro:", error));
+    .catch((error) => {
+      console.error("Erro ao enviar requisição:", error);
+      // Realizar tratamento de erro, se necessário...
+    })
 }
+
 // FORMATA PRA JSON
 function formDataToJson(formData) {
   const jsonObject = {};
