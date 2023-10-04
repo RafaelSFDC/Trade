@@ -501,8 +501,7 @@ function openPopupEdit(plano, page) {
 
     const updateData = () => {
       fields.forEach((field) => {
-        const elementId = `#${field.id}`
-        const element = document.querySelectorAll(elementId);
+        const element = document.getElementById(field.id);
         let value;
 
         // Verifica se é um input
@@ -522,21 +521,19 @@ function openPopupEdit(plano, page) {
     fields.forEach((field) => {
       const element = document.getElementById(field.id);
 
-      // Configura o valor para um input ou select
       if (field.type === 'input' || field.type === 'select') {
         element.value = field.value(plano); // Define o valor do input ou select baseado no plano
+      } else if (field.type === 'file') {
+        // Se for um campo de arquivo, defina o event listener para atualizar o valor
+        element.addEventListener('change', () => {
+          updateData(); // Atualiza os dados com os valores atuais dos inputs, selects e arquivos
+        });
       }
     });
 
     // Adiciona um event listener para o botão "Salvar Alterações"
     salvarAlteracoesBtn.addEventListener("click", () => {
       updateData(); // Atualiza os dados com os valores atuais dos inputs ou selects
-      const imagemSelecionada = getId("imagem-selecionada")
-      console.log(imagemSelecionada.src)
-      if (imagemSelecionada) {
-        // data["imagem"] = imagemSelecionada.src
-        console.log(imageInput.value)
-      }
       updateRow(plano, page, data, editUserId); // Chama a função para atualizar a linha
     });
   }
@@ -746,9 +743,9 @@ function openPopupEdit(plano, page) {
       .then((response) => console.log("resposta do servidor", response))
       .then(() => {
         showAlert("Atualizado com sucesso!", "success");
-        // setTimeout(() => {
-        //   location.reload();
-        // }, 4000);
+        setTimeout(() => {
+          location.reload();
+        }, 4000);
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -1026,7 +1023,7 @@ async function createPlans(plan) {
     try {
       const response = await fetch(apiUrl, options);
       if (response.ok) {
-        showAlertCadastro("Plano cadastrado com sucesso!", "success");
+        // showAlertCadastro("Plano cadastrado com sucesso!", "success");
         setTimeout(() => {
           location.reload();
         }, 4000);
@@ -1081,7 +1078,7 @@ async function categoriasHandler(category) {
     const method = "POST";
     const page = category
     apiHandler(method, page, jsonData);
-    showAlertCadastro("Plano cadastrado com sucesso!", "success");
+    // showAlertCadastro("Plano cadastrado com sucesso!", "success");
     for (const pair of formData.entries()) {
       console.log(`${pair[0]}: ${pair[1]}`);
     }
