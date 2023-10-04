@@ -210,7 +210,7 @@
               <div class="row d-flex align-items-center">
                 <div class="col-md-4 pt-1">
                   <label class="required-field-label">Plano de Inscrição</label>
-                  <select class="form-control" id="planosSelect" name="planoDeInscricao" required>
+                  <select class="form-control" id="planosGerenteSelect" name="planoDeInscricao" required>
                   </select>
                 </div>
                 <div class="col-md-4 pt-1">
@@ -241,7 +241,7 @@
                 <div class="col-md-4 pt-1">
                   <label class="required-field-label">Selecionar Foto</label>
                   <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="imagem" name="imagem" />
+                    <input type="file" class="custom-file-input" id="img_path" name="imagem" />
                     <label class="custom-file-label d-hide" for="customFile">Selecionar</label>
                   </div>
                 </div>
@@ -311,7 +311,7 @@
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
   </script>
   <!-- Carregar Imagem -->
-  <!-- <script>
+  <script>
     // Adiciona um evento de escuta ao input file
     document.getElementById('imagem').addEventListener('change', function (event) {
       // Obtém o elemento da imagem selecionada
@@ -332,7 +332,7 @@
         imgElement.src = "/assets/img/default_img.png";
       }
     });
-  </script> -->
+  </script>
 </body>
 
 </html>

@@ -8,8 +8,11 @@ function getId(id) { return document.getElementById(id) }
 const imageInput = getId("img_path");
 const cardsContainer = getId('cardsContainer');
 const categoriaSelect = getId('categoria');
+const categoriaSelect2 = getId('categoria2');
 const planosSelect = getId('planosSelect');
 const planosAssociadoSelect = getId('planosAssociadoSelect');
+const planosGerenteSelect = getId('planosGerenteSelect');
+const planosAgenciasSelect = getId('planosAgenciasSelect');
 const subCategoriaSelect = getId('subCategoriaSelect')
 const porcentagemPlano = getId('porcentagemPlano')
 const gerentesSelect = getId('gerentesSelect')
@@ -101,7 +104,6 @@ if (imageInput) {
 
       // Define o URL temporário como o atributo src da tag img
       imgElement.src = imageURL;
-
     } else {
       // Caso o usuário não tenha selecionado um arquivo, exibe a imagem padrão
       imgElement.src = "/assets/img/default_img.png";
@@ -109,9 +111,30 @@ if (imageInput) {
   });
 }
 // ---------- CARREGAR CATEGORIAS ----------
-if (categoriaSelect) {
-  const apiUrl = `${url}categorias/`;
+const categoriaSelects = document.querySelectorAll('#categoria');
 
+if (categoriaSelects.length > 0 || categoriaSelect) {
+  const apiUrl = `${url}categorias/`;
+  console.log("SELECTED")
+
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        categoriaSelects.forEach(categoriaSelect => {
+          const optionCategoria = document.createElement("option");
+          optionCategoria.textContent = categoria.nome;
+          optionCategoria.value = categoria.nome;
+          optionCategoria.id = categoria.id;
+          categoriaSelect.appendChild(optionCategoria);
+        });
+      });
+    })
+    .catch((error) => console.error("Erro:", error));
+}
+
+if (categoriaSelect2) {
+  const apiUrl = `${url}categorias/`;
   fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -120,7 +143,7 @@ if (categoriaSelect) {
         optionCategoria.textContent = categoria.nome;
         optionCategoria.value = categoria.nome;
         optionCategoria.id = categoria.id;
-        categoriaSelect.appendChild(optionCategoria);
+        categoriaSelect2.appendChild(optionCategoria);
       });
     })
     .catch((error) => console.error("Erro:", error));
@@ -166,6 +189,82 @@ if (planosSelect) {
       porcentagemPlano.value = idOpcaoSelecionada;
     });
   }
+}
+// ---------- CARREGAR PLANOS GERENTE ----------
+if (planosGerenteSelect) {
+  const apiUrl = `${url}planos/tipo`;
+  console.log("working")
+  body = {
+    "tipo": "Gerente"
+  }
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        optionCategoria.name = categoria.porcentagem;
+        planosGerenteSelect.appendChild(optionCategoria);
+      });
+      console.log(data)
+    })
+    .catch((error) => {
+      console.error("Erro ao enviar requisição:", error);
+      // Realizar tratamento de erro, se necessário...
+    });
+
+  if (porcentagemPlano) {
+    planosGerenteSelect.addEventListener('change', (event) => {
+      const idOpcaoSelecionada = event.target.options[event.target.selectedIndex].name;
+      porcentagemPlano.value = idOpcaoSelecionada;
+    });
+  }
+
+}
+// ---------- CARREGAR PLANOS AGENCIA ----------
+if (planosAgenciasSelect) {
+  const apiUrl = `${url}planos/tipo`;
+  console.log("working")
+  body = {
+    "tipo": "Agencia"
+  }
+
+  fetch(apiUrl, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((categoria) => {
+        const optionCategoria = document.createElement("option");
+        optionCategoria.textContent = categoria.nome;
+        optionCategoria.value = categoria.nome;
+        optionCategoria.id = categoria.id;
+        optionCategoria.name = categoria.porcentagem;
+        planosAgenciasSelect.appendChild(optionCategoria);
+      });
+      console.log(data)
+    })
+    .catch((error) => {
+      console.error("Erro ao enviar requisição:", error);
+      // Realizar tratamento de erro, se necessário...
+    });
+
+  if (porcentagemPlano) {
+    planosAgenciasSelect.addEventListener('change', (event) => {
+      const idOpcaoSelecionada = event.target.options[event.target.selectedIndex].name;
+      porcentagemPlano.value = idOpcaoSelecionada;
+    });
+  }
+
 }
 // ---------- CARREGAR PLANOS ASSOCIADO ----------
 if (planosAssociadoSelect) {
@@ -284,6 +383,7 @@ async function apiHandler(method, page, body) {
         if (data && data.error) {
           console.log("Error from server:", data.error);
         } else {
+          showAlertCadastro("Cadastrado efetuado com sucesso!", "success");
           setTimeout(() => {
             location.reload();
           }, 5000);
@@ -399,10 +499,10 @@ function openPopupEdit(plano, page) {
   function setupEventListener(page, fields, plano, editUserId) {
     const data = {};
 
-
     const updateData = () => {
       fields.forEach((field) => {
-        const element = document.getElementById(field.id);
+        const elementId = `#${field.id}`
+        const element = document.querySelectorAll(elementId);
         let value;
 
         // Verifica se é um input
@@ -431,6 +531,12 @@ function openPopupEdit(plano, page) {
     // Adiciona um event listener para o botão "Salvar Alterações"
     salvarAlteracoesBtn.addEventListener("click", () => {
       updateData(); // Atualiza os dados com os valores atuais dos inputs ou selects
+      const imagemSelecionada = getId("imagem-selecionada")
+      console.log(imagemSelecionada.src)
+      if (imagemSelecionada) {
+        // data["imagem"] = imagemSelecionada.src
+        console.log(imageInput.value)
+      }
       updateRow(plano, page, data, editUserId); // Chama a função para atualizar a linha
     });
   }
@@ -440,6 +546,14 @@ function openPopupEdit(plano, page) {
     const fields = [
       { id: "nomeDaCategoriaModal", dataKey: "nome", type: 'input', value: (plano) => plano.nome }
     ];
+    setupEventListener(page, fields, plano);
+  }
+  if (page === "subCategorias") {
+    const fields = [
+      { id: "categoria2", dataKey: "nomeCategoria", type: 'select', value: (plano) => plano.nomeCategoria },
+      // { id: "categoria", dataKey: "categoria", type: 'select', value: (plano) => plano.idCategoria },
+      { id: "nomeDaSubCategoriaModal", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+    ]
     setupEventListener(page, fields, plano);
   }
   // Exemplo para a página "planos"
@@ -485,7 +599,7 @@ function openPopupEdit(plano, page) {
   else if (page === "agencias") {
     const fields = [
       { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
-      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "nomeFantasia", dataKey: "nomeFantasia", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
       { id: "cnpj", dataKey: "cnpj", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
 
       { id: "inscEstadual", dataKey: "inscEstadual", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
@@ -505,7 +619,7 @@ function openPopupEdit(plano, page) {
       { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
       { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
       { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
-      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "planosAgenciasSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
       { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
       { id: "nomeFranquia", dataKey: "nomeFranquia", type: 'input', value: (plano) => plano.dadosAgencias.nomeFranquia },
       { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
@@ -518,8 +632,9 @@ function openPopupEdit(plano, page) {
       { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
       { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
       { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
-      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
     ];
+    const imagemSelecionada = getId("imagem-selecionada")
+    imagemSelecionada.src = `${url}${plano.imagem}`
     const newPage = `usuarios/agencia`
     const editUserId = 1
     setupEventListener(newPage, fields, plano, editUserId);
@@ -528,7 +643,7 @@ function openPopupEdit(plano, page) {
   else if (page === "associados") {
     const fields = [
       { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
-      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "nomeFantasia", dataKey: "nomeFantasia", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
       { id: "descricao", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.descricao },
       { id: "restricoes", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.restricao },
       { id: "statusConta", dataKey: "statusConta", type: 'select', value: (plano) => plano.statusConta },
@@ -567,8 +682,10 @@ function openPopupEdit(plano, page) {
       { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
       { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
       { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
-      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
     ];
+    // AQUI
+    const imagemSelecionada = getId("imagem-selecionada")
+    imagemSelecionada.src = `${url}${plano.imagem}`
     const newPage = `usuarios/associado`
     const editUserId = 1
     setupEventListener(newPage, fields, plano, editUserId);
@@ -576,7 +693,7 @@ function openPopupEdit(plano, page) {
   else if (page === "gerente") {
     const fields = [
       { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
-      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "nomeFantasia", dataKey: "nomeFantasia", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
       { id: "cnpj", dataKey: "cnpj", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
       { id: "inscEstadual", dataKey: "inscEstadual", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
       { id: "inscMunicipal", dataKey: "inscMunicipal", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
@@ -593,28 +710,19 @@ function openPopupEdit(plano, page) {
       { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
       { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
       { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
-      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "planosAgenciasSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
       { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
       { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
       { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
       { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
       { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
-      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
     ];
+    const imagemSelecionada = getId("imagem-selecionada")
+    imagemSelecionada.src = `${url}${plano.imagem}`
     const newPage = `usuarios/gerente`
     const editUserId = 1
     setupEventListener(newPage, fields, plano, editUserId);
   }
-
-  // Exemplo para uma página com um select
-  if (page === "alguma_pagina_com_select") {
-    const fields = [
-      { id: "seuSelectModal", dataKey: "valorSelecionado", type: 'input', value: (plano) => plano.valorSelecionado }
-    ];
-    setupEventListener(page, fields, plano);
-  }
-
-
 
   function updateRow(plano, page, data, editUserId) {
     const { id } = plano;
@@ -638,9 +746,9 @@ function openPopupEdit(plano, page) {
       .then((response) => console.log("resposta do servidor", response))
       .then(() => {
         showAlert("Atualizado com sucesso!", "success");
-        setTimeout(() => {
-          location.reload();
-        }, 4000);
+        // setTimeout(() => {
+        //   location.reload();
+        // }, 4000);
       })
       .catch((error) => {
         console.error("Error sending request:", error);
@@ -685,8 +793,10 @@ function formatDate() {
 }
 // ----- Cria a tabela
 function createTableRow(categoria, page) {
-  console.log(page)
   const row = document.createElement("tr");
+  function getStatus(estado) {
+    return estado ? "Ativo" : "Inativo";
+  }
   function createOperators(row, categoria, page) {
 
     const operationsCell = document.createElement("td");
@@ -726,8 +836,8 @@ function createTableRow(categoria, page) {
     createCell(categoria.dadosEnderecos.estado)
     createCell(categoria.conta)
     createCell(categoria.email)
-    createCell(categoria.statusConta)
-    createCell(categoria.dadosAgencias.nomeAgencia)
+    createCell(getStatus(categoria.statusConta))
+    createCell(categoria.dadosGerais.tipo)
     createOperators(row, categoria, page)
     return row;
   }
@@ -736,7 +846,7 @@ function createTableRow(categoria, page) {
     createCell(categoria.dadosEnderecos.estado)
     createCell(categoria.conta)
     createCell(categoria.email)
-    createCell(categoria.statusConta)
+    createCell(getStatus(categoria.statusConta))
     createCell(categoria.dadosAgencias.nomeAgencia)
     createOperators(row, categoria, page)
     return row;
@@ -746,7 +856,7 @@ function createTableRow(categoria, page) {
     createCell(categoria.dadosEnderecos.estado)
     createCell(categoria.conta)
     createCell(categoria.email)
-    createCell(categoria.statusConta)
+    createCell(getStatus(categoria.statusConta))
     createCell(categoria.dadosAgencias.nomeAgencia)
     createOperators(row, categoria, page)
     return row;
@@ -755,7 +865,7 @@ function createTableRow(categoria, page) {
     createCell(categoria.nome)
     createCell(categoria.dadosGerais.tipo)
     createCell(categoria.email)
-    createCell(categoria.statusConta)
+    createCell(getStatus(categoria.statusConta))
     createOperators(row, categoria, page)
     return row;
   }
@@ -955,8 +1065,9 @@ async function categoriasHandler(category) {
     const formData = new FormData(categoriasForm);
     var opcaoSelecionada = formData.get('idCategoria');
     if (opcaoSelecionada) {
-      var idOpcaoSelecionada = document.querySelector(`option[value="${opcaoSelecionada}"]`).id;
-      formData.set("idCategoria", idOpcaoSelecionada)
+      var idOpcaoSelecionada = document.querySelector(`option[value="${opcaoSelecionada}"]`)
+      formData.set("nomeCategoria", idOpcaoSelecionada.value)
+      formData.set("idCategoria", idOpcaoSelecionada.id)
     }
     function formDataToJson(formData) {
       const jsonObject = {};
