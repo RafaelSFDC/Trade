@@ -505,8 +505,6 @@ function openPopupEdit(plano, page) {
       { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
       { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
       { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
-
-      // AQUII
       { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
       { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
       { id: "nomeFranquia", dataKey: "nomeFranquia", type: 'input', value: (plano) => plano.dadosAgencias.nomeFranquia },
@@ -554,11 +552,11 @@ function openPopupEdit(plano, page) {
       { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
       { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
       { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
-      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "planosAssociadoSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
       { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
       { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
       { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
-      { id: "gerenteConta", dataKey: "gerenteConta", type: 'select', value: (plano) => plano.dadosOperacoes.gerenteConta },
+      { id: "gerentesSelect", dataKey: "gerenteConta", type: 'select', value: (plano) => plano.dadosOperacoes.gerenteConta },
       { id: "taxaGerenteConta", dataKey: "taxaGerenteConta", type: 'input', value: (plano) => plano.dadosOperacoes.taxaGerenteConta },
       { id: "tipoOperacao", dataKey: "tipoOperacao", type: 'input', value: (plano) => plano.dadosOperacoes.tipoOperacao },
       { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
