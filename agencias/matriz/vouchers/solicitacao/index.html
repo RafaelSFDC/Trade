@@ -34,39 +34,39 @@
           </div>
 
           <div class="container p-4 bg-white rounded shadow">
-            <div class="row">
+            <form class="row">
               <div class="col-md-3 pt-1">
                 <label>Comprador</label>
-                <select class="form-control">
+                <select class="form-control" required>
                   <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-md-3 pt-1">
                 <label>Vendedor</label>
-                <select class="form-control">
+                <select class="form-control" required>
                   <option>Selecionar</option>
                 </select>
               </div>
               <div class="col-md-3 pt-1">
                 <label>Valor</label>
-                <select class="form-control">
+                <select class="form-control" required>
                   <option>RTS$</option>
                 </select>
               </div>
               <div class="col-md-3 pt-1 lastE">
                 <label>Data</label>
-                <input type="date" class="form-control" />
+                <input type="date" class="form-control" required />
               </div>
               <div class="col-md-12 pt-2">
                 <label>Descrição</label>
                 <textarea class="form-control" rows="9"></textarea>
               </div>
               <div class="col-4 offset-8 text-right pt-4">
-                <button type="button" class="btn btn-orange w-50 btn-sm">
+                <button type="submit" class="btn btn-orange w-50 btn-sm">
                   Solicitar
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <div class="container cards mt-2 p-4 bg-white rounded shadow">

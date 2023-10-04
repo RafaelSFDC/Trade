@@ -33,6 +33,8 @@ const minhasOfertas = getId('minhasOfertas');
 const excluirOfertas = getId('excluirOfertas');
 const categoriasPage = getId('categoriasPage');
 const subCategoriasPage = getId('subCategoriasPage');
+const voucherList = getId('voucherList');
+const meusVoucherList = getId('meusVoucherList');
 // ---------- PLANOS
 const associados = getId('associados');
 const agencias = getId('agencias');
@@ -95,6 +97,7 @@ if (subCategoriaSelect) {
   fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
+      console.log("sub")
       data.forEach((categoria) => {
         const optionCategoria = document.createElement("option");
         optionCategoria.textContent = categoria.nome;
@@ -154,10 +157,6 @@ function formDataToJson(formData) {
   });
   return JSON.stringify(jsonObject);
 }
-
-
-
-
 // ---------------------------------------------------------------------------------------------------------
 // --------------------------------------------- FORMULÁRIOS -----------------------------------------------
 // ---------------------------------------------------------------------------------------------------------
@@ -307,7 +306,7 @@ function openPopupEdit(plano, page) {
   console.log(plano)
   const salvarAlteracoesBtn = document.getElementById("salvar-alteracoes-btn");
 
-  function setupEventListener(page, fields, plano) {
+  function setupEventListener(page, fields, plano, editUserId) {
     const data = {};
 
 
@@ -342,7 +341,7 @@ function openPopupEdit(plano, page) {
     // Adiciona um event listener para o botão "Salvar Alterações"
     salvarAlteracoesBtn.addEventListener("click", () => {
       updateData(); // Atualiza os dados com os valores atuais dos inputs ou selects
-      updateRow(plano, page, data); // Chama a função para atualizar a linha
+      updateRow(plano, page, data, editUserId); // Chama a função para atualizar a linha
     });
   }
 
@@ -393,43 +392,130 @@ function openPopupEdit(plano, page) {
     setupEventListener(page, fields, plano);
   }
   // Exemplo para a página "usuario"
+  else if (page === "agencias") {
+    const fields = [
+      { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
+      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "cnpj", dataKey: "cnpj", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
+
+      { id: "inscEstadual", dataKey: "inscEstadual", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
+      { id: "inscMunicipal", dataKey: "inscMunicipal", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
+      { id: "mostrarNoSite", dataKey: "mostrarNoSite", type: 'select', value: (plano) => plano.dadosGerais.mostrarNoSite },
+      { id: "tipo", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.tipo },
+      { id: "nomeContato", dataKey: "nomeContato", type: 'input', value: (plano) => plano.dadosContatos.nomeContato },
+      { id: "telefone", dataKey: "telefone", type: 'input', value: (plano) => plano.dadosContatos.telefone },
+      { id: "celular", dataKey: "celular", type: 'input', value: (plano) => plano.dadosContatos.celular },
+      { id: "emailContato", dataKey: "emailContato", type: 'input', value: (plano) => plano.dadosContatos.emailContato },
+      { id: "emailSecundario", dataKey: "emailSecundario", type: 'input', value: (plano) => plano.dadosContatos.emailSecundario },
+      { id: "logradouro", dataKey: "logradouro", type: 'input', value: (plano) => plano.dadosEnderecos.logradouro },
+      { id: "numero", dataKey: "numero", type: 'input', value: (plano) => plano.dadosEnderecos.numero },
+      { id: "cep", dataKey: "cep", type: 'input', value: (plano) => plano.dadosEnderecos.cep },
+      { id: "complemento", dataKey: "complemento", type: 'input', value: (plano) => plano.dadosEnderecos.complemento },
+      { id: "bairro", dataKey: "bairro", type: 'input', value: (plano) => plano.dadosEnderecos.bairro },
+      { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
+      { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
+      { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
+
+      // AQUII
+      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
+      { id: "nomeFranquia", dataKey: "nomeFranquia", type: 'input', value: (plano) => plano.dadosAgencias.nomeFranquia },
+      { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
+      { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
+      { id: "taxaRepasseMatriz", dataKey: "taxaRepasseMatriz", type: 'input', value: (plano) => plano.dadosOperacoes.taxaRepasseMatriz },
+
+      { id: "tipoOperacao", dataKey: "tipoOperacao", type: 'input', value: (plano) => plano.dadosOperacoes.tipoOperacao },
+      { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
+
+      { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+      { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
+      { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
+      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
+    ];
+    const newPage = `usuarios/agencia`
+    const editUserId = 1
+    setupEventListener(newPage, fields, plano, editUserId);
+  }
+  // Exemplo para a página "usuario"
   else if (page === "associados") {
     const fields = [
       { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
       { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
       { id: "descricao", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.descricao },
       { id: "restricoes", dataKey: "email", type: 'input', value: (plano) => plano.dadosGerais.restricao },
-      { id: "status", dataKey: "statusConta", type: 'select', value: (plano) => plano.statusConta },
-      { id: "cnpj", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
-      { id: "inscEstadual", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
-      { id: "inscMunicipal", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
-      { id: "mostrarNoSite", dataKey: "statusConta", type: 'select', value: (plano) => plano.dadosGerais.mostrarNoSite },
-      // mexer aqui
-      { id: "tipo", dataKey: "statusConta", type: 'input', value: (plano) => plano.statusConta },
-      { id: "nomeContato", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.nomeContato },
-      { id: "telefone", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.telefone },
-      { id: "celular", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.celular },
-      { id: "emailContato", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.emailContato },
-      { id: "emailSecundario", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosContatos.emailSecundario },
-      { id: "logradouro", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.logradouro },
-      { id: "numero", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.numero },
-      { id: "cep", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.cep },
-      { id: "complemento", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.complemento },
-      { id: "bairro", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.bairro },
-      { id: "cidade", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
-      { id: "regiao", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
-      { id: "estado", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
-      { id: "planoDeInscricao", dataKey: "statusConta", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
-      { id: "porcentagemPlanoDeInscricao", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
-      { id: "limiteCredito", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
-      { id: "dataVencimentoFatura", dataKey: "statusConta", type: 'input', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
+      { id: "statusConta", dataKey: "statusConta", type: 'select', value: (plano) => plano.statusConta },
+      { id: "cnpj", dataKey: "cnpj", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
+      { id: "inscEstadual", dataKey: "inscEstadual", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
+      { id: "inscMunicipal", dataKey: "inscMunicipal", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
+      { id: "mostrarNoSite", dataKey: "mostrarNoSite", type: 'select', value: (plano) => plano.dadosGerais.mostrarNoSite },
+      // // // mexer aqui
+      { id: "tipo", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.tipo },
+      { id: "nomeContato", dataKey: "nomeContato", type: 'input', value: (plano) => plano.dadosContatos.nomeContato },
+      { id: "telefone", dataKey: "telefone", type: 'input', value: (plano) => plano.dadosContatos.telefone },
+      { id: "celular", dataKey: "celular", type: 'input', value: (plano) => plano.dadosContatos.celular },
+      { id: "emailContato", dataKey: "emailContato", type: 'input', value: (plano) => plano.dadosContatos.emailContato },
+      { id: "emailSecundario", dataKey: "emailSecundario", type: 'input', value: (plano) => plano.dadosContatos.emailSecundario },
+      { id: "site", dataKey: "site", type: 'input', value: (plano) => plano.dadosContatos.site },
+      { id: "logradouro", dataKey: "logradouro", type: 'input', value: (plano) => plano.dadosEnderecos.logradouro },
+      { id: "numero", dataKey: "numero", type: 'input', value: (plano) => plano.dadosEnderecos.numero },
+      { id: "cep", dataKey: "cep", type: 'input', value: (plano) => plano.dadosEnderecos.cep },
+      { id: "complemento", dataKey: "complemento", type: 'input', value: (plano) => plano.dadosEnderecos.complemento },
+      { id: "bairro", dataKey: "bairro", type: 'input', value: (plano) => plano.dadosEnderecos.bairro },
+      { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
+      { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
+      { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
+      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
+      { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
+      { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
+      { id: "gerenteConta", dataKey: "gerenteConta", type: 'select', value: (plano) => plano.dadosOperacoes.gerenteConta },
+      { id: "taxaGerenteConta", dataKey: "taxaGerenteConta", type: 'input', value: (plano) => plano.dadosOperacoes.taxaGerenteConta },
+      { id: "tipoOperacao", dataKey: "tipoOperacao", type: 'input', value: (plano) => plano.dadosOperacoes.tipoOperacao },
+      { id: "limiteCredito", dataKey: "limiteCredito", type: 'input', value: (plano) => plano.dadosOperacoes.limiteCredito },
+      { id: "limiteVendaMensal", dataKey: "limiteVendaMensal", type: 'input', value: (plano) => plano.dadosOperacoes.limiteVendaMensal },
+      { id: "limiteVendaTotal", dataKey: "limiteVendaTotal", type: 'input', value: (plano) => plano.dadosOperacoes.limiteVendaTotal },
+      { id: "aceitaOrcamento", dataKey: "aceitaOrcamento", type: 'select', value: (plano) => plano.dadosOperacoes.aceitaOrcamento },
+      { id: "aceitaVoucher", dataKey: "aceitaVoucher", type: 'select', value: (plano) => plano.dadosOperacoes.aceitaVoucher },
       { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
       { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
       { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
-      { id: "imagem-selecionada", dataKey: "statusConta", type: 'input', value: (plano) => plano.statusConta },
-
+      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
     ];
-    setupEventListener(page, fields, plano);
+    const newPage = `usuarios/associado`
+    const editUserId = 1
+    setupEventListener(newPage, fields, plano, editUserId);
+  }
+  else if (page === "gerente") {
+    const fields = [
+      { id: "razaoSocial", dataKey: "razaoSocial", type: 'input', value: (plano) => plano.dadosGerais.razaoSocial },
+      { id: "nomeFantasia", dataKey: "tipo", type: 'input', value: (plano) => plano.dadosGerais.nomeFantasia },
+      { id: "cnpj", dataKey: "cnpj", type: 'input', value: (plano) => plano.dadosGerais.cnpj },
+      { id: "inscEstadual", dataKey: "inscEstadual", type: 'input', value: (plano) => plano.dadosGerais.inscEstadual },
+      { id: "inscMunicipal", dataKey: "inscMunicipal", type: 'input', value: (plano) => plano.dadosGerais.inscMunicipal },
+      { id: "nomeContato", dataKey: "nomeContato", type: 'input', value: (plano) => plano.dadosContatos.nomeContato },
+      { id: "telefone", dataKey: "telefone", type: 'input', value: (plano) => plano.dadosContatos.telefone },
+      { id: "celular", dataKey: "celular", type: 'input', value: (plano) => plano.dadosContatos.celular },
+      { id: "emailContato", dataKey: "emailContato", type: 'input', value: (plano) => plano.dadosContatos.emailContato },
+      { id: "emailSecundario", dataKey: "emailSecundario", type: 'input', value: (plano) => plano.dadosContatos.emailSecundario },
+      { id: "logradouro", dataKey: "logradouro", type: 'input', value: (plano) => plano.dadosEnderecos.logradouro },
+      { id: "numero", dataKey: "numero", type: 'input', value: (plano) => plano.dadosEnderecos.numero },
+      { id: "cep", dataKey: "cep", type: 'input', value: (plano) => plano.dadosEnderecos.cep },
+      { id: "complemento", dataKey: "complemento", type: 'input', value: (plano) => plano.dadosEnderecos.complemento },
+      { id: "bairro", dataKey: "bairro", type: 'input', value: (plano) => plano.dadosEnderecos.bairro },
+      { id: "cidade", dataKey: "cidade", type: 'input', value: (plano) => plano.dadosEnderecos.cidade },
+      { id: "regiao", dataKey: "regiao", type: 'input', value: (plano) => plano.dadosEnderecos.regiao },
+      { id: "estado", dataKey: "estado", type: 'input', value: (plano) => plano.dadosEnderecos.estado },
+      { id: "planosSelect", dataKey: "planoDeInscricao", type: 'select', value: (plano) => plano.dadosAgencias.planoDeInscricao },
+      { id: "porcentagemPlano", dataKey: "porcentagemPlanoDeInscricao", type: 'input', value: (plano) => plano.dadosAgencias.porcentagemPlanoDeInscricao },
+      { id: "dataVencimentoFatura", dataKey: "statudataVencimentoFaturasConta", type: 'select', value: (plano) => plano.dadosOperacoes.dataVencimentoFatura },
+      { id: "nome", dataKey: "nome", type: 'input', value: (plano) => plano.nome },
+      { id: "cpf", dataKey: "cpf", type: 'input', value: (plano) => plano.cpf },
+      { id: "email", dataKey: "email", type: 'input', value: (plano) => plano.email },
+      { id: "imagem-selecionada", dataKey: "imagem", type: 'input', value: (plano) => plano.imagem },
+    ];
+    const newPage = `usuarios/gerente`
+    const editUserId = 1
+    setupEventListener(newPage, fields, plano, editUserId);
   }
 
   // Exemplo para uma página com um select
@@ -442,9 +528,16 @@ function openPopupEdit(plano, page) {
 
 
 
-  function updateRow(plano, page, data) {
+  function updateRow(plano, page, data, editUserId) {
     const { id } = plano;
-    const apiUrl = `${url}${page}/${id}`;
+    var apiUrl = ""
+    if (editUserId) {
+      apiUrl = `${url}${page}/${id}/${editUserId}`;
+    } else {
+      apiUrl = `${url}${page}/${id}`;
+    }
+    console.log("dados enviados", data)
+    console.log("Url Usada", apiUrl)
 
     fetch(apiUrl, {
       method: "PUT",
@@ -454,8 +547,9 @@ function openPopupEdit(plano, page) {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
+      .then((response) => console.log("resposta do servidor", response))
       .then(() => {
-        showAlert("Update successful!", "success");
+        showAlert("Atualizado com sucesso!", "success");
         setTimeout(() => {
           location.reload();
         }, 4000);
@@ -540,6 +634,16 @@ function createTableRow(categoria, page) {
     return row;
   }
   else if (page === "agencias") {
+    createCell(categoria.nome)
+    createCell(categoria.dadosEnderecos.estado)
+    createCell(categoria.conta)
+    createCell(categoria.email)
+    createCell(categoria.statusConta)
+    createCell(categoria.dadosAgencias.nomeAgencia)
+    createOperators(row, categoria, page)
+    return row;
+  }
+  else if (page === "gerente") {
     createCell(categoria.nome)
     createCell(categoria.dadosEnderecos.estado)
     createCell(categoria.conta)
@@ -813,7 +917,7 @@ async function usuariosHandler(page) {
     actualPage = "associados"
   } else if (page === "Gerente") {
     request = ["Gerente"]
-    actualPage = "agencias"
+    actualPage = "gerente"
   } else if (page === "Usuarios") {
     request = ["Associado", "Matriz", "Comum", "Master", "Gerente"]
     actualPage = "usuario"
@@ -869,6 +973,27 @@ async function transacoesHandler(transacoes) {
   });
 }
 
+// ------------------------------ CONTROLADOR VOUCHER ------------------------------
+// --------- CONDIÇÕES
+if (voucherList) voucherHandler("transacoes/1")
+else if (meusVoucherList) voucherHandler("transacoes/minhas/1/1")
+// --------- FUNÇÕES
+async function voucherHandler(transacoes) {
+
+  const apiUrl = `${url}${transacoes}`;
+  const response = await fetch(apiUrl);
+  const data = await response.json();
+  console.log(data)
+
+  const tableBody = document.querySelector("tbody");
+  tableBody.innerHTML = "";
+
+  data.transacoes.forEach((categoria) => {
+    console.log(categoria)
+    const row = createTableRow(categoria, "transacoes");
+    tableBody.appendChild(row);
+  });
+}
 
 // ---------------------------------------------------------------------------------------------------------
 // ------------------------------------------------ CARDS --------------------------------------------------

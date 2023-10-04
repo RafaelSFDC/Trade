@@ -175,8 +175,8 @@
                 <div class="col-md-3 pt-1">
                   <label>Mostrar no site</label>
                   <select class="form-control" id="mostrarNoSite" name="mostrarNoSite" required>
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
                   </select>
                 </div>
                 <div class="col-md-3 pt-1">
@@ -264,14 +264,14 @@
               <div class="row">
                 <div class="col-md-3 pt-1">
                   <label class="required-field-label">Plano de Inscrição</label>
-                  <select class="form-control" id="planoDeInscricao" name="planoDeInscricao" required>
+                  <select class="form-control" id="planosSelect" name="planoDeInscricao" required>
                     <option value="Franquia">Franquia</option>
                   </select>
                 </div>
 
                 <div class="col-md-4 pt-1">
                   <label class="required-field-label">Porcentagem Plano de Inscrição</label>
-                  <input type="text" class="form-control" id="porcentagemPlanoDeInscricao"
+                  <input type="text" class="form-control" id="porcentagemPlano"
                     name="porcentagemPlanoDeInscricao" readonly required>
                 </div>
 
@@ -352,7 +352,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <div class="container showAlertEdit"></div>
+          <div class="container showAlertEdit alert"></div>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-primary" id="salvar-alteracoes-btn">Salvar alterações</button>
           <div class="container alert"></div>

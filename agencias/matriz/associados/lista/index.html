@@ -165,7 +165,7 @@
                 </div>
                 <div class="col-md-3 pt-1">
                   <label>Status</label>
-                  <select class="form-control" id="status">
+                  <select class="form-control" id="statusConta">
                     <option value="true">Atendendo</option>
                     <option value="false">Não Atendendo</option>
                   </select>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="col-md-3 pt-1">
                   <label>Subcategoria</label>
-                  <select class="form-control" id="subCategoria">
+                  <select class="form-control" id="subCategoriaSelect">
                   </select>
                 </div>
                 <div class="col-md-3 pt-1">
@@ -296,12 +296,12 @@
               <div class="row d-flex align-items-center">
                 <div class="col-md-4 pt-1">
                   <label class="required-field-label">Plano de Inscrição</label>
-                  <select class="form-control" id="planoDeInscricao" name="planoDeInscricao" required>
+                  <select class="form-control" id="planosSelect" name="planoDeInscricao" required>
                   </select>
                 </div>
                 <div class="col-md-4 pt-1">
                   <label class="required-field-label">Porcentagem Plano de Inscrição %</label>
-                  <input type="text" class="form-control" id="porcentagemPlanoDeInscricao"
+                  <input type="text" class="form-control" id="porcentagemPlano"
                     name="porcentagemPlanoDeInscricao" readonly required>
                 </div>
                 <div class="col-md-4 pt-1">
@@ -322,7 +322,8 @@
                 <div class="col-md-3 pt-1">
                   <label>Gerente de Conta</label>
                   <select class="form-control" id="gerenteConta" name="gerenteConta">
-                    <option value="null">Sem Gerente</option>
+                    <option value="1">Sem Gerente</option>
+                    <option value="2">Com Gerente</option>
                   </select>
                 </div>
                 <div class="col-md-3 pt-1">
@@ -351,15 +352,15 @@
                 <div class="col-md-2 pt-1">
                   <label>Aceita Orçamento</label>
                   <select class="form-control" id="aceitaOrcamento" name="aceitaOrcamento">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
                   </select>
                 </div>
                 <div class="col-md-2 pt-1">
                   <label>Aceita Voucher</label>
                   <select class="form-control" id="aceitaVoucher" name="aceitaVoucher">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
 
                   </select>
                 </div>
@@ -377,7 +378,7 @@
                 <div class="col-md-3 pt-1">
                   <label class="required-field-label">Selecionar Foto</label>
                   <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="imagem" name="imagem" />
+                    <input type="file" class="custom-file-input" id="img_path" name="imagem" />
                     <label class="custom-file-label d-hide" for="customFile">Selecionar</label>
                   </div>
                 </div>
@@ -398,7 +399,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="container showAlertEdit"></div>
+          <div class="container showAlertEdit alert"></div>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
           <button type="button" class="btn btn-primary" id="salvar-alteracoes-btn">Salvar alterações</button>
         </div>
@@ -447,468 +448,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
   </script>
-  <!-- Script Mascaras-->
-  <script>
-    $(document).ready(function () {
-      $('#cpf').inputmask('999.999.999-99', {
-        placeholder: '___.___.___-__'
-      });
-      $('#cnpj').inputmask('99.999.999/9999-99', {
-        placeholder: '__.___.___/____-__'
-      });
-    });
-  </script>
-  <!-- ViaCep-->
-  <script>
-    function obterRegiaoPorCEP(cep) {
-      cep = cep.replace(/\D/g, '');
 
-      const regioes = {
-        'Norte': [69000000, 69999999],
-        'Nordeste': [40000000, 49999999],
-        'Centro-Oeste': [70000000, 78999999],
-        'Sudeste': [1000000, 39999999],
-        'Sul': [80000000, 99999999]
-      };
-
-      for (const regiao in regioes) {
-        const intervalo = regioes[regiao];
-        const cepNumerico = parseInt(cep);
-
-        if (cepNumerico >= intervalo[0] && cepNumerico <= intervalo[1]) {
-          return regiao;
-        }
-      }
-
-      return null;
-    }
-
-    document.getElementById('cep').addEventListener('input', function () {
-      var cep = document.getElementById('cep').value;
-      if (cep.length === 8) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://viacep.com.br/ws/' + cep + '/json/');
-        xhr.onload = function () {
-          if (xhr.status === 200) {
-            var endereco = JSON.parse(xhr.responseText);
-            //console.log(endereco);
-            document.getElementById('logradouro').value = endereco.logradouro;
-            document.getElementById('bairro').value = endereco.bairro;
-            document.getElementById('cidade').value = endereco.localidade;
-            document.getElementById('estado').value = endereco.uf;
-
-            var regiao = obterRegiaoPorCEP(cep);
-            if (regiao) {
-              //console.log(`O CEP ${cep} está na região ${regiao}.`);
-              document.getElementById('regiao').value = regiao;
-            } else {
-              //console.log(`Não foi possível determinar a região para o CEP ${cep}.`);
-            }
-          } else {
-            alert('Erro ao consultar CEP. Por favor, tente novamente mais tarde.');
-          }
-        };
-        xhr.send();
-      }
-    });
-
-    function formatarCep(event) {
-      const cepInput = document.getElementById('cep');
-      const cepValue = cepInput.value.trim();
-
-      if (cepValue.length === 5 && event.key !== 'Backspace') {
-        cepInput.value = cepValue + '-';
-      }
-    }
-  </script>
-  <!--Script preencher tabela -->
-  <script>
-    $(document).ready(function () {
-      // Recupera o cookie
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.indexOf('usuarioId=') === 0) {
-          var usuarioId = cookie.substring('usuarioId='.length, cookie.length);
-          break;
-        }
-      }
-      // Verifica se o idUsuario foi encontrado
-      if (usuarioId === '') {
-        console.error('O cookie idUsuario não foi encontrado.');
-        return;
-      }
-      const apiUrl = `${window.apiBaseUrl}/usuarios/${usuarioId}`;
-      fetch(apiUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Erro na resposta do servidor');
-          }
-          return response.json();
-        })
-        .then(data => {
-          const tableBody = document.querySelector('tbody');
-
-          // Limpa o conteúdo atual da tabela
-          tableBody.innerHTML = '';
-          var usuarios = data.usuarios;
-          // Limpa as opções atuais do <select> Agencia
-          $('#selectAssociado').empty();
-          // Adiciona uma opção vazia como padrão
-          $('#selectAssociado').append('<option value="">Selecionar</option>');
-          // Itera sobre os usuários retornados pela API
-          usuarios.forEach(function (usuario) {
-            // Verifica se o tipo do usuário é Master, Comum ou Matriz
-            if (usuario.dadosGerais.tipo == 'Associado') {
-              // Adiciona uma nova opção ao <select> com o nomeFranquia do usuário
-              $('#selectAssociado').append('<option value="' + usuario.id + '">' + usuario.dadosGerais
-                .nomeFantasia + '</option>');
-            }
-          });
-          // Manipulador de evento de clique para o botão "Localizar"
-          $('#localizarBtn').click(function () {
-            var filtroNomeFantasia = $('#inputNomeFantasia').val(); // Obtém o valor do campo de filtro
-            var filtroNumeroConta = $('#inputNumeroDaConta').val(); // Obtém o valor do campo de filtro
-
-            var filtroAgencia = $('#selectAssociado option:selected')
-              .text(); // Obtém o nome fantasia do elemento selecionado
-
-            // Verifica se o valor do filtro está presente em algum dos dados dos usuários
-            var encontrado = false;
-            usuarios.forEach(function (usuario) {
-              if (usuario.dadosGerais.nomeFantasia.toLowerCase() == filtroAgencia.toLowerCase() ||
-                usuario.dadosGerais.nomeFantasia.toLowerCase() == filtroNomeFantasia.toLowerCase() ||
-                usuario.conta == filtroNumeroConta) {
-                encontrado = true;
-                // Faça algo com os dados do usuário encontrado, se necessário
-                //console.log(usuario);
-                //console.log(usuario.nomeFantasia);
-                const row = document.createElement('tr');
-
-                // Cria as células da linha com os dados da agência
-                const idCell = document.createElement('td');
-                idCell.textContent = usuario.dadosGerais.nomeFantasia;
-                row.appendChild(idCell);
-
-                const estadoCell = document.createElement('td');
-                estadoCell.textContent = usuario.dadosEnderecos.estado;
-                row.appendChild(estadoCell);
-
-                const contaCell = document.createElement('td');
-                contaCell.textContent = usuario.conta;
-                row.appendChild(contaCell);
-
-                const emailCell = document.createElement('td');
-                emailCell.textContent = usuario.email;
-                row.appendChild(emailCell);
-
-                const statusContaCell = document.createElement('td');
-                if (usuario.dadosGerais.status == 0) {
-                  statusContaCell.textContent = "Inativa";
-                  row.appendChild(statusContaCell);
-                } else {
-                  statusContaCell.textContent = "Ativa";
-                  row.appendChild(statusContaCell);
-                }
-
-                const tipoCell = document.createElement('td');
-                tipoCell.textContent = usuario.dadosGerais.tipo;
-                row.appendChild(tipoCell);
-
-                const operationsCell = document.createElement("td");
-                operationsCell.className = "text-center align-middle d-flex justify-content-center";
-                operationsCell.style.gap = "0.1rem";
-
-                // Cria os botões para as operações
-                const editButton = document.createElement("button");
-                editButton.type = "button";
-                editButton.className = "btn btn-sm";
-                editButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
-                editButton.style.backgroundColor = "#3C0464";
-                editButton.style.color = "#fff";
-                // Define o atributo data-modal no botão
-                editButton.setAttribute("data-modal",
-                "myModal"); // Substitua "myModal" pelo ID correto do seu modal
-                operationsCell.appendChild(editButton);
-                // Attach an event listener to the edit button
-                editButton.addEventListener('click', function () {
-                  openPopupEdit(usuario);
-                });
-
-                const unlockButton = document.createElement("button");
-                if (usuario.statusConta == 0) {
-                  unlockButton.type = "button";
-                  unlockButton.className = "btn btn-danger btn-sm";
-                  unlockButton.innerHTML = '<i class="fas fa-lock"></i>';
-                  unlockButton.addEventListener("click", function () {
-                    sendData(true);
-                  });
-                  operationsCell.appendChild(unlockButton);
-                } else {
-                  unlockButton.type = "button";
-                  unlockButton.className = "btn btn-success btn-sm";
-                  unlockButton.innerHTML = '<i class="fas fa-unlock"></i>';
-                  unlockButton.addEventListener("click", function () {
-                    sendData(false);
-                  });
-                  operationsCell.appendChild(unlockButton);
-
-                }
-
-                function sendData(value) {
-                  const data = {
-                    statusConta: value
-                  };
-                  const apiUrl = `${window.apiBaseUrl}/usuarios/status/${usuario.id}`;
-
-                  fetch(apiUrl, {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json"
-                      },
-                      body: JSON.stringify(data)
-                    })
-                    .then(response => {
-                      //console.log(response);
-                      // Handle the response
-                      location.reload();
-                    })
-                    .catch(error => {
-                      // Handle the error
-                    });
-                }
-                row.appendChild(operationsCell);
-
-                // Adiciona a linha à tabela
-                tableBody.appendChild(row);
-              }
-            });
-
-            if (encontrado) {
-              showAlert('Usuário encontrado!', 'success');
-            } else {
-              showAlert('Usuário não encontrado!', 'danger');
-            }
-          });
-        })
-        .catch(error => console.error('Erro:', error));
-    });
-
-    function showAlert(message, type) {
-      var alert = document.createElement("div");
-      alert.classList.add("alert", "alert-" + type);
-      alert.innerHTML = message;
-      var container = document.querySelector(".container");
-      container.insertBefore(alert, container.firstChild);
-      setTimeout(function () {
-        alert.remove();
-      }, 3000);
-    }
-  </script>
-
-
-  <!-- Função para preencher os campos com dados -->
-  <script>
-    function preencherCampos(usuario) {
-      console.log(usuario);
-      const razaoSocial = document.getElementById('razaoSocial');
-      const nomeFantasia = document.getElementById('nomeFantasia');
-      const descricao = document.getElementById('descricao');
-      const restricoes = document.getElementById('restricoes');
-      const cnpj = document.getElementById('cnpj');
-      const inscEstadual = document.getElementById('inscEstadual');
-      const inscMunicipal = document.getElementById('inscMunicipal');
-      const mostrarNoSiteSelect = document.getElementById('mostrarNoSite');
-      const tipo = document.getElementById('tipo');
-      const contatoNome = document.getElementById('nomeContato');
-      const contatoTelefone = document.getElementById('telefone');
-      const contatoCelular = document.getElementById('celular');
-      const contatoEmail = document.getElementById('emailContato');
-      const contatoEmailSecundario = document.getElementById('emailSecundario');
-      const enderecoLargadouro = document.getElementById('logradouro');
-      const enderecoNumero = document.getElementById('numero');
-      const enderecoCEP = document.getElementById('cep');
-      const enderecoComplemento = document.getElementById('complemento');
-      const enderecoBairro = document.getElementById('bairro');
-      const enderecoCidade = document.getElementById('cidade');
-      const enderecoEstado = document.getElementById('estado');
-      const enderecoRegiao = document.getElementById('regiao');
-      const dataCadastro = document.getElementById('dataCadastro');
-
-      const nomeFranquia = document.getElementById('nomeFranquia');
-      const planoInscricao = document.getElementById('planoDeInscricao');
-      const porcentagemPlanoInscricao = document.getElementById('porcentagemPlanoDeInscricao');
-
-      const limiteCredito = document.getElementById('limiteCredito');
-      const taxaRepasseMatriz = document.getElementById('taxaRepasseMatriz');
-      const dataVencimentoFatura = document.getElementById('dataVencimentoFatura');
-      const tipoOperacaoTaxa = document.getElementById('tipoOperacaoTaxa');
-      const usuarioNome = document.getElementById('nome');
-      const usuarioCPF = document.getElementById('cpf');
-      const usuarioEmail = document.getElementById('email');
-      const imagem = document.getElementById('imagem-selecionada');
-      // Preenchendo os campos com os dados correspondentes
-      razaoSocial.value = usuario.dadosGerais.razaoSocial;
-      nomeFantasia.value = usuario.dadosGerais.nomeFantasia;
-      descricao.value = usuario.dadosGerais.descricao;
-      restricoes.value = usuario.dadosGerais.restricoes
-
-      cnpj.value = usuario.dadosGerais.cnpj;
-      inscEstadual.value = usuario.dadosGerais.inscEstadual;
-      inscMunicipal.value = usuario.dadosGerais.inscMunicipal;
-      if (usuario.dadosGerais.mostrarNoSite === true) {
-        mostrarNoSiteSelect.selectedIndex = 0; // atribuindo um índice qualquer
-      } else {
-        mostrarNoSiteSelect.selectedIndex = 1; // atribuindo um índice qualquer
-      }
-
-      if (usuario.dadosGerais.tipo === "Associado") {
-        tipo.selectedIndex = 0;
-      }
-      contatoNome.value = usuario.dadosContatos.nomeContato;
-      contatoTelefone.value = usuario.dadosContatos.telefone;
-      contatoCelular.value = usuario.dadosContatos.celular;
-      contatoEmail.value = usuario.dadosContatos.emailContato;
-
-      contatoEmailSecundario.value = usuario.dadosContatos.emailSecundario;
-      enderecoLargadouro.value = usuario.dadosEnderecos.logradouro;
-      enderecoNumero.value = usuario.dadosEnderecos.numero;
-      enderecoCEP.value = usuario.dadosEnderecos.cep;
-      enderecoComplemento.value = usuario.dadosEnderecos.complemento;
-      enderecoBairro.value = usuario.dadosEnderecos.bairro;
-      enderecoCidade.value = usuario.dadosEnderecos.cidade;
-      enderecoEstado.value = usuario.dadosEnderecos.estado;
-      enderecoRegiao.value = usuario.dadosEnderecos.regiao;
-
-      // Obtém a referência para o elemento <select>
-      const categoriaSelect = document.getElementById('categoria');
-      const categoriaUsuario = usuario.dadosGerais.categoria; // Supondo que você tenha essa variável definida
-
-      for (var i = 0; i < categoriaSelect.options.length; i++) {
-        let option = categoriaSelect.options[i];
-
-        if (categoriaUsuario === option.value) {
-          categoriaSelect.selectedIndex = i; // Define a opção como selecionada
-          break; // Sai do loop, já que a opção foi encontrada
-        }
-      }
-      planoInscricao.value = usuario.dadosAgencias.planoDeInscricao;
-      porcentagemPlanoInscricao.value = usuario.dadosAgencias.porcentagemPlanoDeInscricao;
-      limiteCredito.value = usuario.dadosOperacoes.limiteCredito;
-      dataVencimentoFatura.value = usuario.dadosOperacoes.dataVencimentoFatura;
-      //tipoOperacaoTaxa.value = usuario.dadosOperacoes.tipoOperacaoTaxa;
-      usuarioNome.value = usuario.nome;
-      usuarioCPF.value = usuario.cpf;
-      usuarioEmail.value = usuario.email;
-
-      const imagemUrl = usuario.imagem ? `${window.apiBaseUrl}/${usuario.imagem.replace(/\\/g, '/')}` :
-        '/assets/img/default_img.png';
-      imagem.src = imagemUrl;
-    }
-  </script>
-  <!-- Função para enviar os dados do formulário para a API -->
-  <script>
-    async function enviarDadosFormulario(usuario) {
-      const id = usuario.id; // Obter o ID da agência dinamicamente
-
-      const form = document.getElementById('cadastroForm');
-      const formData = new FormData(form);
-      const imgInput = document.getElementById('imagem');
-      const img_path = imgInput.files[0];
-
-      if (!img_path) {
-        formData.append('imagem', usuario.imagem);
-        console.log('minha imagem é', usuario.imagem)
-      }
-
-      const apiUrl = `${window.apiBaseUrl}/usuarios/${id}`;
-      // Mostra os valores de todos os campos do FormData
-      for (const [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: {
-            // Seus cabeçalhos aqui
-          },
-          body: formData
-        });
-
-        const result = await response.json();
-        console.log(result);
-
-        //console.log('Resposta do servidor:', result);
-        showAlertEdit("Atualização efetuada com sucesso!", "success");
-        setTimeout(() => {
-          //$('#myModal').modal('hide');
-          location.reload();
-        }, 4000);
-
-        // Realizar ações adicionais após o sucesso da requisição...
-      } catch (error) {
-        console.error('Erro ao enviar requisição:', error);
-        // Lidar com o erro...
-      }
-    }
-  </script>
-  <!-- Script para carregar categorias -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-      const apiUrl = `${window.apiBaseUrl}/categorias`;
-
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Processa os dados JSON recebidos
-
-          data.forEach(categoria => {
-            // Cria uma linha na tabela para cada transação
-            //console.log('Categoria', categoria);
-            // Obtém a referência para o elemento <select>
-            const categoriaSelect = document.getElementById('categoria');
-            // Cria um elemento de opção
-            const optionCategoria = document.createElement('option');
-            // Define o texto da opção como o nome do plano
-            optionCategoria.textContent = categoria.nome;
-            // Define o valor da opção como o ID do plano
-            optionCategoria.value = categoria.nome;
-            // Adiciona a opção ao elemento <select>
-            categoriaSelect.appendChild(optionCategoria);
-          });
-        })
-        .catch(error => console.error('Erro:', error));
-    })
-  </script>
-  <!-- Script para carregar sub categorias -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Monta a URL da requisição GET com o parâmetro idAgencia incluindo o usuarioId
-      const apiUrl = `${window.apiBaseUrl}/subCategorias`;
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Processa os dados JSON recebidos
-
-          data.forEach(subCategoria => {
-            // Cria uma linha na tabela para cada transação
-            //console.log('subCategoria', subCategoria);
-            // Obtém a referência para o elemento <select>
-            const subCategoriaSelect = document.getElementById('subCategoria');
-            // Cria um elemento de opção
-            const optionsubCategoria = document.createElement('option');
-            // Define o texto da opção como o nome do plano
-            optionsubCategoria.textContent = subCategoria.nome;
-            // Define o valor da opção como o ID do plano
-            optionsubCategoria.value = subCategoria.nome;
-            // Adiciona a opção ao elemento <select>
-            subCategoriaSelect.appendChild(optionsubCategoria);
-          });
-        })
-        .catch(error => console.error('Erro:', error));
-    })
-  </script>
 </body>
 
 </html>
