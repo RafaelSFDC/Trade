@@ -1,5 +1,5 @@
-// const url = "http://147.135.72.49:3000/"
-const url = "http://localhost:3000/"
+const url = "http://147.135.72.49:3000/"
+// const url = "http://localhost:3000/"
 
 function getId(id) { return document.getElementById(id) }
 // ---------------------------------------------------------------------------------------------------------
@@ -45,6 +45,40 @@ const usuariosList = getId('usuariosLista');
 const usuariosEdit = getId('usuariosEdit');
 // ---------- TRANSAÇÃO
 const transacoes = getId("transacoes")
+
+
+// ---------------------------------------------------------------------------------------------------------
+// ------------------------------------------------- LOGIN -------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
+// getId(login).addEventListener("click", () => {
+//   const emailOuConta = getId(emailOuConta)
+//   const password = getId(password)
+//   const apiUrl = `${url}usuarios/login`
+//   const data = {
+//     emailouconta: emailOuConta,
+//     senha: password
+//   }
+//   fetch(apiUrl, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   })
+//     .then((response) => {
+//       if (response.ok) {
+//         // A resposta é bem-sucedida, redirecione o usuário para a outra página
+//         window.location.href = `./agencias\matriz\dashboard-matriz.html`;
+//       } else {
+//         // Handle errors, se necessário
+//         console.error("Erro na requisição:", response.statusText);
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Erro ao processar a requisição:", error);
+//     });
+// })
+
 
 // ---------------------------------------------------------------------------------------------------------
 // ------------------------------------------ FUNÇÕES UNIVERSAIS -------------------------------------------
@@ -163,7 +197,8 @@ function formDataToJson(formData) {
 // -------------------- REQUISIÇÃO API 
 async function apiHandler(method, page, body) {
   var header = {}
-  if (page === "transacoes") {
+  console.log(body)
+  if (page === "transacoes" || page === "categorias" || page === "subCategorias") {
     header = { 'Content-Type': 'application/json' }
   }
   const destination = `${url}${page}`
@@ -870,8 +905,6 @@ async function categoriasHandler(category) {
       var idOpcaoSelecionada = document.querySelector(`option[value="${opcaoSelecionada}"]`).id;
       formData.set("idCategoria", idOpcaoSelecionada)
     }
-
-
     function formDataToJson(formData) {
       const jsonObject = {};
       formData.forEach((value, key) => {
@@ -1001,9 +1034,11 @@ async function voucherHandler(transacoes) {
 
 // ------------------------------ OFERTAS CARDS ------------------------------
 // --------- CONDIÇÕES
-if (ofertasCards) createOfertasCards()
+if (ofertasCards) createOfertasCards("ofertas/0/10")
+else if (minhasOfertas) createOfertasCards("ofertas/minhas/5/0/2")
+else if (excluirOfertas) createOfertasCards("ofertas/0/10")
 // --------- FUNÇÕES
-async function createOfertasCards() {
+async function createOfertasCards(page) {
   const apiUrl = `${url}ofertas/0/6`;
   try {
     const response = await fetch(apiUrl);
